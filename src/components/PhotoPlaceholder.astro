@@ -1,0 +1,35 @@
+---
+import type { LocalizedText } from "../lib/i18n";
+import Icon from "./Icon.astro";
+
+interface Props {
+  alt: LocalizedText;
+  ratio?: "video" | "square" | "wide" | "portrait";
+  label?: boolean;
+  class?: string;
+}
+
+const { alt, ratio = "video", label = true, class: className = "" } = Astro.props;
+
+const ratioCls: Record<string, string> = {
+  video: "aspect-video",
+  square: "aspect-square",
+  wide: "aspect-[16/7]",
+  portrait: "aspect-[3/4]",
+};
+---
+
+<div
+  class={`bg-placeholder text-brand-300 flex flex-col items-center justify-center gap-2 overflow-hidden rounded-[var(--radius-card)] border border-line ${ratioCls[ratio]} ${className}`}
+  role="img"
+  aria-label={`${alt.en} / ${alt.zh}`}
+>
+  <Icon name="camera" class="h-8 w-8" />
+  {
+    label && (
+      <span class="px-3 text-center text-xs font-medium text-brand-400/80">
+        {alt.zh}
+      </span>
+    )
+  }
+</div>

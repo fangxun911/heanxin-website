@@ -1,0 +1,34 @@
+{
+  "company": {
+    "name": { "en": "Dongguan Heanxin Hardware & Plastic Products Co., Ltd.", "zh": "东莞市禾安鑫五金塑胶制品有限公司" },
+    "shortName": { "en": "Heanxin", "zh": "禾安鑫" },
+    "tagline": {
+      "en": "Plastic Injection Molding · Mold Development · OEM / ODM",
+      "zh": "塑胶注塑 · 模具开发 · OEM / ODM 代工"
+    }
+  },
+  "contact": {
+    "address": {
+      "en": "Room 101, No. 606 Miaobianwang Road, Shipai Town, Dongguan, Guangdong, China",
+      "zh": "中国广东省东莞市石排镇庙边王路606号101室"
+    },
+    "phone": "+86 191 6633 8895",
+    "phoneRaw": "8619166338895",
+    "email": "mia@haxplastic.com"
+  },
+  "nav": [
+    { "href": "/", "label": { "en": "Home", "zh": "首页" } },
+    { "href": "/about", "label": { "en": "About", "zh": "公司简介" } },
+    { "href": "/services", "label": { "en": "Services", "zh": "定制服务" } },
+    { "href": "/industries", "label": { "en": "Industries", "zh": "应用领域" } },
+    { "href": "/mold-capability", "label": { "en": "Capability", "zh": "模具产能" } },
+    { "href": "/products", "label": { "en": "Products", "zh": "产品分类" } },
+    { "href": "/showcase", "label": { "en": "Showcase", "zh": "产品展示" } }
+  ],
+  "footer": {
+    "blurb": {
+      "en": "A one-stop manufacturer for plastic injection molding, mold development and hardware-plastic combined parts, serving OEM / ODM customers worldwide.",
+      "zh": "一站式塑胶注塑、模具开发与五金塑胶组合件制造商，为全球 OEM / ODM 客户提供服务。"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import IconFeatureCard from "../components/IconFeatureCard.astro";
+import PhotoPlaceholder from "../components/PhotoPlaceholder.astro";
+import { site } from "../lib/i18n";
+import about from "../content/about.json";
+
+const { contact } = site;
+---
+
+<BaseLayout
+  title="公司简介"
+  description="东莞市禾安鑫五金塑胶制品有限公司是一家专注塑胶注塑、模具开发、嵌件注塑与五金塑胶组合件的一站式 OEM / ODM 制造企业。"
+>
+  <section class="container-page pt-16 pb-12">
+    <SectionHeader eyebrow={about.header.eyebrow} title={about.header.title} align="left" />
+    <p class="text-muted mt-6 max-w-3xl leading-relaxed">
+      {about.intro.body.en}
+      <span class="mt-2 block text-sm opacity-80">{about.intro.body.zh}</span>
+    </p>
+  </section>
+
+  <section class="container-page pb-16">
+    <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
+      {about.workshops.map((w) => <PhotoPlaceholder alt={w.alt} ratio="square" />)}
+    </div>
+  </section>
+
+  <section class="bg-brand-50/50 border-y border-line py-16">
+    <div class="container-page">
+      <div class="grid gap-6 sm:grid-cols-3">
+        {about.stats.map((s) => <IconFeatureCard icon="handshake" title={s.title} desc={s.desc} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="container-page py-16">
+    <div class="card-base from-brand-600 to-brand-800 bg-gradient-to-br p-8 text-white sm:p-12">
+      <h2 class="font-display text-2xl font-semibold uppercase sm:text-3xl">
+        Get in Touch · 联系我们
+      </h2>
+      <div class="mt-6 grid gap-4 text-sm text-brand-100 sm:grid-cols-3">
+        <p><span class="block font-semibold text-white">地址 Address</span>{contact.address.zh}</p>
+        <p>
+          <span class="block font-semibold text-white">WhatsApp</span>
+          <a class="hover:text-white" href={`https://wa.me/${contact.phoneRaw}`}>{contact.phone}</a>
+        </p>
+        <p>
+          <span class="block font-semibold text-white">Email</span>
+          <a class="hover:text-white" href={`mailto:${contact.email}`}>{contact.email}</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

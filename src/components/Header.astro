@@ -1,0 +1,94 @@
+---
+import { site, url } from "../lib/i18n";
+
+const { nav, company } = site;
+const current = Astro.url.pathname.replace(/\/$/, "");
+
+function isActive(href: string): boolean {
+  const target = url(href).replace(/\/$/, "");
+  return current === target;
+}
+---
+
+<header class="sticky top-0 z-50 border-b border-line bg-white/90 backdrop-blur">
+  <div class="container-page flex h-16 items-center justify-between">
+    <a href={url("/")} class="flex items-center gap-2.5">
+      <span
+        class="bg-brand-500 font-display flex h-9 w-9 items-center justify-center rounded-lg text-lg font-bold text-white"
+        >禾</span
+      >
+      <span class="leading-tight">
+        <span class="font-display text-brand-700 block text-sm font-bold tracking-wide uppercase"
+          >{company.shortName.en}</span
+        >
+        <span class="text-muted block text-xs">{company.shortName.zh}五金塑胶</span>
+      </span>
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden items-center gap-1 lg:flex" aria-label="Primary">
+      {
+        nav.map((item) => (
+          <a
+            href={url(item.href)}
+            aria-current={isActive(item.href) ? "page" : undefined}
+            class={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+              isActive(item.href)
+                ? "text-brand-600 bg-brand-50"
+                : "text-ink hover:text-brand-600 hover:bg-brand-50/60"
+            }`}
+          >
+            {item.label.zh}
+          </a>
+        ))
+      }
+    </nav>
+
+    <a
+      href={`https://wa.me/${site.contact.phoneRaw}`}
+      target="_blank"
+      rel="noopener"
+      class="bg-brand-500 hover:bg-brand-600 hidden rounded-full px-4 py-2 text-sm font-semibold text-white transition lg:inline-flex"
+    >
+      WhatsApp
+    </a>
+
+    <!-- Mobile menu (pure CSS, no JS) -->
+    <details class="group relative lg:hidden">
+      <summary
+        class="text-brand-700 flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-md"
+        aria-label="Menu"
+      >
+        <svg
+          class="h-6 w-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+        >
+          <path class="group-open:hidden" d="M4 7h16M4 12h16M4 17h16"></path>
+          <path class="hidden group-open:block" d="M6 6l12 12M18 6L6 18"></path>
+        </svg>
+      </summary>
+      <nav
+        class="border-line absolute right-0 mt-2 w-56 rounded-xl border bg-white p-2 shadow-xl"
+        aria-label="Mobile"
+      >
+        {
+          nav.map((item) => (
+            <a
+              href={url(item.href)}
+              aria-current={isActive(item.href) ? "page" : undefined}
+              class={`block rounded-md px-3 py-2 text-sm font-medium ${
+                isActive(item.href) ? "text-brand-600 bg-brand-50" : "text-ink hover:bg-brand-50/60"
+              }`}
+            >
+              {item.label.zh} <span class="text-muted text-xs">{item.label.en}</span>
+            </a>
+          ))
+        }
+      </nav>
+    </details>
+  </div>
+</header>

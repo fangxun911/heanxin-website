@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import NumberedCard from "../components/NumberedCard.astro";
+import products from "../content/products.json";
+---
+
+<BaseLayout
+  title="产品分类"
+  description="禾安鑫的产品涵盖塑胶注塑件、精密模具、五金塑胶组合件、嵌件注塑件、外壳机壳及定制组装件等多种类别。"
+>
+  <section class="container-page pt-16 pb-12">
+    <SectionHeader
+      eyebrow={products.header.eyebrow}
+      title={products.header.title}
+      subtitle={products.header.subtitle}
+    />
+  </section>
+
+  <section class="container-page pb-24">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {products.categories.map((c) => <NumberedCard no={c.no} title={c.title} desc={c.desc} />)}
+    </div>
+  </section>
+</BaseLayout>

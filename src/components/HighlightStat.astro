@@ -1,0 +1,34 @@
+---
+import type { LocalizedText } from "../lib/i18n";
+import Icon from "./Icon.astro";
+
+interface Props {
+  icon?: string;
+  title: LocalizedText;
+  desc?: LocalizedText;
+}
+
+const { icon, title, desc } = Astro.props;
+---
+
+<div class="flex h-full flex-col items-center gap-3 rounded-[var(--radius-card)] border border-white/15 bg-white/5 p-6 text-center backdrop-blur-sm">
+  {
+    icon && (
+      <div class="text-brand-100 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-white/10">
+        <Icon name={icon} class="h-6 w-6" />
+      </div>
+    )
+  }
+  <div>
+    <h3 class="font-display text-base font-semibold text-white">{title.en}</h3>
+    <p class="text-brand-100 mt-0.5 text-sm">{title.zh}</p>
+  </div>
+  {
+    desc && (
+      <p class="text-brand-100/85 text-xs leading-relaxed">
+        {desc.en}
+        <span class="mt-0.5 block opacity-80">{desc.zh}</span>
+      </p>
+    )
+  }
+</div>

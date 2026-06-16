@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import IconFeatureCard from "../components/IconFeatureCard.astro";
+import industries from "../content/industries.json";
+---
+
+<BaseLayout
+  title="应用领域"
+  description="禾安鑫的定制塑胶与五金塑胶组合件广泛应用于电子设备、工业控制、智能家居、小型家电、汽车电子及医疗健康设备等行业。"
+>
+  <section class="container-page pt-16 pb-12">
+    <SectionHeader
+      eyebrow={industries.header.eyebrow}
+      title={industries.header.title}
+      subtitle={industries.header.subtitle}
+    />
+  </section>
+
+  <section class="container-page pb-24">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        industries.industries.map((item) => (
+          <IconFeatureCard icon={item.icon} title={item.title} desc={item.desc} />
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

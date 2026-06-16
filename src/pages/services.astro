@@ -1,0 +1,42 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import IconFeatureCard from "../components/IconFeatureCard.astro";
+import ProcessStepper from "../components/ProcessStepper.astro";
+import PhotoPlaceholder from "../components/PhotoPlaceholder.astro";
+import services from "../content/services.json";
+---
+
+<BaseLayout
+  title="定制服务"
+  description="禾安鑫提供定制注塑成型、模具开发、嵌件注塑、五金塑胶组合件及 OEM / ODM 代工，覆盖从设计、开模到批量生产的全流程定制服务。"
+>
+  <section class="container-page pt-16 pb-12">
+    <SectionHeader
+      eyebrow={services.header.eyebrow}
+      title={services.header.title}
+      subtitle={services.header.subtitle}
+    />
+  </section>
+
+  <section class="container-page pb-20">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {services.services.map((s) => <IconFeatureCard icon={s.icon} title={s.title} desc={s.desc} />)}
+    </div>
+  </section>
+
+  <section class="bg-brand-700 py-20">
+    <div class="container-page">
+      <SectionHeader title={services.process.title} tone="dark" />
+      <div class="mt-12">
+        <ProcessStepper steps={services.process.steps} />
+      </div>
+    </div>
+  </section>
+
+  <section class="container-page py-20">
+    <div class="grid gap-6 sm:grid-cols-3">
+      {services.gallery.map((g) => <PhotoPlaceholder alt={g.alt} ratio="video" />)}
+    </div>
+  </section>
+</BaseLayout>

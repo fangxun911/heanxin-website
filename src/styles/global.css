@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+/*
+  Design tokens — SINGLE SOURCE OF TRUTH for the whole site.
+  Extracted from the client brochure (page1-7). Do NOT hard-code colors in markup;
+  always reference these tokens via Tailwind utilities (e.g. bg-brand-600, text-ink).
+*/
+@theme {
+  /* Brand — deep corporate blue */
+  --color-brand-50: #eef2fb;
+  --color-brand-100: #d5e0f4;
+  --color-brand-200: #aac1ea;
+  --color-brand-300: #7a9ce0;
+  --color-brand-400: #3f63c4;
+  --color-brand-500: #1a3a8f; /* primary */
+  --color-brand-600: #142f73;
+  --color-brand-700: #0d2b6b; /* dark */
+  --color-brand-800: #0a1f4d;
+  --color-brand-900: #071537;
+
+  /* Accent / supporting */
+  --color-accent: #2e6bd6;
+  --color-accent-soft: #5b8def;
+
+  /* Neutrals */
+  --color-ink: #15192b; /* body text */
+  --color-muted: #5b6478; /* secondary text */
+  --color-line: #e3e7ef; /* borders */
+  --color-placeholder: #eef1f6; /* image placeholders */
+
+  /* Typography */
+  --font-display: "Oswald", "Noto Sans SC", system-ui, sans-serif;
+  --font-sans: "Inter", "Noto Sans SC", system-ui, sans-serif;
+
+  /* Radius & shadow */
+  --radius-card: 0.875rem;
+  --shadow-card: 0 10px 30px -12px rgba(13, 43, 107, 0.25);
+}
+
+/* Base */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: #ffffff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Reusable layout helpers (kept tiny on purpose) */
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10;
+  }
+
+  .eyebrow {
+    @apply font-display text-sm font-medium uppercase tracking-[0.22em] text-accent;
+  }
+
+  .card-base {
+    @apply rounded-[var(--radius-card)] border border-line bg-white shadow-[var(--shadow-card)];
+  }
+}
+
+/* Decorative wave divider used between dark and light sections */
+.wave-divider {
+  display: block;
+  width: 100%;
+  height: auto;
+  line-height: 0;
+}

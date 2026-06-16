@@ -1,0 +1,32 @@
+{
+  "header": {
+    "eyebrow": { "en": "Company Profile", "zh": "公司简介" },
+    "title": { "en": "About Heanxin", "zh": "走进禾安鑫" }
+  },
+  "intro": {
+    "body": {
+      "en": "Dongguan Heanxin Hardware & Plastic Products Co., Ltd. is a manufacturer specializing in plastic injection molding, mold development, insert molding and hardware-plastic combined parts. With an experienced engineering team and an in-house mold workshop, we provide one-stop OEM / ODM services covering design, tooling, production and assembly.",
+      "zh": "东莞市禾安鑫五金塑胶制品有限公司是一家专注于塑胶注塑、模具开发、嵌件注塑及五金塑胶组合件的制造企业。凭借经验丰富的工程团队与自有模具车间，我们为客户提供涵盖设计、开模、生产到组装的一站式 OEM / ODM 服务。"
+    }
+  },
+  "workshops": [
+    { "alt": { "en": "Injection molding workshop", "zh": "注塑车间" } },
+    { "alt": { "en": "Mold development workshop", "zh": "模具开发车间" } },
+    { "alt": { "en": "Quality inspection area", "zh": "品质检验区" } },
+    { "alt": { "en": "Assembly and packaging area", "zh": "组装与包装区" } }
+  ],
+  "stats": [
+    {
+      "title": { "en": "One-stop Service", "zh": "一站式服务" },
+      "desc": { "en": "Design, mold, molding and assembly in-house.", "zh": "设计、开模、注塑、组装一体化。" }
+    },
+    {
+      "title": { "en": "Experienced Team", "zh": "专业团队" },
+      "desc": { "en": "Skilled mold and process engineers.", "zh": "经验丰富的模具与工艺工程师。" }
+    },
+    {
+      "title": { "en": "Flexible Customization", "zh": "灵活定制" },
+      "desc": { "en": "Tailored solutions for diverse industries.", "zh": "面向多行业的定制化解决方案。" }
+    }
+  ]
+}

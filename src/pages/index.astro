@@ -1,0 +1,64 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import IconFeatureCard from "../components/IconFeatureCard.astro";
+import PhotoPlaceholder from "../components/PhotoPlaceholder.astro";
+import { url } from "../lib/i18n";
+import home from "../content/home.json";
+import about from "../content/about.json";
+---
+
+<BaseLayout
+  title="塑胶注塑与模具定制制造商"
+  description="禾安鑫专注塑胶注塑、模具开发、嵌件注塑与五金塑胶组合件，为电子、汽车、医疗等行业提供 OEM / ODM 一站式定制制造服务。"
+>
+  <Hero
+    eyebrow={home.hero.eyebrow}
+    title={home.hero.title}
+    subtitle={home.hero.subtitle}
+    primaryCta={{ label: home.hero.primaryCta, href: "/services" }}
+    secondaryCta={{ label: home.hero.secondaryCta, href: "/about" }}
+  />
+
+  <section class="container-page py-20">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {home.highlights.map((h) => <IconFeatureCard icon={h.icon} title={h.title} desc={h.desc} />)}
+    </div>
+  </section>
+
+  <section class="bg-brand-50/50 border-y border-line py-20">
+    <div class="container-page grid items-center gap-12 lg:grid-cols-2">
+      <div>
+        <SectionHeader
+          eyebrow={home.intro.eyebrow}
+          title={home.intro.title}
+          align="left"
+        />
+        <p class="text-muted mt-5 leading-relaxed">
+          {home.intro.body.en}
+          <span class="mt-2 block text-sm opacity-80">{home.intro.body.zh}</span>
+        </p>
+        <a
+          href={url("/about")}
+          class="bg-brand-500 hover:bg-brand-600 mt-7 inline-flex rounded-full px-6 py-3 text-sm font-semibold text-white transition"
+        >
+          了解更多 · Learn More
+        </a>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        {about.workshops.map((w) => <PhotoPlaceholder alt={w.alt} ratio="square" />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="container-page py-20">
+    <SectionHeader
+      eyebrow={about.stats[0].title}
+      title={{ en: "Why Work With Heanxin", zh: "为何选择禾安鑫" }}
+    />
+    <div class="mt-12 grid gap-6 sm:grid-cols-3">
+      {about.stats.map((s) => <IconFeatureCard icon="shield" title={s.title} desc={s.desc} />)}
+    </div>
+  </section>
+</BaseLayout>

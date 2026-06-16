@@ -1,0 +1,31 @@
+---
+import type { LocalizedText } from "../lib/i18n";
+
+interface Props {
+  no: string;
+  title: LocalizedText;
+  desc?: LocalizedText;
+}
+
+const { no, title, desc } = Astro.props;
+---
+
+<div
+  class="card-base group relative h-full overflow-hidden p-6 transition-transform duration-200 hover:-translate-y-1"
+>
+  <span
+    class="font-display text-brand-100 group-hover:text-brand-200 absolute top-3 right-4 text-5xl leading-none font-bold transition-colors"
+    aria-hidden="true">{no}</span
+  >
+  <p class="font-display text-accent text-sm font-semibold tracking-widest">{no}</p>
+  <h3 class="font-display text-brand-700 mt-2 text-lg font-semibold">{title.en}</h3>
+  <p class="text-muted mt-0.5 text-sm font-medium">{title.zh}</p>
+  {
+    desc && (
+      <p class="text-muted mt-3 text-sm leading-relaxed">
+        {desc.en}
+        <span class="mt-1 block text-xs opacity-80">{desc.zh}</span>
+      </p>
+    )
+  }
+</div>

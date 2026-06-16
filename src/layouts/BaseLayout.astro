@@ -1,0 +1,89 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { site, url } from "../lib/i18n";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const { company, contact } = site;
+
+const fullTitle = `${title} | ${company.shortName.zh} Heanxin`;
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const ogImage = new URL(url("og-image.svg"), Astro.site).toString();
+
+// Structured data helps OEM/ODM buyers find the company via search engines.
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: company.name.en,
+  alternateName: company.name.zh,
+  url: Astro.site?.toString(),
+  email: contact.email,
+  telephone: contact.phone,
+  description: description,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Room 101, No. 606 Miaobianwang Road, Shipai Town",
+    addressLocality: "Dongguan",
+    addressRegion: "Guangdong",
+    addressCountry: "CN",
+  },
+  makesOffer: [
+    "Plastic Injection Molding",
+    "Mold Development",
+    "Insert Molding",
+    "Hardware-Plastic Combined Parts",
+    "OEM / ODM Manufacturing",
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href={url("favicon.svg")} />
+    <link rel="canonical" href={canonical} />
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content={company.name.en} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="focus:bg-brand-600 sr-only focus:not-sr-only focus:absolute focus:z-50 focus:rounded-md focus:px-4 focus:py-2 focus:text-white"
+      >Skip to content</a
+    >
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

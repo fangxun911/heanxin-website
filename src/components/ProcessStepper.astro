@@ -1,0 +1,36 @@
+---
+import type { LocalizedText } from "../lib/i18n";
+
+interface Step {
+  title: LocalizedText;
+  desc?: LocalizedText;
+}
+
+interface Props {
+  steps: Step[];
+}
+
+const { steps } = Astro.props;
+---
+
+<ol class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+  {
+    steps.map((step, i) => (
+      <li class="card-base relative flex h-full items-start gap-4 p-5">
+        <span class="bg-brand-500 font-display flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-base font-bold text-white">
+          {String(i + 1).padStart(2, "0")}
+        </span>
+        <div>
+          <h3 class="font-display text-brand-700 text-base font-semibold">{step.title.en}</h3>
+          <p class="text-muted text-sm font-medium">{step.title.zh}</p>
+          {step.desc && (
+            <p class="text-muted mt-2 text-xs leading-relaxed">
+              {step.desc.en}
+              <span class="mt-0.5 block opacity-80">{step.desc.zh}</span>
+            </p>
+          )}
+        </div>
+      </li>
+    ))
+  }
+</ol>
