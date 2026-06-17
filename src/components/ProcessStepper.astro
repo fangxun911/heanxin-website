@@ -37,21 +37,22 @@ const tlDescCls = tone === "dark" ? "text-brand-100/85" : "text-muted";
 
 {
   variant === "timeline" ? (
-    <ol class="relative mx-auto max-w-3xl">
+    <ol class="relative flex flex-col lg:flex-row lg:items-start">
       <span
-        class={`pointer-events-none absolute top-2 bottom-2 left-6 w-0.5 -translate-x-1/2 sm:left-1/2 ${lineCls}`}
+        class={`pointer-events-none absolute top-2 bottom-2 left-6 z-0 w-0.5 -translate-x-1/2 lg:top-6 lg:right-0 lg:bottom-auto lg:left-0 lg:h-0.5 lg:w-auto lg:translate-x-0 ${lineCls}`}
         aria-hidden="true"
       />
       {steps.map((step, i) => (
-        <li class="relative" data-reveal>
+        <li
+          class="relative flex flex-col pb-8 pl-16 last:pb-0 lg:flex-1 lg:items-center lg:px-3 lg:pb-0 lg:pl-0 lg:text-center"
+          data-reveal
+        >
           <span
-            class={`absolute top-5 left-6 z-10 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full text-white ring-4 sm:left-1/2 ${nodeCls}`}
+            class={`absolute top-1 left-6 z-10 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full text-white ring-4 lg:static lg:mb-5 lg:translate-x-0 ${nodeCls}`}
           >
             <Icon name={step.icon ?? "default"} class="h-6 w-6" />
           </span>
-          <div
-            class={`py-4 pl-16 sm:w-1/2 sm:py-6 ${i % 2 === 0 ? "sm:pr-14 sm:pl-0 sm:text-right" : "sm:ml-auto sm:pl-14"}`}
-          >
+          <div>
             <p class={`font-display text-xs font-bold tracking-widest ${tlNumCls}`}>
               {String(i + 1).padStart(2, "0")}
             </p>
