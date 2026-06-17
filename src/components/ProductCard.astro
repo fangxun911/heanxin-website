@@ -12,7 +12,8 @@ const { title, alt } = Astro.props;
 ---
 
 <div
-  class="card-base group h-full overflow-hidden transition-transform duration-200 hover:-translate-y-1"
+  data-reveal
+  class="card-base card-interactive group h-full overflow-hidden"
 >
   <PhotoPlaceholder alt={alt} ratio="square" labelStyle="none" class="rounded-none border-0" />
   <div class="p-4">

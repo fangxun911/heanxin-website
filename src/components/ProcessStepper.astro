@@ -29,9 +29,9 @@ const numCls = tone === "dark" ? "bg-white text-brand-700" : "bg-brand-100 text-
 <ol class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
   {
     steps.map((step, i) => (
-      <li class="relative flex h-full">
+      <li class="relative flex h-full" data-reveal>
         <div
-          class={`relative flex h-full w-full flex-col items-center rounded-[var(--radius-card)] border px-5 pt-8 pb-6 text-center ${cardCls}`}
+          class={`card-interactive relative flex h-full w-full flex-col items-center rounded-[var(--radius-card)] border px-5 pt-8 pb-6 text-center ${cardCls}`}
         >
           <span
             class={`font-display absolute -top-3 right-4 flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold ${numCls}`}

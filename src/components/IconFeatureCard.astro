@@ -14,7 +14,8 @@ const { icon, no, title, desc } = Astro.props;
 ---
 
 <div
-  class="group bg-surface hover:border-brand-200 border-line relative h-full overflow-hidden rounded-[var(--radius-card)] border p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-[var(--shadow-card)]"
+  data-reveal
+  class="group card-interactive bg-surface border-line relative h-full overflow-hidden rounded-[var(--radius-card)] border p-6"
 >
   <span
     class="bg-ember-500 absolute inset-x-0 top-0 h-1 origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100"

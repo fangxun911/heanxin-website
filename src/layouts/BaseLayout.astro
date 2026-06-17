@@ -69,11 +69,14 @@ const jsonLd = {
       // Set the display language before paint (no FOUC). First-time visitors:
       // Chinese if the browser prefers Chinese, otherwise English. Choice persists.
       (function () {
+        var el = document.documentElement;
+        // Enable reveal-on-scroll only when JS runs (content stays visible for
+        // no-JS visitors and crawlers — SEO safe).
+        el.classList.add("js-reveal");
         try {
           var stored = localStorage.getItem("lang");
           var nav = (navigator.language || "").toLowerCase();
           var lang = stored || (nav.indexOf("zh") === 0 ? "zh" : "en");
-          var el = document.documentElement;
           el.setAttribute("data-lang", lang);
           el.setAttribute("lang", lang);
         } catch (e) {}
@@ -123,6 +126,37 @@ const jsonLd = {
           localStorage.setItem("lang", next);
         } catch (e) {}
       });
+    </script>
+    <script is:inline>
+      // Reveal-on-scroll enhancement. Content is already visible; this only
+      // animates it in. Honors reduced-motion and degrades gracefully.
+      (function () {
+        var els = document.querySelectorAll("[data-reveal]");
+        if (!els.length) return;
+        var reduce =
+          window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (reduce || !("IntersectionObserver" in window)) {
+          for (var i = 0; i < els.length; i++) els[i].classList.add("is-visible");
+          return;
+        }
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (!entry.isIntersecting) return;
+              var el = entry.target;
+              // Stagger siblings sharing a parent for a refined cascade.
+              var sibs = Array.prototype.filter.call(el.parentElement.children, function (c) {
+                return c.hasAttribute("data-reveal");
+              });
+              el.style.transitionDelay = Math.min(sibs.indexOf(el), 6) * 70 + "ms";
+              el.classList.add("is-visible");
+              io.unobserve(el);
+            });
+          },
+          { rootMargin: "0px 0px -10% 0px", threshold: 0.08 }
+        );
+        for (var j = 0; j < els.length; j++) io.observe(els[j]);
+      })();
     </script>
   </body>
 </html>

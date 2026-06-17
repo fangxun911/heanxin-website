@@ -23,7 +23,7 @@ const { eyebrow, title, subtitle, primaryCta, secondaryCta, compact = false } = 
 ---
 
 <section
-  class={`from-brand-700 via-brand-600 to-brand-800 relative overflow-hidden bg-gradient-to-br ${compact ? "py-16" : "py-20 sm:py-24"}`}
+  class={`bg-deep relative overflow-hidden ${compact ? "py-16" : "py-20 sm:py-24"}`}
 >
   <!-- Decorative circuit grid -->
   <div
@@ -33,7 +33,7 @@ const { eyebrow, title, subtitle, primaryCta, secondaryCta, compact = false } = 
   >
   </div>
   <div
-    class="bg-accent/30 pointer-events-none absolute -top-24 -right-24 h-96 w-96 rounded-full blur-3xl"
+    class="bg-spark-500/25 animate-glow pointer-events-none absolute -top-24 -right-24 h-96 w-96 rounded-full blur-3xl"
   >
   </div>
 
@@ -87,10 +87,10 @@ const { eyebrow, title, subtitle, primaryCta, secondaryCta, compact = false } = 
               {primaryCta && (
                 <a
                   href={url(primaryCta.href)}
-                  class="bg-ember-500 hover:bg-ember-600 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-base font-semibold text-white shadow-[var(--shadow-ember)] transition"
+                  class="group bg-ember-500 hover:bg-ember-600 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-base font-semibold text-white shadow-[var(--shadow-ember)] transition hover:-translate-y-0.5"
                 >
                   <T text={primaryCta.label} />
-                  <Icon name="arrowRight" class="h-5 w-5" />
+                  <Icon name="arrowRight" class="h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </a>
               )}
               {secondaryCta && (
@@ -109,7 +109,7 @@ const { eyebrow, title, subtitle, primaryCta, secondaryCta, compact = false } = 
       {
         !compact && (
           <div class="relative hidden lg:block">
-            <div class="relative rounded-2xl border border-white/20 bg-white/5 p-6 backdrop-blur-sm">
+            <div class="animate-float relative rounded-2xl border border-white/20 bg-white/5 p-6 backdrop-blur-sm">
               <span class="text-brand-100/70 font-display text-xs tracking-widest uppercase">
                 Plastic · Mold · Hardware
               </span>
