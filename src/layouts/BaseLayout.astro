@@ -12,6 +12,7 @@ import "@fontsource/work-sans/600.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { site, url } from "../lib/i18n";
+import { ClientRouter } from "astro:transitions";
 
 interface Props {
   title: string;
@@ -100,6 +101,10 @@ const jsonLd = {
     <meta property="og:site_name" content={company.name.en} />
     <meta name="twitter:card" content="summary_large_image" />
 
+    <!-- Smooth cross-page transitions (progressive enhancement; static HTML
+         is unchanged, browsers without support fall back to normal navigation). -->
+    <ClientRouter />
+
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
@@ -115,47 +120,56 @@ const jsonLd = {
     <Footer />
     <script is:inline>
       // Toggle between Chinese and English; persist the choice.
-      document.addEventListener("click", function (e) {
-        var btn = e.target.closest("[data-lang-toggle]");
-        if (!btn) return;
-        var el = document.documentElement;
-        var next = el.getAttribute("data-lang") === "en" ? "zh" : "en";
-        el.setAttribute("data-lang", next);
-        el.setAttribute("lang", next);
-        try {
-          localStorage.setItem("lang", next);
-        } catch (e) {}
-      });
+      // Bound once on the persistent document (survives view transitions).
+      if (!window.__heanxinLangBound) {
+        window.__heanxinLangBound = true;
+        document.addEventListener("click", function (e) {
+          var btn = e.target.closest("[data-lang-toggle]");
+          if (!btn) return;
+          var el = document.documentElement;
+          var next = el.getAttribute("data-lang") === "en" ? "zh" : "en";
+          el.setAttribute("data-lang", next);
+          el.setAttribute("lang", next);
+          try {
+            localStorage.setItem("lang", next);
+          } catch (e) {}
+        });
+      }
     </script>
     <script is:inline>
       // Reveal-on-scroll enhancement. Content is already visible; this only
       // animates it in. Honors reduced-motion and degrades gracefully.
+      // Runs on first load AND after every view-transition navigation so cards
+      // on newly loaded pages are revealed (otherwise they'd stay hidden).
       (function () {
-        var els = document.querySelectorAll("[data-reveal]");
-        if (!els.length) return;
-        var reduce =
-          window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        if (reduce || !("IntersectionObserver" in window)) {
-          for (var i = 0; i < els.length; i++) els[i].classList.add("is-visible");
-          return;
-        }
-        var io = new IntersectionObserver(
-          function (entries) {
-            entries.forEach(function (entry) {
-              if (!entry.isIntersecting) return;
-              var el = entry.target;
-              // Stagger siblings sharing a parent for a refined cascade.
-              var sibs = Array.prototype.filter.call(el.parentElement.children, function (c) {
-                return c.hasAttribute("data-reveal");
+        function initReveal() {
+          var els = document.querySelectorAll("[data-reveal]:not(.is-visible)");
+          if (!els.length) return;
+          var reduce =
+            window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          if (reduce || !("IntersectionObserver" in window)) {
+            for (var i = 0; i < els.length; i++) els[i].classList.add("is-visible");
+            return;
+          }
+          var io = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (!entry.isIntersecting) return;
+                var el = entry.target;
+                // Stagger siblings sharing a parent for a refined cascade.
+                var sibs = Array.prototype.filter.call(el.parentElement.children, function (c) {
+                  return c.hasAttribute("data-reveal");
+                });
+                el.style.transitionDelay = Math.min(sibs.indexOf(el), 6) * 70 + "ms";
+                el.classList.add("is-visible");
+                io.unobserve(el);
               });
-              el.style.transitionDelay = Math.min(sibs.indexOf(el), 6) * 70 + "ms";
-              el.classList.add("is-visible");
-              io.unobserve(el);
-            });
-          },
-          { rootMargin: "0px 0px -10% 0px", threshold: 0.08 }
-        );
-        for (var j = 0; j < els.length; j++) io.observe(els[j]);
+            },
+            { rootMargin: "0px 0px -10% 0px", threshold: 0.08 }
+          );
+          for (var j = 0; j < els.length; j++) io.observe(els[j]);
+        }
+        document.addEventListener("astro:page-load", initReveal);
       })();
     </script>
   </body>
