@@ -12,22 +12,22 @@ import about from "../content/about.json";
   description="东莞市禾安鑫五金塑胶制品有限公司是一家专注塑胶注塑、模具开发、嵌件注塑与五金塑胶组合件的一站式 OEM / ODM 制造企业。"
 >
   <section class="container-page pt-12 pb-8">
-    <SectionHeader eyebrow={about.header.eyebrow} title={about.header.title} align="left" as="h1" />
-    <p class="text-muted mt-6 max-w-3xl leading-relaxed">
+    <SectionHeader eyebrow={about.header.eyebrow} title={about.header.title} as="h1" />
+    <p class="text-muted mx-auto mt-6 max-w-3xl text-center leading-relaxed">
       <T text={about.intro.body} />
     </p>
   </section>
 
   <section class="container-page pb-12">
     <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
-      {about.workshops.map((w) => <PhotoPlaceholder alt={w.alt} ratio="square" />)}
+      {about.workshops.map((w) => <PhotoPlaceholder alt={w.alt} ratio="video" />)}
     </div>
   </section>
 
   <section class="section-tint border-line border-y py-14">
     <div class="container-page">
       <div class="grid gap-5 sm:grid-cols-3">
-        {about.stats.map((s) => <IconFeatureCard icon="handshake" title={s.title} desc={s.desc} />)}
+        {about.stats.map((s) => <IconFeatureCard icon={s.icon} title={s.title} desc={s.desc} />)}
       </div>
     </div>
   </section>

@@ -17,21 +17,24 @@
   ],
   "stats": [
     {
-      "title": { "en": "One-stop Service", "zh": "一站式服务" },
+      "icon": "injection",
+      "title": { "en": "Specialized in Plastics", "zh": "专注塑胶制造" },
       "desc": {
-        "en": "Design, mold, molding and assembly in-house.",
-        "zh": "设计、开模、注塑、组装一体化。"
+        "en": "Focused on injection molding, tooling and hardware-plastic parts.",
+        "zh": "专注注塑成型、模具开发与五金塑胶组合件。"
       }
     },
     {
-      "title": { "en": "Experienced Team", "zh": "专业团队" },
+      "icon": "drawing",
+      "title": { "en": "Experienced Engineers", "zh": "资深工程团队" },
       "desc": { "en": "Skilled mold and process engineers.", "zh": "经验丰富的模具与工艺工程师。" }
     },
     {
-      "title": { "en": "Flexible Customization", "zh": "灵活定制" },
+      "icon": "oem",
+      "title": { "en": "One-stop OEM / ODM", "zh": "一站式 OEM / ODM" },
       "desc": {
-        "en": "Tailored solutions for diverse industries.",
-        "zh": "面向多行业的定制化解决方案。"
+        "en": "Design, tooling, production and assembly in one place.",
+        "zh": "设计、开模、生产、组装全程一体化。"
       }
     }
   ]
