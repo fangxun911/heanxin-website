@@ -23,7 +23,7 @@
       {
         "icon": "tooling",
         "title": { "en": "Mold Assembly", "zh": "模具装配" },
-        "desc": { "en": "Fitting and polishing.", "zh": "合模与招光。" }
+        "desc": { "en": "Fitting and polishing.", "zh": "合模与抛光。" }
       },
       {
         "icon": "injection",

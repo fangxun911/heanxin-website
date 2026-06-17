@@ -8,9 +8,17 @@ interface Props {
   subtitle?: LocalizedText;
   align?: "left" | "center";
   tone?: "light" | "dark";
+  as?: "h1" | "h2";
 }
 
-const { eyebrow, title, subtitle, align = "center", tone = "light" } = Astro.props;
+const {
+  eyebrow,
+  title,
+  subtitle,
+  align = "center",
+  tone = "light",
+  as: HeadingTag = "h2",
+} = Astro.props;
 
 const alignCls = align === "center" ? "mx-auto text-center" : "text-left";
 const titleColor = tone === "dark" ? "text-white" : "text-brand-700";
@@ -27,9 +35,9 @@ const barCenter = align === "center" ? "justify-center" : "";
       </p>
     )
   }
-  <h2 class={`font-display mt-3 text-4xl font-bold tracking-tight sm:text-5xl ${titleColor}`}>
+  <HeadingTag class={`font-display mt-3 text-4xl font-bold tracking-tight sm:text-5xl ${titleColor}`}>
     <span lang="en" class="uppercase">{title.en}</span><span lang="zh">{title.zh}</span>
-  </h2>
+  </HeadingTag>
   <div class={`accent-bar mt-4 ${barCenter}`} aria-hidden="true">
     <span></span>
     <span></span>
