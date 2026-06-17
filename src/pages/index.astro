@@ -3,11 +3,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import SectionHeader from "../components/SectionHeader.astro";
 import IconFeatureCard from "../components/IconFeatureCard.astro";
-import PhotoPlaceholder from "../components/PhotoPlaceholder.astro";
 import T from "../components/T.astro";
 import { url } from "../lib/i18n";
 import home from "../content/home.json";
-import about from "../content/about.json";
 ---
 
 <BaseLayout
@@ -27,22 +25,19 @@ import about from "../content/about.json";
     </div>
   </section>
 
-  <section class="section-tint border-line border-y py-14">
-    <div class="container-page grid items-center gap-10 lg:grid-cols-2">
-      <div>
-        <SectionHeader eyebrow={home.intro.eyebrow} title={home.intro.title} align="left" />
-        <p class="text-muted mt-5 leading-relaxed">
-          <T text={home.intro.body} />
-        </p>
+  <section class="section-tint border-line border-y py-16">
+    <div class="container-page">
+      <SectionHeader eyebrow={home.intro.eyebrow} title={home.intro.title} />
+      <p class="text-muted mx-auto mt-6 max-w-3xl text-center leading-relaxed">
+        <T text={home.intro.body} />
+      </p>
+      <div class="mt-8 flex justify-center">
         <a
           href={url("/about")}
-          class="bg-brand-500 hover:bg-brand-600 mt-7 inline-flex rounded-full px-6 py-3 text-sm font-semibold text-white transition"
+          class="bg-brand-500 hover:bg-brand-600 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition hover:-translate-y-0.5"
         >
           <span lang="zh">了解更多</span><span lang="en">Learn More</span>
         </a>
-      </div>
-      <div class="grid grid-cols-2 gap-4">
-        {about.workshops.map((w) => <PhotoPlaceholder alt={w.alt} ratio="square" />)}
       </div>
     </div>
   </section>

@@ -18,8 +18,9 @@ import about from "../content/about.json";
     </p>
   </section>
 
-  <section class="container-page pb-12">
-    <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
+  <section class="container-page py-12">
+    <SectionHeader eyebrow={about.facilities.eyebrow} title={about.facilities.title} />
+    <div class="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
       {about.workshops.map((w) => <PhotoPlaceholder alt={w.alt} ratio="video" />)}
     </div>
   </section>

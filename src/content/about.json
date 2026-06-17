@@ -9,6 +9,10 @@
       "zh": "东莞市禾安鑫五金塑胶制品有限公司是一家专注于塑胶注塑、模具开发、嵌件注塑及五金塑胶组合件的制造企业。凭借经验丰富的工程团队与自有模具车间，我们为客户提供涵盖设计、开模、生产到组装的一站式 OEM / ODM 服务。"
     }
   },
+  "facilities": {
+    "eyebrow": { "en": "Facilities", "zh": "厂房设施" },
+    "title": { "en": "Our Workshops", "zh": "生产车间" }
+  },
   "workshops": [
     { "alt": { "en": "Injection molding workshop", "zh": "注塑车间" } },
     { "alt": { "en": "Mold development workshop", "zh": "模具开发车间" } },
