@@ -67,20 +67,39 @@ const jsonLd = {
 <html lang="zh" data-lang="zh">
   <head>
     <script is:inline>
-      // Set the display language before paint (no FOUC). First-time visitors:
-      // Chinese if the browser prefers Chinese, otherwise English. Choice persists.
+      // Keep the active language stable across view transitions.
+      // First-time visitors: Chinese if the browser prefers Chinese, otherwise
+      // English. The choice persists in localStorage and is copied into the
+      // incoming document before Astro swaps pages, so it does not snap back
+      // to the server default during client navigation.
       (function () {
+        function getPreferredLang() {
+          try {
+            var stored = localStorage.getItem("lang");
+            if (stored === "en" || stored === "zh") return stored;
+            var nav = (navigator.language || "").toLowerCase();
+            return nav.indexOf("zh") === 0 ? "zh" : "en";
+          } catch (e) {
+            return "zh";
+          }
+        }
+
+        function applyLang(root, lang) {
+          root.setAttribute("data-lang", lang);
+          root.setAttribute("lang", lang);
+        }
+
         var el = document.documentElement;
+        var lang = getPreferredLang();
+        applyLang(el, lang);
+
+        document.addEventListener("astro:before-swap", function (event) {
+          applyLang(event.newDocument.documentElement, getPreferredLang());
+        });
+
         // Enable reveal-on-scroll only when JS runs (content stays visible for
         // no-JS visitors and crawlers — SEO safe).
         el.classList.add("js-reveal");
-        try {
-          var stored = localStorage.getItem("lang");
-          var nav = (navigator.language || "").toLowerCase();
-          var lang = stored || (nav.indexOf("zh") === 0 ? "zh" : "en");
-          el.setAttribute("data-lang", lang);
-          el.setAttribute("lang", lang);
-        } catch (e) {}
       })();
     </script>
     <meta charset="utf-8" />
@@ -231,11 +250,19 @@ const jsonLd = {
               start();
             }
 
-            if (nextBtn) nextBtn.addEventListener("click", function () { nav(index + 1); });
-            if (prevBtn) prevBtn.addEventListener("click", function () { nav(index - 1); });
+            if (nextBtn)
+              nextBtn.addEventListener("click", function () {
+                nav(index + 1);
+              });
+            if (prevBtn)
+              prevBtn.addEventListener("click", function () {
+                nav(index - 1);
+              });
             for (var d = 0; d < dots.length; d++) {
               (function (di) {
-                dots[di].addEventListener("click", function () { nav(di); });
+                dots[di].addEventListener("click", function () {
+                  nav(di);
+                });
               })(d);
             }
 
