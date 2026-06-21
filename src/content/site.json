@@ -31,6 +31,7 @@
     { "href": "/industries", "label": { "en": "Industries", "zh": "应用领域" } },
     { "href": "/mold-capability", "label": { "en": "Capability", "zh": "模具产能" } },
     { "href": "/products", "label": { "en": "Products", "zh": "产品分类" } },
+    { "href": "/news", "label": { "en": "News", "zh": "新闻资讯" } },
     { "href": "/showcase", "label": { "en": "Showcase", "zh": "产品展示" } }
   ],
   "quoteCta": {

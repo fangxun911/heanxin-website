@@ -1,0 +1,69 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SectionHeader from "../../components/SectionHeader.astro";
+import T from "../../components/T.astro";
+import news from "../../content/news.json";
+import { url } from "../../lib/i18n";
+
+export function getStaticPaths() {
+  return news.articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+---
+
+<BaseLayout title={article.title.zh} description={article.summary.zh}>
+  <article class="container-page pt-12 pb-16">
+    <a href={url("/news")} class="text-ember-700 text-sm font-semibold">
+      <span lang="en">Back to News</span><span lang="zh">返回新闻资讯</span>
+    </a>
+
+    <div class="mt-6">
+      <SectionHeader
+        eyebrow={{ en: article.date, zh: article.date }}
+        title={article.title}
+        subtitle={article.summary}
+        as="h1"
+      />
+    </div>
+
+    <div class="mx-auto mt-10 max-w-3xl space-y-8">
+      {
+        article.sections.map((section) => (
+          <section class="border-line border-b pb-8 last:border-b-0 last:pb-0">
+            <h2 class="font-display text-brand-700 text-2xl font-semibold">
+              <T text={section.heading} />
+            </h2>
+            <p class="text-muted mt-4 leading-relaxed">
+              <T text={section.body} />
+            </p>
+          </section>
+        ))
+      }
+    </div>
+  </article>
+
+  <section class="section-tint border-line border-y py-14">
+    <div class="container-page flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p class="eyebrow text-ember-700">
+          <span lang="en">Project Support</span><span lang="zh">项目支持</span>
+        </p>
+        <h2 class="font-display text-brand-700 mt-2 text-3xl font-bold">
+          <span lang="en">Need a custom plastic part quote?</span><span lang="zh"
+            >需要定制塑胶件报价？</span
+          >
+        </h2>
+      </div>
+      <a
+        href={url("/#quote")}
+        class="bg-ember-500 hover:bg-ember-600 inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5"
+      >
+        <span lang="en">Get a Quote</span><span lang="zh">获取报价</span>
+      </a>
+    </div>
+  </section>
+</BaseLayout>

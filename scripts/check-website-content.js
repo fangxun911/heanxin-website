@@ -126,7 +126,49 @@ function assertMaterialsProcessesPage() {
   }
 }
 
-const checks = [assertQuotePath, assertMaterialsProcessesPage];
+function assertNewsSeoPages() {
+  const site = readJson("src/content/site.json");
+  const news = readJson("src/content/news.json");
+  const listPage = readText("src/pages/news.astro");
+  const detailPage = readText("src/pages/news/[slug].astro");
+
+  const navItem = site.nav.find((item) => item.href === "/news");
+  assert(navItem, "site.nav must include /news");
+  assert(navItem.label.en === "News", "news nav English label is required");
+  assert(navItem.label.zh === "新闻资讯", "news nav Chinese label is required");
+
+  assertLocalized(news.header.title, "news.header.title");
+  assert(Array.isArray(news.articles), "news.articles must be an array");
+  assert(news.articles.length >= 5, "news must include at least five SEO article topics");
+
+  const requiredSlugs = [
+    "choose-right-material-plastic-enclosures",
+    "abs-vs-pc-electronic-housings",
+    "what-is-plastic-injection-molding",
+    "start-custom-plastic-product-project",
+    "plastic-mold-development-process",
+  ];
+  const slugs = news.articles.map((article) => article.slug);
+  for (const slug of requiredSlugs) {
+    assert(slugs.includes(slug), `news.articles must include ${slug}`);
+  }
+
+  for (const article of news.articles) {
+    assertLocalized(article.title, `news article ${article.slug} title`);
+    assertLocalized(article.summary, `news article ${article.slug} summary`);
+    assert(typeof article.date === "string" && article.date, `${article.slug} date is required`);
+    assert(Array.isArray(article.sections), `${article.slug} sections must be an array`);
+    assert(article.sections.length >= 3, `${article.slug} should have useful article sections`);
+  }
+
+  assertContains(listPage, "news.json", "News list page");
+  assertContains(listPage, "url(", "News list page links");
+  assertContains(detailPage, "getStaticPaths", "News detail page");
+  assertContains(detailPage, "news.json", "News detail page");
+  assertContains(detailPage, "article.slug", "News detail page route data");
+}
+
+const checks = [assertQuotePath, assertMaterialsProcessesPage, assertNewsSeoPages];
 
 for (const check of checks) {
   check();
