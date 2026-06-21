@@ -3,7 +3,7 @@ import { site, url } from "../lib/i18n";
 import Icon from "./Icon.astro";
 import T from "./T.astro";
 
-const { nav, company } = site;
+const { nav, company, quoteCta } = site;
 const current = Astro.url.pathname.replace(/\/$/, "");
 
 function isActive(href: string): boolean {
@@ -51,6 +51,13 @@ function isActive(href: string): boolean {
     </nav>
 
     <div class="hidden items-center gap-2 lg:flex">
+      <a
+        href={url(quoteCta.href)}
+        class="bg-ember-500 hover:bg-ember-600 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5"
+      >
+        <T text={quoteCta.label} />
+        <Icon name="arrowRight" class="h-4 w-4" />
+      </a>
       <button
         type="button"
         data-lang-toggle
@@ -97,6 +104,13 @@ function isActive(href: string): boolean {
             </a>
           ))
         }
+        <a
+          href={url(quoteCta.href)}
+          class="bg-ember-500 mt-1 flex items-center justify-between rounded-md px-3 py-2 text-sm font-semibold text-white"
+        >
+          <T text={quoteCta.label} />
+          <Icon name="arrowRight" class="h-4 w-4" />
+        </a>
         <button
           type="button"
           data-lang-toggle

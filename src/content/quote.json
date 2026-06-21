@@ -1,0 +1,65 @@
+{
+  "sectionId": "quote",
+  "header": {
+    "eyebrow": { "en": "Request a Quote", "zh": "项目询盘" },
+    "title": {
+      "en": "Send Your Plastic Part Requirements",
+      "zh": "提交您的塑胶件定制需求"
+    },
+    "subtitle": {
+      "en": "Share drawings, material requirements, quantity and project details. Our team will review the information and reply with the next manufacturing step.",
+      "zh": "请提供图纸、材料要求、数量和项目细节。我们会评估需求，并回复下一步制造建议。"
+    }
+  },
+  "fields": [
+    {
+      "id": "name",
+      "label": { "en": "Name", "zh": "姓名" }
+    },
+    {
+      "id": "company",
+      "label": { "en": "Company Name", "zh": "公司名称" }
+    },
+    {
+      "id": "email",
+      "label": { "en": "Email", "zh": "邮箱" }
+    },
+    {
+      "id": "phone",
+      "label": { "en": "WhatsApp / Phone", "zh": "WhatsApp / 电话" }
+    },
+    {
+      "id": "productType",
+      "label": { "en": "Product Type", "zh": "产品类型" }
+    },
+    {
+      "id": "material",
+      "label": { "en": "Material Requirement", "zh": "材料要求" }
+    },
+    {
+      "id": "quantity",
+      "label": { "en": "Estimated Quantity", "zh": "预计数量" }
+    },
+    {
+      "id": "drawingStatus",
+      "label": { "en": "Drawings / 3D Files Available?", "zh": "是否已有图纸 / 3D 文件？" }
+    },
+    {
+      "id": "message",
+      "label": { "en": "Project Details", "zh": "项目详情" }
+    },
+    {
+      "id": "files",
+      "label": { "en": "Files to Attach by Email", "zh": "通过邮件附上的文件" }
+    }
+  ],
+  "channels": {
+    "title": { "en": "Quote Channels", "zh": "询盘方式" },
+    "emailCta": { "en": "Email Project Details", "zh": "发送项目邮件" },
+    "whatsappCta": { "en": "Chat on WhatsApp", "zh": "WhatsApp 沟通" },
+    "note": {
+      "en": "For faster evaluation, attach 2D drawings, 3D files or sample photos when available.",
+      "zh": "如已有 2D 图纸、3D 文件或样品照片，请一并通过邮件发送，便于更快评估。"
+    }
+  }
+}

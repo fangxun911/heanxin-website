@@ -29,6 +29,10 @@
     { "href": "/products", "label": { "en": "Products", "zh": "产品分类" } },
     { "href": "/showcase", "label": { "en": "Showcase", "zh": "产品展示" } }
   ],
+  "quoteCta": {
+    "href": "/#quote",
+    "label": { "en": "Get a Quote", "zh": "获取报价" }
+  },
   "footer": {
     "blurb": {
       "en": "A one-stop manufacturer for plastic injection molding, mold development and hardware-plastic combined parts, serving OEM / ODM customers worldwide.",

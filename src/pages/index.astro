@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import SectionHeader from "../components/SectionHeader.astro";
 import IconFeatureCard from "../components/IconFeatureCard.astro";
+import QuoteSection from "../components/QuoteSection.astro";
 import T from "../components/T.astro";
 import { url } from "../lib/i18n";
 import home from "../content/home.json";
@@ -16,7 +17,8 @@ import home from "../content/home.json";
     eyebrow={home.hero.eyebrow}
     title={home.hero.title}
     subtitle={home.hero.subtitle}
-    secondaryCta={{ label: home.hero.secondaryCta, href: "/#contact" }}
+    primaryCta={{ label: home.hero.primaryCta, href: "/#quote" }}
+    secondaryCta={{ label: home.hero.secondaryCta, href: "/products" }}
   />
 
   <section class="container-page py-14">
@@ -41,4 +43,6 @@ import home from "../content/home.json";
       </div>
     </div>
   </section>
+
+  <QuoteSection />
 </BaseLayout>

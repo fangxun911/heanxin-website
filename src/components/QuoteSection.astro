@@ -1,0 +1,77 @@
+---
+import quote from "../content/quote.json";
+import { site } from "../lib/i18n";
+import Icon from "./Icon.astro";
+import SectionHeader from "./SectionHeader.astro";
+import T from "./T.astro";
+
+const { contact } = site;
+const mailSubject = encodeURIComponent("Custom Plastic Injection Molding Quote Request");
+---
+
+<section id={quote.sectionId} class="section-tint border-line border-y py-16">
+  <div class="container-page">
+    <SectionHeader
+      eyebrow={quote.header.eyebrow}
+      title={quote.header.title}
+      subtitle={quote.header.subtitle}
+    />
+
+    <div class="mt-10 grid gap-6 lg:grid-cols-[1.4fr_0.8fr]">
+      <div class="grid gap-3 sm:grid-cols-2">
+        {
+          quote.fields.map((field, index) => (
+            <div
+              data-reveal
+              class="border-line bg-surface flex items-center gap-3 rounded-[var(--radius-card)] border p-4"
+            >
+              <span class="bg-brand-100 text-brand-700 font-display inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span class="text-ink text-sm font-semibold">
+                <T text={field.label} />
+              </span>
+            </div>
+          ))
+        }
+      </div>
+
+      <aside
+        data-reveal
+        class="bg-deep relative overflow-hidden rounded-[var(--radius-card)] p-6 text-white"
+      >
+        <div
+          class="bg-ember-500/20 pointer-events-none absolute -top-16 -right-16 h-40 w-40 rounded-full blur-3xl"
+          aria-hidden="true"
+        >
+        </div>
+        <div class="relative">
+          <p class="eyebrow text-ember-300"><T text={quote.channels.title} /></p>
+          <p class="text-brand-100/85 mt-4 text-sm leading-relaxed">
+            <T text={quote.channels.note} />
+          </p>
+          <div class="mt-6 flex flex-col gap-3">
+            <a
+              href={`mailto:${contact.email}?subject=${mailSubject}`}
+              class="bg-ember-500 hover:bg-ember-600 inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5"
+            >
+              <Icon name="mail" class="h-4.5 w-4.5" />
+              <T text={quote.channels.emailCta} />
+            </a>
+            <a
+              href={`https://wa.me/${contact.phoneRaw}`}
+              target="_blank"
+              rel="noopener"
+              class="inline-flex items-center justify-center gap-2 rounded-full border border-white/35 px-5 py-3 text-sm font-semibold text-white transition hover:border-white hover:bg-white/10"
+            >
+              <Icon name="chat" class="h-4.5 w-4.5" />
+              <T text={quote.channels.whatsappCta} />
+            </a>
+          </div>
+          <p class="text-brand-100/75 mt-5 text-sm">{contact.email}</p>
+          <p class="text-brand-100/75 mt-1 text-sm">WhatsApp: {contact.phone}</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
