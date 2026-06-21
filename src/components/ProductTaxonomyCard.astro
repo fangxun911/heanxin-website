@@ -1,0 +1,35 @@
+---
+import type { LocalizedText } from "../lib/i18n";
+import T from "./T.astro";
+
+interface Props {
+  no: string;
+  title: LocalizedText;
+  desc: LocalizedText;
+  examples: LocalizedText[];
+}
+
+const { no, title, desc, examples } = Astro.props;
+---
+
+<article data-reveal class="card-base card-interactive group relative h-full overflow-hidden p-6">
+  <span
+    class="bg-ember-500 absolute inset-x-0 top-0 h-1 origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100"
+    aria-hidden="true"></span>
+  <p class="font-display text-ember-700 text-sm font-bold tracking-widest">{no}</p>
+  <h2 class="font-display text-brand-700 mt-3 text-2xl font-semibold">
+    <T text={title} />
+  </h2>
+  <p class="text-muted mt-4 text-[15px] leading-relaxed">
+    <T text={desc} />
+  </p>
+  <div class="mt-5 flex flex-wrap gap-2">
+    {
+      examples.map((example) => (
+        <span class="bg-brand-50 text-brand-700 rounded-full px-3 py-1 text-xs font-semibold">
+          <T text={example} />
+        </span>
+      ))
+    }
+  </div>
+</article>

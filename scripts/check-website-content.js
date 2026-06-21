@@ -168,7 +168,46 @@ function assertNewsSeoPages() {
   assertContains(detailPage, "article.slug", "News detail page route data");
 }
 
-const checks = [assertQuotePath, assertMaterialsProcessesPage, assertNewsSeoPages];
+function assertProductTaxonomy() {
+  const products = readJson("src/content/products.json");
+  const page = readText("src/pages/products.astro");
+
+  const requiredCategories = [
+    "Plastic Electronic Enclosures",
+    "Industrial Plastic Components",
+    "Smart Home & Small Appliance Parts",
+    "Automotive Plastic Components",
+    "Plastic & Metal Insert Molding Parts",
+    "Custom Plastic Products",
+    "Display Boxes",
+  ];
+
+  const categoryNames = products.categories.map((item) => item.title.en);
+  for (const category of requiredCategories) {
+    assert(categoryNames.includes(category), `products.categories must include ${category}`);
+  }
+
+  for (const category of products.categories) {
+    assertLocalized(category.title, `product category ${category.no} title`);
+    assertLocalized(category.desc, `product category ${category.no} desc`);
+    assert(
+      Array.isArray(category.examples) && category.examples.length >= 2,
+      `product category ${category.no} needs buyer-facing examples`
+    );
+  }
+
+  assertLocalized(products.cta.title, "products.cta.title");
+  assertContains(page, "products.cta", "Products page");
+  assertContains(page, "examples", "Products page category examples");
+  assertContains(page, "/#quote", "Products page quote link");
+}
+
+const checks = [
+  assertQuotePath,
+  assertMaterialsProcessesPage,
+  assertNewsSeoPages,
+  assertProductTaxonomy,
+];
 
 for (const check of checks) {
   check();

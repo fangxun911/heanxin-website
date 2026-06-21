@@ -1,42 +1,111 @@
 {
   "header": {
     "eyebrow": { "en": "Product Categories", "zh": "产品分类" },
-    "title": { "en": "What We Manufacture", "zh": "我们的制造范围" },
+    "title": { "en": "Custom Plastic Products We Manufacture", "zh": "我们制造的定制塑胶产品" },
     "subtitle": {
-      "en": "From single parts to assembled products — a broad range of plastic and hardware-plastic product categories.",
-      "zh": "从单一零件到组装成品，覆盖多种塑胶与五金塑胶产品品类。"
+      "en": "Focused on small and medium custom plastic parts for electronics, industrial equipment, smart devices, automotive electronics and OEM / ODM projects.",
+      "zh": "专注电子、工业设备、智能产品、汽车电子及 OEM / ODM 项目的中小型定制塑胶件。"
     }
   },
   "categories": [
     {
       "no": "01",
-      "title": { "en": "Plastic Injection Parts", "zh": "塑胶注塑件" },
-      "desc": { "en": "Custom-molded plastic components.", "zh": "定制成型塑胶零件。" }
+      "title": { "en": "Plastic Electronic Enclosures", "zh": "塑胶电子外壳" },
+      "desc": {
+        "en": "Custom housings and protective shells for electronic products, control units and smart devices.",
+        "zh": "用于电子产品、控制设备和智能终端的定制外壳与保护壳体。"
+      },
+      "examples": [
+        { "en": "Control box housings", "zh": "控制盒外壳" },
+        { "en": "Device covers", "zh": "设备面盖" },
+        { "en": "Sensor enclosures", "zh": "传感器外壳" }
+      ]
     },
     {
       "no": "02",
-      "title": { "en": "Precision Molds", "zh": "精密模具" },
-      "desc": { "en": "High-precision tooling for production.", "zh": "用于量产的高精度模具。" }
+      "title": { "en": "Industrial Plastic Components", "zh": "工业塑胶零部件" },
+      "desc": {
+        "en": "Durable molded parts for industrial control, equipment protection and machine-side assemblies.",
+        "zh": "用于工业控制、设备防护和机械配套的耐用注塑零部件。"
+      },
+      "examples": [
+        { "en": "Equipment panels", "zh": "设备面板" },
+        { "en": "Structural brackets", "zh": "结构支架" },
+        { "en": "Protective covers", "zh": "防护盖板" }
+      ]
     },
     {
       "no": "03",
-      "title": { "en": "Hardware-Plastic Parts", "zh": "五金塑胶组合件" },
-      "desc": { "en": "Integrated metal-and-plastic components.", "zh": "五金与塑胶一体化部件。" }
+      "title": { "en": "Smart Home & Small Appliance Parts", "zh": "智能家居与小家电配件" },
+      "desc": {
+        "en": "Precision plastic parts for connected home devices, small appliances and consumer electronics.",
+        "zh": "用于智能家居、小型家电和消费电子产品的精密塑胶件。"
+      },
+      "examples": [
+        { "en": "Smart device shells", "zh": "智能设备壳体" },
+        { "en": "Appliance knobs", "zh": "家电旋钮" },
+        { "en": "Internal supports", "zh": "内部支撑件" }
+      ]
     },
     {
       "no": "04",
-      "title": { "en": "Insert-Molded Parts", "zh": "嵌件注塑件" },
-      "desc": { "en": "Inserts encapsulated in plastic.", "zh": "嵌件包覆成型零件。" }
+      "title": { "en": "Automotive Plastic Components", "zh": "汽车塑胶零部件" },
+      "desc": {
+        "en": "Small custom plastic components for automotive electronics, interior modules and auxiliary assemblies.",
+        "zh": "用于汽车电子、内饰模块和辅助结构的小型定制塑胶零件。"
+      },
+      "examples": [
+        { "en": "Automotive electronics covers", "zh": "汽车电子盖件" },
+        { "en": "Clips and retainers", "zh": "卡扣与固定件" },
+        { "en": "Interior plastic parts", "zh": "内饰塑胶件" }
+      ]
     },
     {
       "no": "05",
-      "title": { "en": "Housings & Enclosures", "zh": "外壳与机壳" },
-      "desc": { "en": "Protective shells for devices.", "zh": "设备保护外壳。" }
+      "title": { "en": "Plastic & Metal Insert Molding Parts", "zh": "五金塑胶嵌件成型件" },
+      "desc": {
+        "en": "Integrated metal-and-plastic components produced through insert molding and hardware-plastic assembly.",
+        "zh": "通过嵌件注塑和五金塑胶组合工艺制造的一体化金属塑胶部件。"
+      },
+      "examples": [
+        { "en": "Threaded insert parts", "zh": "螺母嵌件产品" },
+        { "en": "Metal reinforced components", "zh": "金属加强件" },
+        { "en": "Connector housings", "zh": "连接器壳体" }
+      ]
     },
     {
       "no": "06",
-      "title": { "en": "Custom Assemblies", "zh": "定制组装件" },
-      "desc": { "en": "Assembled and finished modules.", "zh": "组装与后处理模块。" }
+      "title": { "en": "Custom Plastic Products", "zh": "定制塑胶产品" },
+      "desc": {
+        "en": "OEM / ODM plastic products developed from drawings, samples or functional requirements.",
+        "zh": "根据图纸、样品或功能需求开发的 OEM / ODM 定制塑胶产品。"
+      },
+      "examples": [
+        { "en": "New product projects", "zh": "新品开发项目" },
+        { "en": "Sample-based parts", "zh": "来样定制零件" },
+        { "en": "Assembly-ready modules", "zh": "可组装模块" }
+      ]
+    },
+    {
+      "no": "07",
+      "title": { "en": "Display Boxes", "zh": "展示盒" },
+      "desc": {
+        "en": "Plastic display and storage boxes for product presentation, protection and retail use.",
+        "zh": "用于产品展示、防护和零售陈列的塑胶展示盒与收纳盒。"
+      },
+      "examples": [
+        { "en": "Clear display boxes", "zh": "透明展示盒" },
+        { "en": "Protective cases", "zh": "保护盒" },
+        { "en": "Retail presentation boxes", "zh": "零售陈列盒" }
+      ]
     }
-  ]
+  ],
+  "cta": {
+    "title": { "en": "Have a product outside these categories?", "zh": "您的产品不在以上分类中？" },
+    "desc": {
+      "en": "Send the drawing, sample photo or application requirement. We can evaluate mold structure, material choice and production feasibility.",
+      "zh": "发送图纸、样品照片或应用需求，我们可评估模具结构、材料选择和量产可行性。"
+    },
+    "button": { "en": "Get a Quote", "zh": "获取报价" }
+  }
 }
