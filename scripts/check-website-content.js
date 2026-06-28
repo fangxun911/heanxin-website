@@ -46,6 +46,10 @@ function assertContains(text, expected, label) {
   assert(text.includes(expected), `${label} must contain "${expected}"`);
 }
 
+function assertNotContains(text, unexpected, label) {
+  assert(!text.includes(unexpected), `${label} must not contain "${unexpected}"`);
+}
+
 function listSourceFiles(relativeDir) {
   const absoluteDir = path.join(root, relativeDir);
   const entries = readdirSync(absoluteDir);
@@ -275,6 +279,10 @@ function assertNewsSeoPages() {
   assertContains(searchComponent, "url(", "News search component links");
   assertContains(searchComponent, "data-news-form", "News search component");
   assertContains(searchComponent, 'type="search"', "News search component");
+  assertContains(searchComponent, "data-placeholder-en", "News search component");
+  assertContains(searchComponent, "data-placeholder-zh", "News search component");
+  assertContains(searchComponent, "setSearchPlaceholder", "News search component");
+  assertNotContains(searchComponent, 'placeholder="Search materials', "News search placeholder");
   assertContains(searchComponent, 'type="submit"', "News search component");
   assertContains(searchComponent, "data-news-card", "News search component");
   assertContains(searchComponent, "data-search-text", "News search component");
