@@ -298,6 +298,11 @@ function assertNewsSeoPages() {
   assertContains(detailPage, "getStaticPaths", "News detail page");
   assertContains(detailPage, "news.json", "News detail page");
   assertContains(detailPage, "article.slug", "News detail page route data");
+  assertContains(detailPage, 'Icon name="chevronLeft"', "News detail back button");
+  assertContains(detailPage, '<span lang="en">Back</span>', "News detail back button");
+  assertContains(detailPage, '<span lang="zh">返回</span>', "News detail back button");
+  assertNotContains(detailPage, "Back to News", "News detail back button");
+  assertNotContains(detailPage, "返回新闻资讯", "News detail back button");
 }
 
 function assertProductTaxonomy() {

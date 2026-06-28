@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Icon from "../../components/Icon.astro";
 import SectionHeader from "../../components/SectionHeader.astro";
 import T from "../../components/T.astro";
 import news from "../../content/news.json";
@@ -17,8 +18,12 @@ const { article } = Astro.props;
 
 <BaseLayout title={article.title.zh} description={article.summary.zh}>
   <article class="container-page pt-12 pb-16">
-    <a href={url("/news")} class="text-ember-700 text-sm font-semibold">
-      <span lang="en">Back to News</span><span lang="zh">返回新闻资讯</span>
+    <a
+      href={url("/news")}
+      class="border-line text-brand-700 hover:border-ember-500 hover:text-ember-700 focus:ring-ember-200 inline-flex items-center gap-2 rounded-full border bg-white px-4 py-2 text-sm font-semibold transition hover:-translate-y-0.5 focus:ring-4 focus:outline-none"
+    >
+      <Icon name="chevronLeft" class="h-4 w-4" />
+      <span lang="en">Back</span><span lang="zh">返回</span>
     </a>
 
     <div class="mt-6">
