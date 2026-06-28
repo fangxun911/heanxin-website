@@ -53,7 +53,7 @@ const searchTextFor = (article: NewsArticle) =>
 
 <div class="space-y-8" data-news-search>
   <div class="card-base p-4 sm:p-5">
-    <div class="flex flex-col gap-3 lg:flex-row lg:items-center">
+    <form class="flex flex-col gap-3 lg:flex-row lg:items-center" data-news-form>
       <label class="sr-only" for="news-search">
         <span lang="en">Search news articles</span>
         <span lang="zh">搜索新闻资讯</span>
@@ -74,6 +74,14 @@ const searchTextFor = (article: NewsArticle) =>
         />
       </div>
       <button
+        type="submit"
+        data-news-submit
+        class="bg-brand-700 hover:bg-brand-800 focus:ring-ember-200 inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white transition focus:ring-4 focus:outline-none"
+      >
+        <span lang="en">Search</span>
+        <span lang="zh">搜索</span>
+      </button>
+      <button
         type="button"
         data-news-clear
         class="border-line text-brand-700 hover:border-ember-500 hover:text-ember-700 inline-flex items-center justify-center rounded-full border px-5 py-3 text-sm font-semibold transition"
@@ -81,7 +89,7 @@ const searchTextFor = (article: NewsArticle) =>
         <span lang="en">Clear</span>
         <span lang="zh">清除</span>
       </button>
-    </div>
+    </form>
     <p class="text-muted mt-3 text-sm" aria-live="polite" data-news-status>
       <span lang="en">Showing all articles</span>
       <span lang="zh">显示全部文章</span>
@@ -137,13 +145,15 @@ const searchTextFor = (article: NewsArticle) =>
     const roots = document.querySelectorAll("[data-news-search]");
 
     roots.forEach((root) => {
+      const form = root.querySelector("[data-news-form]");
       const input = root.querySelector("[data-news-input]");
+      const submit = root.querySelector("[data-news-submit]");
       const clear = root.querySelector("[data-news-clear]");
       const cards = Array.from(root.querySelectorAll("[data-news-card]"));
       const empty = root.querySelector("[data-news-empty]");
       const status = root.querySelector("[data-news-status]");
 
-      if (!input || !clear || !empty || !status || cards.length === 0) return;
+      if (!form || !input || !submit || !clear || !empty || !status || cards.length === 0) return;
 
       const statusText = {
         enAll: "Showing all articles",
@@ -183,6 +193,11 @@ const searchTextFor = (article: NewsArticle) =>
       };
 
       input.addEventListener("input", filter);
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        filter();
+        input.focus();
+      });
       clear.addEventListener("click", () => {
         input.value = "";
         filter();

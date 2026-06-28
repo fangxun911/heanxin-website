@@ -273,11 +273,15 @@ function assertNewsSeoPages() {
   assertContains(listPage, "news.json", "News list page");
   assertContains(listPage, "NewsSearch", "News list page");
   assertContains(searchComponent, "url(", "News search component links");
+  assertContains(searchComponent, "data-news-form", "News search component");
   assertContains(searchComponent, 'type="search"', "News search component");
+  assertContains(searchComponent, 'type="submit"', "News search component");
   assertContains(searchComponent, "data-news-card", "News search component");
   assertContains(searchComponent, "data-search-text", "News search component");
   assertContains(searchComponent, "data-news-empty", "News search component");
+  assertContains(searchComponent, "data-news-submit", "News search component");
   assertContains(searchComponent, "data-news-clear", "News search component");
+  assertContains(searchComponent, 'addEventListener("submit"', "News search component");
   assertContains(searchComponent, "aria-live", "News search component");
   assertContains(detailPage, "getStaticPaths", "News detail page");
   assertContains(detailPage, "news.json", "News detail page");
