@@ -92,9 +92,9 @@ const searchTextFor = (article: NewsArticle) =>
         <span lang="zh">清除</span>
       </button>
     </form>
-    <p class="text-muted mt-3 text-sm" aria-live="polite" data-news-status>
-      <span lang="en">Showing all articles</span>
-      <span lang="zh">显示全部文章</span>
+    <p class="sr-only" aria-live="polite" data-news-status>
+      <span lang="en"></span>
+      <span lang="zh"></span>
     </p>
   </div>
 
@@ -152,8 +152,6 @@ const searchTextFor = (article: NewsArticle) =>
       if (!form || !input || !submit || !clear || !empty || !status || cards.length === 0) return;
 
       const statusText = {
-        enAll: "Showing all articles",
-        zhAll: "显示全部文章",
         enCount: (count) => `Showing ${count} matching article${count === 1 ? "" : "s"}`,
         zhCount: (count) => `显示 ${count} 篇匹配文章`,
       };
@@ -172,8 +170,8 @@ const searchTextFor = (article: NewsArticle) =>
         if (!en || !zh) return;
 
         if (!query) {
-          en.textContent = statusText.enAll;
-          zh.textContent = statusText.zhAll;
+          en.textContent = "";
+          zh.textContent = "";
           return;
         }
 

@@ -295,6 +295,8 @@ function assertNewsSeoPages() {
   assertContains(searchComponent, "data-news-clear", "News search component");
   assertContains(searchComponent, 'addEventListener("submit"', "News search component");
   assertContains(searchComponent, "aria-live", "News search component");
+  assertNotContains(searchComponent, "Showing all articles", "News search status");
+  assertNotContains(searchComponent, "显示全部文章", "News search status");
   assertContains(detailPage, "getStaticPaths", "News detail page");
   assertContains(detailPage, "news.json", "News detail page");
   assertContains(detailPage, "article.slug", "News detail page route data");
