@@ -284,8 +284,12 @@ function assertNewsSeoPages() {
   assertContains(searchComponent, "setSearchPlaceholder", "News search component");
   assertNotContains(searchComponent, 'placeholder="Search materials', "News search placeholder");
   assertContains(searchComponent, 'type="submit"', "News search component");
+  assertContains(searchComponent, "<a\n          data-reveal", "News search clickable card");
+  assertContains(searchComponent, "href={url(`/news/${article.slug}`)}", "News search card link");
   assertContains(searchComponent, "data-news-card", "News search component");
   assertContains(searchComponent, "data-search-text", "News search component");
+  assertNotContains(searchComponent, "Read Article", "News search card CTA");
+  assertNotContains(searchComponent, "阅读文章", "News search card CTA");
   assertContains(searchComponent, "data-news-empty", "News search component");
   assertContains(searchComponent, "data-news-submit", "News search component");
   assertContains(searchComponent, "data-news-clear", "News search component");
