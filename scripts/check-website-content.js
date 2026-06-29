@@ -712,14 +712,20 @@ function assertHomeVisualRefinement() {
   );
   assertContains(
     hero,
-    "object-fit: cover",
-    "Home hero desktop background image must span the full hero without a visible image edge"
+    "object-fit: contain",
+    "Home hero desktop background image must preserve the full source PNG without cropping"
   );
   assertContains(
     hero,
-    "clamp(620px, calc(100vw * 941 / 1672), 760px)",
-    "Home hero desktop height must follow the PNG ratio enough to avoid harsh product cropping"
+    "object-position: center top",
+    "Home hero desktop background image must align from the top while preserving the full PNG"
   );
+  assertContains(
+    hero,
+    "clamp(720px, calc(100vw * 941 / 1672), 860px)",
+    "Home hero desktop height must be tall enough to show the full PNG"
+  );
+  assertNotContains(hero, "object-fit: cover", "Home hero must not crop the source PNG");
   assertNotContains(
     hero,
     "background: linear-gradient",
