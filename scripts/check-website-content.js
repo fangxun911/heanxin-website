@@ -564,17 +564,30 @@ function assertHomeBuyerJourney() {
 function assertHomeVisualRefinement() {
   const home = readJson("src/content/home.json");
   const media = readJson("src/content/media.json");
+  const mediaText = readText("src/content/media.json");
   const page = readText("src/pages/index.astro");
   const hero = readText("src/components/HomeHero.astro");
+  const oldCleanBanner = path.join(root, "public", "images/products/banner-home-clean.webp");
 
   assert(
-    media.banners.home.src === "images/products/banner-home-clean.webp",
-    "home banner must use the text-free derivative"
+    media.banners.home.src === "images/products/banner-home.jpg",
+    "home banner must use the new client JPG asset"
+  );
+  assert(
+    media.banners.home.source === "docs/产品画册/产品图片/首页Banner图.jpg",
+    "home banner source must be the new text-free JPG"
+  );
+  assert(
+    media.banners.home.width === 1672 && media.banners.home.height === 941,
+    "home banner dimensions must match the new JPG"
   );
   assert(
     existsSync(path.join(root, "public", media.banners.home.src)),
-    "text-free home banner file must exist"
+    "new text-free JPG home banner file must exist"
   );
+  assertNotContains(mediaText, "首页Banner图.png", "Home media registry");
+  assertNotContains(mediaText, "banner-home-clean.webp", "Home media registry");
+  assert(!existsSync(oldCleanBanner), "unused banner-home-clean.webp should be removed");
   assert(home.hero.image === "homeBanner", "home.hero.image must keep the registered home banner");
 
   assertContains(page, "HomeHero", "Home page must use the dedicated home hero");
@@ -607,11 +620,18 @@ function assertHomeVisualRefinement() {
     "home-hero__machine-line",
     "Home hero must not render transparent placeholder-like frames"
   );
+  assertNotContains(
+    hero,
+    "mask-image",
+    "Home hero must not use a circular mask that clips the wide JPG"
+  );
   assertContains(
     hero,
     "mix-blend-multiply",
     "Home hero product art must blend into the background"
   );
+  assertContains(hero, "home-hero__art-shell", "Home hero must keep an unframed product art shell");
+  assertContains(hero, "::after", "Home hero art shell should soften JPG edges without a frame");
   assertContains(hero, "drop-shadow", "Home hero product art should use natural product shadow");
 }
 

@@ -69,19 +69,21 @@ const alt = `${image.alt.en} / ${image.alt.zh}`;
       </div>
     </div>
 
-    <div data-reveal class="home-hero__stage relative z-10 min-h-[360px] lg:min-h-[460px]">
+    <div data-reveal class="home-hero__stage relative z-10 min-h-[300px] lg:min-h-[430px]">
       <div class="home-hero__curve" aria-hidden="true"></div>
-      <img
-        src={url(image.src)}
-        width={image.width}
-        height={image.height}
-        alt={alt}
-        loading="eager"
-        decoding="async"
-        fetchpriority="high"
-        sizes="(min-width: 1024px) 56vw, 100vw"
-        class="home-hero__art relative z-10 ml-auto h-auto w-full max-w-[580px] mix-blend-multiply"
-      />
+      <div class="home-hero__art-shell relative z-10 ml-auto w-full max-w-[760px]">
+        <img
+          src={url(image.src)}
+          width={image.width}
+          height={image.height}
+          alt={alt}
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+          sizes="(min-width: 1024px) 58vw, 100vw"
+          class="home-hero__art h-auto w-full mix-blend-multiply"
+        />
+      </div>
     </div>
   </div>
 </section>
@@ -117,26 +119,56 @@ const alt = `${image.alt.en} / ${image.alt.zh}`;
 
   .home-hero__stage {
     display: grid;
-    align-items: end;
+    align-items: center;
   }
 
-  .home-hero__art {
-    filter: drop-shadow(0 2rem 1.75rem color-mix(in srgb, var(--color-brand-900) 14%, transparent));
-    mask-image: radial-gradient(ellipse 76% 78% at 56% 50%, black 58%, transparent 95%);
+  .home-hero__art-shell {
+    filter: drop-shadow(
+      0 1.4rem 1.45rem color-mix(in srgb, var(--color-brand-900) 11%, transparent)
+    );
+  }
+
+  .home-hero__art-shell::after {
+    position: absolute;
+    inset: -1px;
+    content: "";
+    background:
+      linear-gradient(
+        90deg,
+        var(--color-canvas) 0%,
+        color-mix(in srgb, var(--color-canvas) 92%, transparent) 8%,
+        transparent 22%,
+        transparent 88%,
+        color-mix(in srgb, var(--color-brand-50) 90%, transparent) 100%
+      ),
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--color-brand-50) 82%, transparent) 0%,
+        transparent 18%,
+        transparent 90%,
+        color-mix(in srgb, var(--color-brand-50) 78%, transparent) 100%
+      );
+    pointer-events: none;
   }
 
   .home-hero__curve {
     position: absolute;
-    inset: 5% -10% 8% -4%;
-    border-radius: 46% 0 0 54% / 52% 0 0 48%;
+    z-index: 0;
+    inset: 0 -12% 0 0;
+    border-radius: 48% 0 0 52% / 54% 0 0 46%;
     background:
       linear-gradient(
         135deg,
-        color-mix(in srgb, var(--color-brand-200) 48%, transparent),
-        transparent 36%
+        color-mix(in srgb, var(--color-brand-100) 62%, transparent),
+        transparent 42%
       ),
-      linear-gradient(180deg, var(--color-canvas) 0%, var(--color-brand-50) 100%);
-    box-shadow: inset 22px 0 0 color-mix(in srgb, var(--color-brand-400) 54%, transparent);
+      linear-gradient(
+        110deg,
+        color-mix(in srgb, var(--color-canvas) 52%, var(--color-brand-50)) 0%,
+        var(--color-brand-50) 66%,
+        var(--color-surface) 100%
+      );
+    box-shadow: inset 16px 0 0 color-mix(in srgb, var(--color-brand-300) 28%, transparent);
   }
 
   @media (max-width: 1023px) {
@@ -145,8 +177,8 @@ const alt = `${image.alt.en} / ${image.alt.zh}`;
     }
 
     .home-hero__curve {
-      inset: 6% -22% 0 -10%;
-      border-radius: 2rem;
+      inset: 8% -20% 0 -8%;
+      border-radius: 2rem 0 0 2rem;
       box-shadow: none;
     }
   }
