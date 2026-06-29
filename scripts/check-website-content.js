@@ -745,6 +745,16 @@ function assertHomeVisualRefinement() {
     "font-size: clamp(3rem, 3.65vw, 3.15rem)",
     "English home hero title must use a controlled desktop font size"
   );
+  assertContains(
+    hero,
+    "@media (min-width: 1024px)",
+    "Home hero must keep desktop-only copy positioning"
+  );
+  assertContains(
+    hero,
+    "transform: translateX(-2rem)",
+    "Home hero copy must move left on desktop without moving the background"
+  );
   assertNotContains(hero, "object-fit: cover", "Home hero must not crop the source PNG");
   assertNotContains(
     hero,

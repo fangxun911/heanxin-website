@@ -108,6 +108,12 @@ const { title, subtitle, image, primaryCta, secondaryCta } = Astro.props;
     }
   }
 
+  @media (min-width: 1024px) {
+    .home-hero__copy {
+      transform: translateX(-2rem);
+    }
+  }
+
   @media (max-width: 1023px) {
     .home-hero .container-page {
       min-height: 760px;
