@@ -85,14 +85,12 @@ const { title, subtitle, image, primaryCta, secondaryCta } = Astro.props;
 
 <style>
   .home-hero {
-    background:
-      linear-gradient(100deg, var(--color-canvas) 0 46%, transparent 46%),
-      linear-gradient(
-        135deg,
-        var(--color-canvas) 0%,
-        var(--color-brand-50) 62%,
-        var(--color-surface) 100%
-      );
+    background: linear-gradient(
+      135deg,
+      var(--color-brand-50) 0%,
+      var(--color-surface) 48%,
+      var(--color-canvas) 100%
+    );
   }
 
   .home-hero__wash {
@@ -100,12 +98,12 @@ const { title, subtitle, image, primaryCta, secondaryCta } = Astro.props;
     inset: 0;
     background:
       radial-gradient(
-        60% 58% at 82% 18%,
+        58% 58% at 24% 18%,
         color-mix(in srgb, var(--color-brand-100) 80%, transparent),
         transparent 70%
       ),
       radial-gradient(
-        42% 44% at 44% 88%,
+        42% 44% at 36% 88%,
         color-mix(in srgb, var(--color-ember-100) 36%, transparent),
         transparent 68%
       );

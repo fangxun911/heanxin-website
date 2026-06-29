@@ -706,6 +706,16 @@ function assertHomeVisualRefinement() {
     "home.capabilityStrip",
     "Home page must render the reference-style capability strip"
   );
+  assertContains(
+    hero,
+    "var(--color-brand-50) 0%",
+    "Home hero desktop background must mirror to light blue on the left and white on the right"
+  );
+  assertContains(
+    hero,
+    "var(--color-canvas) 100%",
+    "Home hero desktop background must end with white on the right"
+  );
 
   assert(
     Array.isArray(home.coreSolutions?.items) && home.coreSolutions.items.length === 4,
