@@ -704,6 +704,11 @@ function assertHomeVisualRefinement() {
     "home-hero__background",
     "Home hero must render the PNG as a single background layer"
   );
+  const heroSectionClass = hero.match(/<section class="([^"]*home-hero[^"]*)">/)?.[1] ?? "";
+  assert(
+    !heroSectionClass.split(/\s+/).includes("border-b"),
+    "Home hero must not draw a divider between the banner and core solutions"
+  );
   assertContains(
     hero,
     "src={url(image.src)}",
