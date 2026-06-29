@@ -716,6 +716,17 @@ function assertHomeVisualRefinement() {
     "var(--color-canvas) 100%",
     "Home hero desktop background must end with white on the right"
   );
+  assertContains(
+    hero,
+    "home-hero__product-field",
+    "Home hero product shadows must sit on a dedicated white support field"
+  );
+  assertContains(
+    hero,
+    "var(--color-canvas) 58%",
+    "Home hero product support field must keep the product area near pure white"
+  );
+  assertContains(hero, "z-index: 2;", "Home hero product image must sit above the support field");
 
   assert(
     Array.isArray(home.coreSolutions?.items) && home.coreSolutions.items.length === 4,
