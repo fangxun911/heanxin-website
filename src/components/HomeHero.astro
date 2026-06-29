@@ -45,7 +45,7 @@ const { title, subtitle, image, primaryCta, secondaryCta } = Astro.props;
   <div class="container-page relative z-10 min-h-[620px] py-10 lg:min-h-[560px] lg:py-12">
     <div data-reveal class="home-hero__copy relative max-w-2xl">
       <h1
-        class="font-display text-brand-800 max-w-3xl text-4xl leading-[1.05] font-bold sm:text-5xl xl:text-6xl"
+        class="home-hero__title font-display text-brand-800 max-w-3xl text-4xl leading-[1.05] font-bold sm:text-5xl xl:text-6xl"
       >
         <T text={title} />
       </h1>
@@ -96,6 +96,16 @@ const { title, subtitle, image, primaryCta, secondaryCta } = Astro.props;
 
   .home-hero__copy {
     padding-top: clamp(2.75rem, 7vw, 5rem);
+  }
+
+  :global(html[data-lang="en"]) .home-hero__title {
+    max-width: min(34vw, 31rem);
+  }
+
+  @media (min-width: 1280px) {
+    :global(html[data-lang="en"]) .home-hero__title {
+      font-size: clamp(3rem, 3.65vw, 3.15rem);
+    }
   }
 
   @media (max-width: 1023px) {

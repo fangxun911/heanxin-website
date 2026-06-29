@@ -725,6 +725,26 @@ function assertHomeVisualRefinement() {
     "clamp(720px, calc(100vw * 941 / 1672), 860px)",
     "Home hero desktop height must be tall enough to show the full PNG"
   );
+  assertContains(
+    hero,
+    "home-hero__title",
+    "Home hero title must expose a class for language-specific typography"
+  );
+  assertContains(
+    hero,
+    ':global(html[data-lang="en"]) .home-hero__title',
+    "Home hero must apply a dedicated English title safe area"
+  );
+  assertContains(
+    hero,
+    "max-width: min(34vw, 31rem)",
+    "English home hero title must be narrow enough to avoid product overlap"
+  );
+  assertContains(
+    hero,
+    "font-size: clamp(3rem, 3.65vw, 3.15rem)",
+    "English home hero title must use a controlled desktop font size"
+  );
   assertNotContains(hero, "object-fit: cover", "Home hero must not crop the source PNG");
   assertNotContains(
     hero,
