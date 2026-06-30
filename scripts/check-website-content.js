@@ -872,15 +872,20 @@ function assertTopPageEyebrowsHidden() {
 function assertFooterGlobalDesign() {
   const footer = readText("src/components/Footer.astro");
   const worldMapPath = "src/components/WorldMapOutline.astro";
+  const worldMap = readText(worldMapPath);
 
   assert(existsSync(path.join(root, worldMapPath)), `${worldMapPath} must exist`);
   assertContains(footer, "WorldMapOutline", "Footer global background");
   assertContains(footer, "footer-global-map", "Footer global map layer");
+  assertContains(footer, "text-spark-400/24", "Footer global map visible desktop color");
+  assertContains(footer, "lg:w-[920px]", "Footer global map desktop scale");
+  assertContains(worldMap, 'stroke-width="2.8"', "Footer global map visible continent stroke");
   assertContains(footer, "footer-surface", "Footer redesigned surface");
   assertContains(footer, "footer-topline", "Footer lightweight top transition");
   assertContains(footer, "footer-contact-card", "Footer contact cards");
   assertContains(footer, "global-node", "Footer global business nodes");
   assertNotContains(footer, "WorldMapDots", "Footer global background");
+  assertNotContains(footer, "text-spark-400/18", "Footer global map weak desktop color");
   assertNotContains(footer, "hidden w-[760px]", "Footer global map mobile visibility");
   assertNotContains(footer, "h-[90px] w-full sm:h-[120px]", "Footer old thick wave");
   assertNotContains(footer, "Layered wave transition", "Footer old wave comment");
