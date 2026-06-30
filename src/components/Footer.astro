@@ -1,111 +1,146 @@
 ---
 import { site } from "../lib/i18n";
 import Icon from "./Icon.astro";
-import WorldMapDots from "./WorldMapDots.astro";
+import WorldMapOutline from "./WorldMapOutline.astro";
 import T from "./T.astro";
 
 const { company, contact, footer } = site;
 const year = new Date().getFullYear();
+const contactItems = [
+  {
+    icon: "location",
+    href: contact.mapUrl,
+    external: true,
+    aria: "在高德地图中查看地址 · View address on Amap",
+    content: contact.address,
+  },
+  {
+    icon: "chat",
+    href: `https://wa.me/${contact.phoneRaw}`,
+    external: true,
+    label: `WhatsApp: ${contact.phone}`,
+  },
+  {
+    icon: "mail",
+    href: `mailto:${contact.email}`,
+    label: contact.email,
+  },
+];
 ---
 
-<footer id="contact" class="relative mt-24">
-  <!-- Layered wave transition into the dark footer -->
-  <div class="relative -mb-px leading-[0]" aria-hidden="true">
+<footer id="contact" class="relative mt-20">
+  <div class="footer-topline relative -mb-px h-9 overflow-hidden leading-[0]" aria-hidden="true">
     <svg
-      class="block h-[90px] w-full sm:h-[120px]"
-      viewBox="0 0 1440 120"
+      class="absolute inset-0 h-full w-full"
+      viewBox="0 0 1440 44"
       preserveAspectRatio="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        fill="var(--color-brand-600)"
-        fill-opacity="0.55"
-        d="M0,72 C240,24 480,120 720,84 C960,48 1200,16 1440,64 L1440,120 L0,120 Z"></path>
-      <path
         fill="var(--color-brand-700)"
-        d="M0,88 C240,48 480,112 720,80 C960,48 1200,104 1440,72 L1440,120 L0,120 Z"></path>
+        d="M0,24 C260,10 421,40 666,22 C894,5 1168,8 1440,20 L1440,44 L0,44 Z"></path>
     </svg>
   </div>
 
-  <div class="bg-deep text-brand-100 relative overflow-hidden">
-    <WorldMapDots
-      class="text-brand-400/20 pointer-events-none absolute top-6 right-0 hidden w-[420px] lg:block"
+  <div class="footer-surface bg-deep text-brand-100 relative overflow-hidden">
+    <WorldMapOutline
+      class="footer-global-map text-spark-400/10 lg:text-spark-400/18 pointer-events-none absolute top-18 right-[-13rem] w-[560px] max-w-none sm:right-[-10rem] sm:w-[680px] lg:top-5 lg:right-[-5rem] lg:w-[760px] lg:max-w-[58vw]"
     />
     <div
-      class="container-page relative grid gap-x-8 gap-y-10 py-12 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr]"
+      class="pointer-events-none absolute inset-y-0 right-0 hidden w-[55%] bg-gradient-to-l from-white/7 via-white/3 to-transparent lg:block"
+      aria-hidden="true"
     >
-      <div>
-        <div class="flex items-center gap-2.5">
+    </div>
+    <div
+      class="bg-ember-500/8 pointer-events-none absolute right-[18%] bottom-20 hidden h-48 w-48 rounded-full blur-3xl lg:block"
+      aria-hidden="true"
+    >
+    </div>
+
+    <div
+      class="container-page relative grid gap-8 py-12 sm:py-14 lg:grid-cols-[1.05fr_1.15fr] lg:items-center"
+    >
+      <div class="max-w-xl">
+        <div class="flex items-center gap-3">
           <span
-            class="font-display flex h-10 items-center justify-center rounded-lg bg-white/15 px-2.5 text-lg font-bold tracking-tight text-white"
+            class="font-display flex h-11 items-center justify-center rounded-lg bg-white/14 px-3 text-lg font-bold tracking-tight text-white ring-1 ring-white/12"
             >HAX</span
           >
-          <span class="font-display text-base font-bold tracking-wide text-white uppercase"
-            >{company.shortName.en}</span
-          >
+          <div>
+            <span class="font-display block text-lg font-bold tracking-wide text-white uppercase"
+              >{company.shortName.en}</span
+            >
+            <p class="text-brand-100/85 text-sm font-medium"><T text={company.name} /></p>
+          </div>
         </div>
-        <p class="mt-1 text-sm font-medium text-white"><T text={company.name} /></p>
-        <p class="text-brand-100/85 mt-4 max-w-md text-sm leading-relaxed">
+
+        <p class="text-brand-100/86 mt-5 max-w-lg text-sm leading-relaxed sm:text-base">
           <T text={footer.blurb} />
         </p>
+
+        <div class="mt-6 flex flex-wrap gap-2.5 text-xs font-semibold">
+          <span
+            class="global-node text-brand-100/90 inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/8 px-3 py-2"
+          >
+            <span class="bg-ember-500 h-1.5 w-1.5 rounded-full"></span>
+            <span lang="en">Dongguan manufacturing base</span><span lang="zh">东莞制造基地</span>
+          </span>
+          <span
+            class="global-node text-brand-100/90 inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/8 px-3 py-2"
+          >
+            <span class="bg-spark-400 h-1.5 w-1.5 rounded-full"></span>
+            <span lang="en">Worldwide OEM / ODM support</span><span lang="zh"
+              >全球 OEM / ODM 支持</span
+            >
+          </span>
+        </div>
       </div>
 
-      <div>
-        <h2 class="font-display text-sm font-semibold tracking-wider text-white uppercase">
-          <span lang="en">Contact</span><span lang="zh">联系我们</span>
-        </h2>
-        <ul class="mt-4 space-y-3.5 text-sm">
-          <li>
-            <a
-              href={contact.mapUrl}
-              target="_blank"
-              rel="noopener"
-              class="group flex items-start gap-3 transition hover:text-white"
-              aria-label="在高德地图中查看地址 · View address on Amap"
-            >
-              <span
-                class="bg-brand-500 group-hover:bg-accent inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white transition"
-              >
-                <Icon name="location" class="h-4.5 w-4.5" />
-              </span>
-              <span class="pt-1.5"><T text={contact.address} /></span>
-            </a>
-          </li>
-          <li>
-            <a
-              href={`https://wa.me/${contact.phoneRaw}`}
-              target="_blank"
-              rel="noopener"
-              class="group inline-flex items-center gap-3 transition hover:text-white"
-            >
-              <span
-                class="bg-brand-500 group-hover:bg-accent inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white transition"
-              >
-                <Icon name="chat" class="h-4.5 w-4.5" />
-              </span>
-              WhatsApp: {contact.phone}
-            </a>
-          </li>
-          <li>
-            <a
-              href={`mailto:${contact.email}`}
-              class="group inline-flex items-center gap-3 transition hover:text-white"
-            >
-              <span
-                class="bg-brand-500 group-hover:bg-accent inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white transition"
-              >
-                <Icon name="mail" class="h-4.5 w-4.5" />
-              </span>
-              {contact.email}
-            </a>
-          </li>
-        </ul>
+      <div class="lg:justify-self-end">
+        <div
+          class="max-w-xl rounded-[var(--radius-card)] border border-white/12 bg-white/8 p-4 shadow-[var(--shadow-card)] backdrop-blur-sm sm:p-5"
+        >
+          <div class="mb-4 flex items-end justify-between gap-4">
+            <div>
+              <p class="eyebrow text-ember-400">
+                <span lang="en">Global contact</span><span lang="zh">全球业务联系</span>
+              </p>
+              <h2 class="font-display mt-1 text-2xl leading-tight font-bold text-white">
+                <span lang="en">Talk to Heanxin</span><span lang="zh">联系禾安鑫</span>
+              </h2>
+            </div>
+            <Icon name="globe" class="text-spark-400/70 hidden h-9 w-9 sm:block" />
+          </div>
+
+          <ul class="grid gap-3 text-sm">
+            {
+              contactItems.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    target={item.external ? "_blank" : undefined}
+                    rel={item.external ? "noopener" : undefined}
+                    aria-label={item.aria}
+                    class="footer-contact-card group text-brand-100/88 hover:border-spark-400/45 flex items-start gap-3 rounded-lg border border-white/10 bg-white/7 px-3.5 py-3 transition hover:-translate-y-0.5 hover:bg-white/11 hover:text-white"
+                  >
+                    <span class="bg-brand-500/80 group-hover:bg-ember-500 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white ring-1 ring-white/14 transition">
+                      <Icon name={item.icon} class="h-4.5 w-4.5" />
+                    </span>
+                    <span class="pt-1">
+                      {item.content ? <T text={item.content} /> : item.label}
+                    </span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
       </div>
     </div>
 
     <div class="relative border-t border-white/10">
       <div
-        class="container-page text-brand-100/70 flex flex-col gap-2 py-5 text-xs sm:flex-row sm:items-center sm:justify-between"
+        class="container-page text-brand-100/68 flex flex-col gap-2 py-5 text-xs sm:flex-row sm:items-center sm:justify-between"
       >
         <p>
           <span lang="en">© {year} {company.name.en}. All rights reserved.</span><span lang="zh"

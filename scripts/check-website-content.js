@@ -869,6 +869,23 @@ function assertTopPageEyebrowsHidden() {
   }
 }
 
+function assertFooterGlobalDesign() {
+  const footer = readText("src/components/Footer.astro");
+  const worldMapPath = "src/components/WorldMapOutline.astro";
+
+  assert(existsSync(path.join(root, worldMapPath)), `${worldMapPath} must exist`);
+  assertContains(footer, "WorldMapOutline", "Footer global background");
+  assertContains(footer, "footer-global-map", "Footer global map layer");
+  assertContains(footer, "footer-surface", "Footer redesigned surface");
+  assertContains(footer, "footer-topline", "Footer lightweight top transition");
+  assertContains(footer, "footer-contact-card", "Footer contact cards");
+  assertContains(footer, "global-node", "Footer global business nodes");
+  assertNotContains(footer, "WorldMapDots", "Footer global background");
+  assertNotContains(footer, "hidden w-[760px]", "Footer global map mobile visibility");
+  assertNotContains(footer, "h-[90px] w-full sm:h-[120px]", "Footer old thick wave");
+  assertNotContains(footer, "Layered wave transition", "Footer old wave comment");
+}
+
 function assertSeoAndEngineeringQuality() {
   const readme = readText("README.md");
   const baseLayout = readText("src/layouts/BaseLayout.astro");
@@ -909,6 +926,7 @@ const checks = [
   assertHomeBuyerJourney,
   assertHomeVisualRefinement,
   assertTopPageEyebrowsHidden,
+  assertFooterGlobalDesign,
   assertSeoAndEngineeringQuality,
 ];
 
