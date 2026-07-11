@@ -1,6 +1,7 @@
 ---
 import type { LocalizedText } from "../lib/i18n";
-import { url } from "../lib/i18n";
+import { Picture } from "astro:assets";
+import { resolveImage, responsiveWidths } from "../lib/images";
 
 interface ImageAsset {
   src: string;
@@ -18,6 +19,7 @@ interface Props {
   priority?: boolean;
   fit?: "cover" | "contain";
   sizes?: string;
+  widths?: number[];
 }
 
 const {
@@ -29,6 +31,7 @@ const {
   priority = false,
   fit = "cover",
   sizes = "100vw",
+  widths = [320, 480, 640, 960],
 } = Astro.props;
 
 const aspectClass = {
@@ -44,18 +47,26 @@ const fitClass = fit === "contain" ? "object-contain" : "object-cover";
 const loadingValue = priority ? "eager" : loading;
 const fetchPriority = priority ? "high" : undefined;
 const alt = `${image.alt.en} / ${image.alt.zh}`;
+const source = resolveImage(image.src);
+const outputWidths = responsiveWidths(source, widths);
+const outputWidth = outputWidths.at(-1) ?? source.width;
+const outputHeight = Math.round((outputWidth / source.width) * source.height);
 ---
 
 <div class:list={["bg-surface relative overflow-hidden", aspectClass, className]}>
-  <img
-    src={url(image.src)}
-    width={image.width}
-    height={image.height}
+  <Picture
+    src={source}
+    formats={["avif"]}
+    fallbackFormat="webp"
+    widths={outputWidths}
+    width={outputWidth}
+    height={outputHeight}
     alt={alt}
     loading={loadingValue}
     decoding="async"
     fetchpriority={fetchPriority}
     sizes={sizes}
+    pictureAttributes={{ class: "contents" }}
     class:list={["h-full w-full", fitClass, imgClass]}
   />
 </div>

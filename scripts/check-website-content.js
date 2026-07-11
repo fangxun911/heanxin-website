@@ -18,7 +18,7 @@ function readJson(relativePath) {
 }
 
 function readPngRgba(relativePath) {
-  const absolutePath = path.join(root, "public", relativePath);
+  const absolutePath = path.join(root, "src/assets", relativePath);
   const buffer = readFileSync(absolutePath);
   const signature = "89504e470d0a1a0a";
   assert(buffer.subarray(0, 8).toString("hex") === signature, `${relativePath} must be a PNG`);
@@ -141,7 +141,7 @@ function assertImageAsset(asset, label) {
   assert(Number.isInteger(asset.width) && asset.width > 0, `${label}.width`);
   assert(Number.isInteger(asset.height) && asset.height > 0, `${label}.height`);
   assertLocalized(asset.alt, `${label}.alt`);
-  assert(existsSync(path.join(root, "public", asset.src)), `${label}.src file must exist`);
+  assert(existsSync(path.join(root, "src/assets", asset.src)), `${label}.src file must exist`);
 }
 
 function listSourceFiles(relativeDir) {
@@ -538,6 +538,7 @@ function assertRealMediaAssets() {
     "src/components/ResponsiveImage.astro",
     "src/components/ProductGallery.astro",
     "src/components/ImageHero.astro",
+    "src/lib/images.ts",
   ];
   for (const component of requiredComponents) {
     assert(existsSync(path.join(root, component)), `${component} must exist`);
@@ -683,12 +684,12 @@ function assertHomeVisualRefinement() {
   const mediaText = readText("src/content/media.json");
   const page = readText("src/pages/index.astro");
   const hero = readText("src/components/HomeHero.astro");
-  const oldJpgBanner = path.join(root, "public", "images/products/banner-home.jpg");
-  const oldWebpBanner = path.join(root, "public", "images/products/banner-home.webp");
-  const oldCleanBanner = path.join(root, "public", "images/products/banner-home-clean.webp");
+  const oldJpgBanner = path.join(root, "src/assets", "images/products/banner-home.jpg");
+  const oldWebpBanner = path.join(root, "src/assets", "images/products/banner-home.webp");
+  const oldCleanBanner = path.join(root, "src/assets", "images/products/banner-home-clean.webp");
   const oldTransparentBanner = path.join(
     root,
-    "public",
+    "src/assets",
     "images/products/banner-home-transparent.png"
   );
 
@@ -705,7 +706,7 @@ function assertHomeVisualRefinement() {
     "home banner dimensions must match the client PNG"
   );
   assert(
-    existsSync(path.join(root, "public", media.banners.home.src)),
+    existsSync(path.join(root, "src/assets", media.banners.home.src)),
     "PNG home banner background file must exist"
   );
   assertNotContains(mediaText, "首页Banner图.jpg", "Home media registry");
@@ -744,8 +745,15 @@ function assertHomeVisualRefinement() {
   );
   assertContains(
     hero,
-    "src={url(image.src)}",
-    "Home hero background image must use url() for base path safety"
+    "src={source}",
+    "Home hero background image must use an imported Astro image asset"
+  );
+  assertContains(hero, 'formats={["avif"]}', "Home hero must provide an AVIF source");
+  assertContains(hero, 'fallbackFormat="webp"', "Home hero must provide a WebP fallback");
+  assertContains(
+    hero,
+    "responsiveWidths(source, [480, 768, 1024, 1280, 1672])",
+    "Home hero must provide responsive image widths"
   );
   assertContains(
     hero,

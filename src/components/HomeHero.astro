@@ -1,6 +1,8 @@
 ---
 import type { LocalizedText } from "../lib/i18n";
 import { url } from "../lib/i18n";
+import { Picture } from "astro:assets";
+import { resolveImage, responsiveWidths } from "../lib/images";
 import Icon from "./Icon.astro";
 import T from "./T.astro";
 
@@ -26,18 +28,24 @@ interface Props {
 }
 
 const { title, subtitle, image, primaryCta, secondaryCta } = Astro.props;
+const source = resolveImage(image.src);
+const widths = responsiveWidths(source, [480, 768, 1024, 1280, 1672]);
 ---
 
 <section class="home-hero relative overflow-hidden">
-  <img
-    src={url(image.src)}
-    width={image.width}
-    height={image.height}
+  <Picture
+    src={source}
+    formats={["avif"]}
+    fallbackFormat="webp"
+    widths={widths}
+    width={source.width}
+    height={source.height}
     alt=""
     loading="eager"
     decoding="async"
     fetchpriority="high"
     sizes="100vw"
+    pictureAttributes={{ class: "contents" }}
     class="home-hero__background pointer-events-none absolute inset-0 h-full w-full"
     aria-hidden="true"
   />

@@ -7,10 +7,11 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/check-image-performance.js",
     "preview": "astro preview",
     "astro": "astro",
     "test:content": "node scripts/check-website-content.js",
+    "test:images": "node scripts/check-image-performance.js",
     "format": "prettier --write \"**/*.{astro,ts,js,mjs,css,json,md}\"",
     "format:check": "prettier --check \"**/*.{astro,ts,js,mjs,css,json,md}\""
   },

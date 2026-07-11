@@ -2,6 +2,7 @@
 import type { LocalizedText } from "../lib/i18n";
 import { url } from "../lib/i18n";
 import Icon from "./Icon.astro";
+import ResponsiveImage from "./ResponsiveImage.astro";
 import T from "./T.astro";
 
 interface ImageAsset {
@@ -20,7 +21,6 @@ interface Props {
 }
 
 const { icon, title, desc, image, href } = Astro.props;
-const alt = `${image.alt.en} / ${image.alt.zh}`;
 ---
 
 <a
@@ -28,15 +28,12 @@ const alt = `${image.alt.en} / ${image.alt.zh}`;
   href={url(href)}
   class="group border-line hover:border-brand-200 relative grid h-full grid-cols-[6.5rem_1fr] items-center gap-3 rounded-lg border bg-white/80 p-4 shadow-sm transition duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-[var(--shadow-card)] max-sm:grid-cols-1"
 >
-  <img
-    src={url(image.src)}
-    width={image.width}
-    height={image.height}
-    alt={alt}
-    loading="lazy"
-    decoding="async"
+  <ResponsiveImage
+    image={image}
+    fit="contain"
     sizes="(min-width: 1024px) 16vw, 42vw"
-    class="h-24 w-full object-contain mix-blend-multiply drop-shadow-md transition duration-300 group-hover:scale-105 max-sm:h-32"
+    class="h-24 w-full bg-transparent max-sm:h-32"
+    imgClass="mix-blend-multiply drop-shadow-md transition duration-300 group-hover:scale-105"
   />
   <div class="min-w-0">
     <div class="text-brand-500 mb-2 inline-flex items-center gap-2 text-sm font-semibold">
