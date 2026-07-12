@@ -16,6 +16,7 @@
   "categories": [
     {
       "no": "01",
+      "slug": "electronic-housings",
       "title": {
         "en": "Plastic Electronic Enclosures",
         "zh": "塑胶电子外壳"
@@ -53,6 +54,7 @@
     },
     {
       "no": "02",
+      "slug": "industrial-components",
       "title": {
         "en": "Industrial Plastic Components",
         "zh": "工业塑胶零部件"
@@ -89,6 +91,7 @@
     },
     {
       "no": "03",
+      "slug": "smart-home-appliance",
       "title": {
         "en": "Smart Home & Small Appliance Parts",
         "zh": "智能家居与小家电配件"
@@ -125,6 +128,7 @@
     },
     {
       "no": "04",
+      "slug": "automotive-components",
       "title": {
         "en": "Automotive Plastic Components",
         "zh": "汽车塑胶零部件"
@@ -161,6 +165,7 @@
     },
     {
       "no": "05",
+      "slug": "insert-molding",
       "title": {
         "en": "Plastic & Metal Insert Molding Parts",
         "zh": "五金塑胶嵌件成型件"
@@ -197,6 +202,7 @@
     },
     {
       "no": "06",
+      "slug": "custom-plastic-products",
       "title": {
         "en": "Custom Plastic Products",
         "zh": "定制塑胶产品"
@@ -233,6 +239,7 @@
     },
     {
       "no": "07",
+      "slug": "display-boxes",
       "title": {
         "en": "Display Boxes",
         "zh": "展示盒"

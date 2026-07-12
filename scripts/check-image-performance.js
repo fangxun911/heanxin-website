@@ -122,10 +122,34 @@ for (const [label, srcset] of [
 
 const productsHtml = readFileSync(path.join(dist, "products/index.html"), "utf8");
 const productImages = productsHtml.match(/<img\b[^>]*>/g) ?? [];
+const eagerProductImages = productImages.filter((image) => attribute(image, "loading") === "eager");
+const highPriorityProductImages = productImages.filter(
+  (image) => attribute(image, "fetchpriority") === "high"
+);
+const productMarkupBeforeTemplates = productsHtml.split(
+  "<template data-product-panel-template="
+)[0];
+const initialPreviewCount = (productMarkupBeforeTemplates.match(/data-product-image/g) ?? [])
+  .length;
 assert(productImages.length > 0, "Products page must contain product images");
 assert(
-  productImages.every((image) => attribute(image, "loading") === "lazy"),
-  "Products page contains a non-lazy product image"
+  eagerProductImages.length === 1 && highPriorityProductImages.length === 1,
+  "Products page must only prioritize the portfolio hero image"
+);
+assert(
+  productImages.every(
+    (image) => attribute(image, "loading") === "lazy" || highPriorityProductImages.includes(image)
+  ),
+  "Products page contains an unexpected eager image"
+);
+assert(initialPreviewCount === 5, "Products page must initially render exactly five previews");
+assert(
+  (productsHtml.match(/<template data-product-panel-template=/g) ?? []).length === 7,
+  "Products page must contain seven inert category templates"
+);
+assert(
+  (productsHtml.match(/<template data-product-gallery-template=/g) ?? []).length === 7,
+  "Products page must contain seven inert gallery templates"
 );
 
 console.log(

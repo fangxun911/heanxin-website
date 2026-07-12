@@ -1,0 +1,484 @@
+---
+import type { LocalizedText } from "../lib/i18n";
+import media from "../content/media.json";
+import ProductCategoryPanel from "./ProductCategoryPanel.astro";
+import ResponsiveImage from "./ResponsiveImage.astro";
+import T from "./T.astro";
+
+interface Category {
+  no: string;
+  slug: string;
+  title: LocalizedText;
+  desc: LocalizedText;
+  examples: LocalizedText[];
+  coverImage: string;
+  galleryImages: string[];
+}
+
+interface Props {
+  categories: Category[];
+}
+
+const { categories } = Astro.props;
+const assets = media.assetMap;
+const catalog = categories.map((category) => {
+  const imageIds = [...new Set([category.coverImage, ...category.galleryImages])];
+  return {
+    category,
+    images: imageIds.map((id) => assets[id]).filter(Boolean),
+  };
+});
+const initial = catalog[0];
+---
+
+<section class="product-explorer container-page py-14" data-product-explorer>
+  <div class="grid min-w-0 gap-8 lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-12">
+    <aside class="min-w-0 lg:sticky lg:top-24 lg:self-start">
+      <div class="mb-5 flex items-end justify-between gap-4 lg:block">
+        <div>
+          <p class="text-ember-700 text-xs font-bold tracking-[0.2em] uppercase">
+            <span lang="en">Product index</span><span lang="zh">产品索引</span>
+          </p>
+          <p class="font-display text-brand-800 mt-2 text-xl font-semibold">
+            <span lang="en">Select a family</span><span lang="zh">选择产品分类</span>
+          </p>
+        </div>
+        <span class="text-muted text-xs lg:mt-3 lg:block">
+          <span lang="en">07 categories</span><span lang="zh">共 07 个分类</span>
+        </span>
+      </div>
+
+      <div
+        class="product-category-tabs -mx-5 flex w-[calc(100%+2.5rem)] max-w-none snap-x gap-2 overflow-x-auto px-5 pb-3 lg:mx-0 lg:block lg:w-full lg:max-w-full lg:overflow-visible lg:px-0 lg:pb-0"
+        role="tablist"
+        aria-label="Product categories / 产品分类"
+        data-product-tabs
+      >
+        {
+          catalog.map(({ category }, index) => (
+            <button
+              type="button"
+              id={`product-tab-${category.slug}`}
+              class="product-category-tab border-line min-w-[14rem] snap-start border px-4 py-3 text-left transition lg:mb-2 lg:w-full lg:min-w-0"
+              role="tab"
+              aria-selected={index === 0 ? "true" : "false"}
+              aria-controls="product-category-stage"
+              tabindex={index === 0 ? 0 : -1}
+              data-category-tab={category.slug}
+            >
+              <span class="flex items-center gap-3">
+                <span class="font-display text-ember-600 text-sm font-bold">{category.no}</span>
+                <span class="font-display text-brand-700 text-sm leading-snug font-semibold">
+                  <T text={category.title} />
+                </span>
+              </span>
+            </button>
+          ))
+        }
+      </div>
+    </aside>
+
+    <div
+      id="product-category-stage"
+      class="product-explorer-stage min-w-0"
+      role="tabpanel"
+      aria-labelledby={`product-tab-${initial.category.slug}`}
+      aria-live="polite"
+      data-product-stage
+    >
+      <ProductCategoryPanel category={initial.category} images={initial.images} />
+    </div>
+  </div>
+
+  <div hidden aria-hidden="true">
+    {
+      catalog.map(({ category, images }) => (
+        <template data-product-panel-template={category.slug}>
+          <ProductCategoryPanel category={category} images={images} />
+        </template>
+      ))
+    }
+
+    {
+      catalog.map(({ category, images }) => (
+        <template
+          data-product-gallery-template={category.slug}
+          data-category-title-en={category.title.en}
+          data-category-title-zh={category.title.zh}
+        >
+          <div class="product-lightbox-thumbnails" data-lightbox-thumbnail-list>
+            {images.map((image, index) => (
+              <button
+                type="button"
+                class="product-lightbox-thumbnail border-line bg-canvas shrink-0 border p-1"
+                data-lightbox-thumbnail
+                data-image-index={index}
+                aria-label={`${image.alt.en} / ${image.alt.zh}`}
+              >
+                <span data-lightbox-picture>
+                  <ResponsiveImage
+                    image={image}
+                    fit="contain"
+                    class="h-20 w-20 bg-white p-1 sm:h-24 sm:w-24"
+                    sizes="112px"
+                    widths={[320, 480, 768, 1024, 1280]}
+                  />
+                </span>
+              </button>
+            ))}
+          </div>
+        </template>
+      ))
+    }
+  </div>
+
+  <dialog class="product-lightbox m-auto h-[94vh] w-[96vw] max-w-[90rem] p-0" data-product-lightbox>
+    <div class="flex h-full min-h-0 flex-col bg-white">
+      <header
+        class="border-line flex items-center justify-between gap-5 border-b px-4 py-3 sm:px-6"
+      >
+        <div class="min-w-0">
+          <p class="font-display text-brand-800 truncate text-lg font-semibold sm:text-xl">
+            <span lang="en" data-lightbox-title-en></span>
+            <span lang="zh" data-lightbox-title-zh></span>
+          </p>
+          <p
+            class="text-muted mt-1 text-xs font-semibold tracking-widest uppercase"
+            data-lightbox-counter
+          >
+          </p>
+        </div>
+        <button
+          type="button"
+          class="border-line text-brand-700 hover:bg-brand-50 inline-flex h-11 w-11 shrink-0 items-center justify-center border text-xl transition"
+          data-lightbox-close
+          aria-label="Close gallery / 关闭图库"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+      </header>
+
+      <div class="relative min-h-0 flex-1 overflow-hidden bg-white" data-lightbox-swipe-area>
+        <div class="flex h-full items-center justify-center p-4 sm:p-8" data-lightbox-main></div>
+        <button
+          type="button"
+          class="bg-brand-800/85 hover:bg-ember-600 absolute top-1/2 left-3 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center text-xl text-white transition sm:left-5"
+          data-lightbox-prev
+          aria-label="Previous image / 上一张"
+        >
+          <span aria-hidden="true">←</span>
+        </button>
+        <button
+          type="button"
+          class="bg-brand-800/85 hover:bg-ember-600 absolute top-1/2 right-3 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center text-xl text-white transition sm:right-5"
+          data-lightbox-next
+          aria-label="Next image / 下一张"
+        >
+          <span aria-hidden="true">→</span>
+        </button>
+      </div>
+
+      <div
+        class="border-line overflow-x-auto border-t bg-white px-4 py-3 sm:px-6"
+        data-lightbox-thumbnails
+      >
+      </div>
+    </div>
+  </dialog>
+
+  <noscript>
+    <div class="border-line mt-12 border-t pt-8">
+      <h2 class="font-display text-brand-800 text-2xl font-semibold">
+        产品分类 / Product Categories
+      </h2>
+      <div class="mt-6 grid gap-5 sm:grid-cols-2">
+        {
+          catalog.map(({ category }) => (
+            <article>
+              <h3 class="font-display text-brand-700 font-semibold">
+                {category.no} · {category.title.zh} / {category.title.en}
+              </h3>
+              <p class="text-muted mt-2 text-sm">
+                {category.desc.zh} / {category.desc.en}
+              </p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </noscript>
+</section>
+
+<script>
+  function initProductExplorer(root: HTMLElement) {
+    if (root.dataset.ready === "true") return;
+    root.dataset.ready = "true";
+
+    const stage = root.querySelector<HTMLElement>("[data-product-stage]");
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>("[data-category-tab]")];
+    const dialog = root.querySelector<HTMLDialogElement>("[data-product-lightbox]");
+    const lightboxMain = root.querySelector<HTMLElement>("[data-lightbox-main]");
+    const thumbnailHost = root.querySelector<HTMLElement>("[data-lightbox-thumbnails]");
+    const titleEn = root.querySelector<HTMLElement>("[data-lightbox-title-en]");
+    const titleZh = root.querySelector<HTMLElement>("[data-lightbox-title-zh]");
+    const counter = root.querySelector<HTMLElement>("[data-lightbox-counter]");
+    const prevButton = root.querySelector<HTMLButtonElement>("[data-lightbox-prev]");
+    const nextButton = root.querySelector<HTMLButtonElement>("[data-lightbox-next]");
+    const closeButton = root.querySelector<HTMLButtonElement>("[data-lightbox-close]");
+    const swipeArea = root.querySelector<HTMLElement>("[data-lightbox-swipe-area]");
+
+    if (!stage || !dialog || !lightboxMain || !thumbnailHost || !counter) return;
+
+    const validSlugs = new Set(tabs.map((tab) => tab.dataset.categoryTab));
+    let activeSlug = tabs[0]?.dataset.categoryTab ?? "";
+    let activeImageIndex = 0;
+    let imageCount = 0;
+    let lastTrigger: HTMLElement | null = null;
+    let swipeStartX: number | null = null;
+
+    function slugFromHash() {
+      const slug = decodeURIComponent(window.location.hash.slice(1));
+      return validSlugs.has(slug) ? slug : null;
+    }
+
+    function updateTabs(slug: string) {
+      for (const tab of tabs) {
+        const selected = tab.dataset.categoryTab === slug;
+        tab.setAttribute("aria-selected", String(selected));
+        tab.tabIndex = selected ? 0 : -1;
+      }
+    }
+
+    function showCategory(slug: string, updateHistory = false) {
+      const template = root.querySelector<HTMLTemplateElement>(
+        `template[data-product-panel-template="${slug}"]`
+      );
+      const selectedTab = tabs.find((tab) => tab.dataset.categoryTab === slug);
+      if (!template || !selectedTab) return;
+
+      stage.replaceChildren(template.content.cloneNode(true));
+      stage.setAttribute("aria-labelledby", selectedTab.id);
+      activeSlug = slug;
+      updateTabs(slug);
+
+      if (updateHistory && window.location.hash.slice(1) !== slug) {
+        window.history.pushState(null, "", `#${slug}`);
+      }
+    }
+
+    function setLightboxImage(index: number) {
+      if (!imageCount) return;
+      activeImageIndex = (index + imageCount) % imageCount;
+      const thumbnails = [
+        ...thumbnailHost.querySelectorAll<HTMLButtonElement>("[data-lightbox-thumbnail]"),
+      ];
+      const selected = thumbnails.find(
+        (thumbnail) => Number(thumbnail.dataset.imageIndex) === activeImageIndex
+      );
+      const picture = selected?.querySelector<HTMLElement>("[data-lightbox-picture]");
+      if (!selected || !picture) return;
+
+      const largePicture = picture.cloneNode(true) as HTMLElement;
+      largePicture.querySelectorAll<HTMLElement>("[sizes]").forEach((element) => {
+        element.setAttribute("sizes", "(min-width: 1280px) 1100px, 90vw");
+      });
+      largePicture.querySelector("div")?.classList.add("product-lightbox-main-image");
+      lightboxMain.replaceChildren(largePicture);
+
+      for (const thumbnail of thumbnails) {
+        thumbnail.setAttribute(
+          "aria-current",
+          String(Number(thumbnail.dataset.imageIndex) === activeImageIndex)
+        );
+      }
+      counter.textContent = `${String(activeImageIndex + 1).padStart(2, "0")} / ${String(
+        imageCount
+      ).padStart(2, "0")}`;
+      selected.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    }
+
+    function openLightbox(index: number, trigger: HTMLElement) {
+      const template = root.querySelector<HTMLTemplateElement>(
+        `template[data-product-gallery-template="${activeSlug}"]`
+      );
+      if (!template) return;
+
+      const gallery = template.content.cloneNode(true) as DocumentFragment;
+      const list = gallery.querySelector<HTMLElement>("[data-lightbox-thumbnail-list]");
+      if (!list) return;
+
+      thumbnailHost.replaceChildren(...list.childNodes);
+      imageCount = thumbnailHost.querySelectorAll("[data-lightbox-thumbnail]").length;
+      if (titleEn) titleEn.textContent = template.dataset.categoryTitleEn ?? "";
+      if (titleZh) titleZh.textContent = template.dataset.categoryTitleZh ?? "";
+      lastTrigger = trigger;
+      dialog.showModal();
+      setLightboxImage(index);
+    }
+
+    root.addEventListener("click", (event) => {
+      const target = event.target as HTMLElement;
+      const tab = target.closest<HTMLButtonElement>("[data-category-tab]");
+      if (tab?.dataset.categoryTab) {
+        showCategory(tab.dataset.categoryTab, true);
+        return;
+      }
+
+      const imageButton = target.closest<HTMLButtonElement>("[data-product-image]");
+      if (imageButton) {
+        openLightbox(Number(imageButton.dataset.imageIndex ?? 0), imageButton);
+        return;
+      }
+
+      const thumbnail = target.closest<HTMLButtonElement>("[data-lightbox-thumbnail]");
+      if (thumbnail) setLightboxImage(Number(thumbnail.dataset.imageIndex ?? 0));
+    });
+
+    root.addEventListener("keydown", (event) => {
+      const target = event.target as HTMLElement;
+      const tab = target.closest<HTMLButtonElement>("[data-category-tab]");
+      if (tab && ["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp"].includes(event.key)) {
+        event.preventDefault();
+        const currentIndex = tabs.indexOf(tab);
+        const direction = event.key === "ArrowRight" || event.key === "ArrowDown" ? 1 : -1;
+        const nextTab = tabs[(currentIndex + direction + tabs.length) % tabs.length];
+        nextTab.focus();
+        if (nextTab.dataset.categoryTab) showCategory(nextTab.dataset.categoryTab, true);
+      }
+
+      if (!dialog.open) return;
+      if (event.key === "Escape") {
+        event.preventDefault();
+        dialog.close();
+        return;
+      }
+      if (event.key === "ArrowLeft") setLightboxImage(activeImageIndex - 1);
+      if (event.key === "ArrowRight") setLightboxImage(activeImageIndex + 1);
+    });
+
+    prevButton?.addEventListener("click", () => setLightboxImage(activeImageIndex - 1));
+    nextButton?.addEventListener("click", () => setLightboxImage(activeImageIndex + 1));
+    closeButton?.addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+    dialog.addEventListener("close", () => {
+      lightboxMain.replaceChildren();
+      thumbnailHost.replaceChildren();
+      lastTrigger?.focus();
+    });
+
+    swipeArea?.addEventListener("pointerdown", (event) => {
+      swipeStartX = event.clientX;
+    });
+    swipeArea?.addEventListener("pointerup", (event) => {
+      if (swipeStartX === null) return;
+      const distance = event.clientX - swipeStartX;
+      swipeStartX = null;
+      if (Math.abs(distance) < 50) return;
+      setLightboxImage(activeImageIndex + (distance < 0 ? 1 : -1));
+    });
+
+    const onHistoryChange = () => {
+      const slug = slugFromHash();
+      if (slug && slug !== activeSlug) showCategory(slug);
+    };
+    window.addEventListener("popstate", onHistoryChange);
+    window.addEventListener("hashchange", onHistoryChange);
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        window.removeEventListener("popstate", onHistoryChange);
+        window.removeEventListener("hashchange", onHistoryChange);
+      },
+      { once: true }
+    );
+
+    const initialSlug = slugFromHash();
+    if (initialSlug && initialSlug !== activeSlug) showCategory(initialSlug);
+  }
+
+  function initProductExplorers() {
+    document
+      .querySelectorAll<HTMLElement>("[data-product-explorer]")
+      .forEach((root) => initProductExplorer(root));
+  }
+
+  initProductExplorers();
+  document.addEventListener("astro:page-load", initProductExplorers);
+</script>
+
+<style>
+  .product-category-tab {
+    background: var(--color-canvas);
+  }
+
+  .product-category-tab:hover {
+    border-color: var(--color-brand-200);
+    background: var(--color-brand-50);
+  }
+
+  .product-category-tab[aria-selected="true"] {
+    border-color: var(--color-brand-700);
+    background: var(--color-brand-800);
+  }
+
+  .product-category-tab[aria-selected="true"] :global(.text-brand-700) {
+    color: white;
+  }
+
+  .product-explorer-stage :global(.product-category-panel) {
+    animation: product-panel-in 0.36s ease both;
+  }
+
+  .product-lightbox {
+    border: 1px solid var(--color-line);
+    color: var(--color-ink);
+  }
+
+  .product-lightbox::backdrop {
+    background: color-mix(in srgb, var(--color-brand-900) 78%, transparent);
+    backdrop-filter: blur(8px);
+  }
+
+  .product-lightbox-thumbnails {
+    display: flex;
+    gap: 0.75rem;
+    width: max-content;
+  }
+
+  .product-lightbox-thumbnail[aria-current="true"] {
+    border-color: var(--color-ember-500);
+    box-shadow: 0 0 0 2px var(--color-ember-100);
+  }
+
+  :global(.product-lightbox-main-image) {
+    width: min(72vw, 68rem);
+    height: min(66vh, 48rem);
+    background: white;
+  }
+
+  @keyframes product-panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .product-explorer-stage :global(.product-category-panel) {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 639px) {
+    :global(.product-lightbox-main-image) {
+      width: 88vw;
+      height: 62vh;
+    }
+  }
+</style>

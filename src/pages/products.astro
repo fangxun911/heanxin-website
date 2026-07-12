@@ -1,10 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import IconFeatureCard from "../components/IconFeatureCard.astro";
-import SectionHeader from "../components/SectionHeader.astro";
-import ProductGallery from "../components/ProductGallery.astro";
-import ProductTaxonomyCard from "../components/ProductTaxonomyCard.astro";
-import ProductShowcaseGrid from "../components/ProductShowcaseGrid.astro";
+import Icon from "../components/Icon.astro";
+import ProductExplorer from "../components/ProductExplorer.astro";
+import ResponsiveImage from "../components/ResponsiveImage.astro";
 import T from "../components/T.astro";
 import media from "../content/media.json";
 import products from "../content/products.json";
@@ -12,89 +10,147 @@ import showcase from "../content/showcase.json";
 import { url } from "../lib/i18n";
 
 const assets = media.assetMap;
+const categoryCount = products.categories.length;
+const totalPhotos = new Set(
+  products.categories.flatMap((category) => [category.coverImage, ...category.galleryImages])
+).size;
 ---
 
 <BaseLayout
   title="产品分类"
   description="禾安鑫制造塑胶电子外壳、工业塑胶零部件、智能家居与小家电配件、汽车塑胶零部件、五金塑胶嵌件成型件、定制塑胶产品和展示盒。"
 >
-  <section class="container-page pt-12 pb-8">
-    <SectionHeader title={products.header.title} subtitle={products.header.subtitle} as="h1" />
+  <section class="border-line relative overflow-hidden border-b bg-white">
+    <div
+      class="pointer-events-none absolute inset-y-0 right-0 hidden w-1/2 lg:block"
+      aria-hidden="true"
+    >
+      <div class="border-brand-100 absolute top-0 right-[18%] h-full border-l"></div>
+      <div class="border-brand-100 absolute top-1/2 right-0 w-full border-t"></div>
+      <span
+        class="bg-ember-500 absolute top-1/2 right-[18%] h-2.5 w-2.5 -translate-y-1/2 rounded-full"
+      ></span>
+    </div>
+
+    <div
+      class="container-page relative grid gap-10 py-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:py-16"
+    >
+      <div class="max-w-2xl">
+        <p class="text-ember-700 text-xs font-bold tracking-[0.22em] uppercase">
+          <span lang="en">Product portfolio · 2026</span><span lang="zh">产品画册 · 2026</span>
+        </p>
+        <h1
+          class="font-display text-brand-800 mt-5 text-4xl leading-[1.04] font-semibold tracking-[-0.035em] sm:text-5xl xl:text-6xl"
+        >
+          <T text={products.header.title} />
+        </h1>
+        <p class="text-muted mt-6 max-w-xl text-lg leading-relaxed">
+          <T text={products.header.subtitle} />
+        </p>
+
+        <div class="border-line mt-9 flex max-w-lg border-y py-5">
+          <div class="min-w-0 flex-1">
+            <strong class="font-display text-brand-800 block text-4xl font-semibold">
+              {String(categoryCount).padStart(2, "0")}
+            </strong>
+            <span class="text-muted mt-1 block text-xs font-semibold tracking-widest uppercase">
+              <span lang="en">Product families</span><span lang="zh">产品分类</span>
+            </span>
+          </div>
+          <div class="border-line min-w-0 flex-1 border-l pl-7">
+            <strong class="font-display text-brand-800 block text-4xl font-semibold">
+              {String(totalPhotos).padStart(2, "0")}
+            </strong>
+            <span class="text-muted mt-1 block text-xs font-semibold tracking-widest uppercase">
+              <span lang="en">Project photos</span><span lang="zh">项目实拍</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative lg:pl-6">
+        <div
+          class="border-brand-100 absolute -top-4 -right-4 h-28 w-28 border-t border-r"
+          aria-hidden="true"
+        >
+        </div>
+        <ResponsiveImage
+          image={assets.productLineBanner}
+          aspect="wide"
+          fit="contain"
+          priority
+          class="border-line relative border bg-white p-3 sm:p-5"
+          sizes="(min-width: 1024px) 52vw, 100vw"
+          widths={[480, 768, 1024, 1280, 1600]}
+        />
+        <div class="bg-brand-800 absolute -bottom-5 left-0 px-5 py-3 text-white sm:left-10">
+          <p class="text-xs font-semibold tracking-widest uppercase">
+            <span lang="en">Injection molding · Insert molding · OEM / ODM</span>
+            <span lang="zh">注塑成型 · 嵌件注塑 · OEM / ODM</span>
+          </p>
+        </div>
+      </div>
+    </div>
   </section>
+
+  <ProductExplorer categories={products.categories} />
 
   <section class="container-page pb-12">
-    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="border-line grid border-y sm:grid-cols-2 xl:grid-cols-4">
       {
-        products.categories.map((category) => (
-          <ProductTaxonomyCard
-            no={category.no}
-            title={category.title}
-            desc={category.desc}
-            examples={category.examples}
-            image={assets[category.coverImage]}
-          />
+        showcase.whyChooseUs.reasons.map((reason, index) => (
+          <div
+            class:list={[
+              "flex gap-4 px-5 py-6",
+              index > 0 && "border-line max-xl:border-t xl:border-l",
+              index === 1 && "sm:border-t-0 sm:border-l",
+              index === 2 && "xl:border-t-0",
+            ]}
+          >
+            <span class="text-ember-600 mt-0.5 shrink-0">
+              <Icon name={reason.icon} class="h-6 w-6" />
+            </span>
+            <div>
+              <h2 class="font-display text-brand-700 font-semibold">
+                <T text={reason.title} />
+              </h2>
+              <p class="text-muted mt-1 text-sm leading-relaxed">
+                <T text={reason.desc} />
+              </p>
+            </div>
+          </div>
         ))
       }
     </div>
   </section>
 
-  <section class="container-page py-14">
-    <SectionHeader
-      eyebrow={{ en: "Full Product Gallery", zh: "完整产品图库" }}
-      title={{
-        en: "Seven Product Categories With Real Project Photos",
-        zh: "七大产品分类实拍图库",
-      }}
-      subtitle={{
-        en: "All client-provided product photos are organized by category, so buyers can quickly match similar structures, materials and application directions.",
-        zh: "将甲方提供的全部产品图片按分类整理，帮助买家快速匹配相近结构、材料和应用方向。",
-      }}
-    />
-    <div class="mt-10">
-      <ProductGallery categories={products.categories} />
-    </div>
-  </section>
-
-  <section class="section-tint border-line border-y py-14">
-    <div class="container-page">
-      <SectionHeader
-        eyebrow={showcase.header.eyebrow}
-        title={showcase.header.title}
-        subtitle={showcase.header.subtitle}
-      />
-      <div class="mt-10">
-        <ProductShowcaseGrid items={showcase.products} />
-      </div>
-    </div>
-  </section>
-
-  <section class="container-page py-14">
-    <SectionHeader title={showcase.whyChooseUs.title} />
-    <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-      {
-        showcase.whyChooseUs.reasons.map((reason) => (
-          <IconFeatureCard icon={reason.icon} title={reason.title} desc={reason.desc} />
-        ))
-      }
-    </div>
-  </section>
-
-  <section class="section-tint border-line border-y py-14">
-    <div class="container-page flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-      <div class="max-w-2xl">
-        <h2 class="font-display text-brand-700 text-3xl font-bold">
-          <T text={products.cta.title} />
-        </h2>
-        <p class="text-muted mt-3 leading-relaxed">
-          <T text={products.cta.desc} />
-        </p>
-      </div>
-      <a
-        href={url("/contact#quote")}
-        class="bg-ember-500 hover:bg-ember-600 inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5"
+  <section class="container-page pb-16">
+    <div class="bg-deep relative overflow-hidden px-6 py-10 text-white sm:px-10 sm:py-12 lg:px-14">
+      <div
+        class="border-spark-400/25 pointer-events-none absolute top-0 right-0 h-full w-1/3 border-l"
+        aria-hidden="true"
       >
-        <T text={products.cta.button} />
-      </a>
+      </div>
+      <div class="relative flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+        <div class="max-w-3xl">
+          <p class="text-ember-300 text-xs font-bold tracking-[0.22em] uppercase">
+            <span lang="en">Custom project evaluation</span><span lang="zh">定制项目评估</span>
+          </p>
+          <h2 class="font-display mt-4 text-3xl leading-tight font-semibold sm:text-4xl">
+            <T text={products.cta.title} />
+          </h2>
+          <p class="mt-4 max-w-2xl leading-relaxed text-white/75">
+            <T text={products.cta.desc} />
+          </p>
+        </div>
+        <a
+          href={url("/contact#quote")}
+          class="bg-ember-500 hover:bg-ember-600 inline-flex shrink-0 items-center justify-center gap-3 px-7 py-3.5 text-sm font-semibold text-white transition hover:-translate-y-0.5"
+        >
+          <T text={products.cta.button} />
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>

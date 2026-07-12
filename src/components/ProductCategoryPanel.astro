@@ -1,0 +1,145 @@
+---
+import type { LocalizedText } from "../lib/i18n";
+import ResponsiveImage from "./ResponsiveImage.astro";
+import T from "./T.astro";
+
+interface ImageAsset {
+  src: string;
+  width: number;
+  height: number;
+  alt: LocalizedText;
+}
+
+interface Category {
+  no: string;
+  slug: string;
+  title: LocalizedText;
+  desc: LocalizedText;
+  examples: LocalizedText[];
+}
+
+interface Props {
+  category: Category;
+  images: ImageAsset[];
+}
+
+const { category, images } = Astro.props;
+const previews = images.slice(0, 5);
+const mainImage = previews[0];
+const supportingImages = previews.slice(1);
+---
+
+<section class="product-category-panel" data-product-panel data-category={category.slug}>
+  <div class="border-line grid gap-6 border-t pt-6 lg:grid-cols-[8rem_1fr_auto] lg:items-start">
+    <p class="font-display text-ember-500 text-6xl leading-none font-semibold tracking-[-0.06em]">
+      {category.no}
+    </p>
+    <div class="max-w-2xl">
+      <h2 class="font-display text-brand-800 text-3xl leading-tight font-semibold sm:text-4xl">
+        <T text={category.title} />
+      </h2>
+      <p class="text-muted mt-4 max-w-xl leading-relaxed">
+        <T text={category.desc} />
+      </p>
+      <div class="mt-5 flex flex-wrap gap-x-5 gap-y-2">
+        {
+          category.examples.map((example) => (
+            <span class="text-brand-600 before:bg-ember-500 inline-flex items-center gap-2 text-sm font-semibold before:h-1.5 before:w-1.5 before:rounded-full">
+              <T text={example} />
+            </span>
+          ))
+        }
+      </div>
+    </div>
+    <div class="border-line flex items-baseline gap-2 border-l pl-5 max-lg:border-l-0 max-lg:pl-0">
+      <strong class="font-display text-brand-800 text-4xl font-semibold">{images.length}</strong>
+      <span class="text-muted text-xs font-semibold tracking-widest uppercase">
+        <span lang="en">Project photos</span><span lang="zh">项目实拍</span>
+      </span>
+    </div>
+  </div>
+
+  <div class="mt-8 grid gap-3 lg:grid-cols-[1.42fr_0.88fr]">
+    {
+      mainImage && (
+        <button
+          type="button"
+          class="group border-line bg-surface relative min-h-[22rem] overflow-hidden border text-left sm:min-h-[30rem] lg:min-h-[38rem]"
+          data-product-image
+          data-image-index="0"
+        >
+          <ResponsiveImage
+            image={mainImage}
+            fit="contain"
+            class="h-full min-h-[22rem] bg-white p-5 sm:min-h-[30rem] lg:min-h-[38rem]"
+            imgClass="transition duration-500 group-hover:scale-[1.025]"
+            sizes="(min-width: 1024px) 58vw, 100vw"
+            widths={[480, 768, 1024, 1280]}
+          />
+          <span class="bg-brand-800 absolute top-5 left-5 px-3 py-1.5 text-xs font-semibold tracking-widest text-white">
+            01 / {String(images.length).padStart(2, "0")}
+          </span>
+          <span class="border-line bg-canvas/90 text-brand-700 absolute right-5 bottom-5 inline-flex items-center gap-2 border px-4 py-2 text-xs font-semibold backdrop-blur-sm">
+            <>
+              <span lang="en">View large</span>
+              <span lang="zh">查看大图</span>
+            </>
+            <span aria-hidden="true">↗</span>
+          </span>
+        </button>
+      )
+    }
+
+    <div class="grid min-h-[26rem] grid-cols-2 grid-rows-2 gap-3 sm:min-h-[34rem] lg:min-h-[38rem]">
+      {
+        supportingImages.map((image, index) => {
+          const imageIndex = index + 1;
+          const isLastPreview = imageIndex === previews.length - 1;
+
+          return (
+            <button
+              type="button"
+              class="group border-line bg-surface relative min-h-0 overflow-hidden border text-left"
+              data-product-image
+              data-image-index={imageIndex}
+            >
+              <ResponsiveImage
+                image={image}
+                fit="contain"
+                class="h-full bg-white p-3"
+                imgClass="transition duration-500 group-hover:scale-105"
+                sizes="(min-width: 1024px) 19vw, 46vw"
+                widths={[320, 480, 640, 800]}
+              />
+              <span class="text-brand-700 bg-canvas/90 absolute top-3 left-3 px-2 py-1 text-[11px] font-semibold">
+                {String(imageIndex + 1).padStart(2, "0")}
+              </span>
+              {isLastPreview && images.length > previews.length && (
+                <span class="product-preview-more absolute inset-0 flex flex-col items-center justify-center text-center text-white">
+                  <strong class="font-display text-4xl font-semibold">
+                    +{images.length - previews.length}
+                  </strong>
+                  <span class="mt-2 text-xs font-semibold tracking-widest uppercase">
+                    <span lang="en">View all</span>
+                    <span lang="zh">查看全部</span>
+                  </span>
+                </span>
+              )}
+            </button>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .product-preview-more {
+    background: color-mix(in srgb, var(--color-brand-900) 78%, transparent);
+    transition: background-color 0.25s ease;
+  }
+
+  button:hover .product-preview-more {
+    background: color-mix(in srgb, var(--color-brand-700) 84%, transparent);
+  }
+</style>

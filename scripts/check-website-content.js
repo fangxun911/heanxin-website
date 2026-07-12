@@ -408,6 +408,7 @@ function assertProductTaxonomy() {
   const products = readJson("src/content/products.json");
   const showcase = readJson("src/content/showcase.json");
   const page = readText("src/pages/products.astro");
+  const explorer = readText("src/components/ProductExplorer.astro");
 
   const requiredCategories = [
     "Plastic Electronic Enclosures",
@@ -420,11 +421,20 @@ function assertProductTaxonomy() {
   ];
 
   const categoryNames = products.categories.map((item) => item.title.en);
+  const categorySlugs = products.categories.map((item) => item.slug);
   for (const category of requiredCategories) {
     assert(categoryNames.includes(category), `products.categories must include ${category}`);
   }
+  assert(
+    new Set(categorySlugs).size === products.categories.length,
+    "product slugs must be unique"
+  );
 
   for (const category of products.categories) {
+    assert(
+      typeof category.slug === "string" && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(category.slug),
+      `product category ${category.no} slug`
+    );
     assertLocalized(category.title, `product category ${category.no} title`);
     assertLocalized(category.desc, `product category ${category.no} desc`);
     assert(typeof category.coverImage === "string", `product category ${category.no} coverImage`);
@@ -451,9 +461,18 @@ function assertProductTaxonomy() {
   }
   assertContains(page, "products.cta", "Products page");
   assertContains(page, "showcase.json", "Products page showcase");
-  assertContains(page, "examples", "Products page category examples");
-  assertContains(page, "ProductGallery", "Products page product gallery");
+  assertContains(page, "ProductExplorer", "Products page interactive catalog");
+  assertContains(page, "productLineBanner", "Products page portfolio hero");
+  assertNotContains(page, "ProductGallery", "Products page old full gallery");
+  assertNotContains(page, "ProductTaxonomyCard", "Products page old taxonomy grid");
+  assertNotContains(page, "ProductShowcaseGrid", "Products page duplicate showcase grid");
   assertContains(page, "/contact#quote", "Products page quote link");
+  assertContains(explorer, "data-product-panel-template", "Product explorer lazy panels");
+  assertContains(explorer, "data-product-gallery-template", "Product explorer lazy galleries");
+  assertContains(explorer, "showModal", "Product explorer lightbox");
+  assertContains(explorer, "window.history.pushState", "Product explorer deep links");
+  assertContains(explorer, "astro:page-load", "Product explorer view transition support");
+  assertContains(explorer, "prefers-reduced-motion", "Product explorer reduced motion support");
 }
 
 function assertRealMediaAssets() {
@@ -536,7 +555,8 @@ function assertRealMediaAssets() {
 
   const requiredComponents = [
     "src/components/ResponsiveImage.astro",
-    "src/components/ProductGallery.astro",
+    "src/components/ProductExplorer.astro",
+    "src/components/ProductCategoryPanel.astro",
     "src/components/ImageHero.astro",
     "src/lib/images.ts",
   ];
