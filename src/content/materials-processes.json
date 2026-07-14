@@ -2,13 +2,35 @@
   "header": {
     "eyebrow": { "en": "Materials & Finishes", "zh": "材料与工艺" },
     "title": {
-      "en": "Materials and Surface Processes",
-      "zh": "材料与表面工艺"
+      "en": "Built from the right material.",
+      "zh": "从选对材料开始。"
     },
     "subtitle": {
-      "en": "Choose the right resin, then match it with the right finishing process for performance, appearance and cost.",
-      "zh": "先选对材料，再匹配合适的表面工艺，平衡性能、外观与成本。"
+      "en": "Match resin performance with the right surface process to make every part work better, look sharper and stay cost-effective.",
+      "zh": "让材料性能与表面工艺精准匹配，让每一个零件更好用、更好看，也更具成本效率。"
+    },
+    "primaryCta": { "en": "Explore materials", "zh": "浏览材料" },
+    "secondaryCta": { "en": "Discuss a project", "zh": "沟通项目" },
+    "materialCount": { "en": "Material routes", "zh": "材料路线" },
+    "processCount": { "en": "Finishing options", "zh": "表面工艺" },
+    "signalLabel": { "en": "Material signal map", "zh": "材料信号图" },
+    "signalCenter": {
+      "en": "Performance\nAppearance\nCost",
+      "zh": "性能\n外观\n成本"
     }
+  },
+  "marquee": {
+    "label": { "en": "Material and process index", "zh": "材料与工艺索引" }
+  },
+  "materialsSection": {
+    "eyebrow": { "en": "01 · Resin library", "zh": "01 · 材料实验室" },
+    "title": { "en": "Start with what the part needs to do", "zh": "先从零件要做什么出发" },
+    "subtitle": {
+      "en": "Strength, clarity, wear resistance or safety — each resin route is selected around the real application, not a one-size-fits-all list.",
+      "zh": "强度、透明度、耐磨性或安全要求——我们从真实应用出发匹配材料，而不是套用单一答案。"
+    },
+    "itemLabel": { "en": "Resin route", "zh": "材料路线" },
+    "countLabel": { "en": "routes ready to compare", "zh": "条路线可供比较" }
   },
   "materials": [
     {
@@ -17,7 +39,12 @@
       "desc": {
         "en": "Good impact resistance and easy finishing, widely used for electronic housings, small appliance parts and general plastic components.",
         "zh": "抗冲击性能和加工性能较好，适用于电子产品外壳、小家电配件及通用塑胶零部件。"
-      }
+      },
+      "imageAlt": { "en": "ABS resin and molded part sample", "zh": "ABS 原料与注塑件样品" },
+      "tags": [
+        { "en": "Impact resistant", "zh": "抗冲击" },
+        { "en": "Easy finishing", "zh": "易后处理" }
+      ]
     },
     {
       "no": "02",
@@ -25,7 +52,12 @@
       "desc": {
         "en": "High strength, optical clarity and impact resistance for transparent covers, protective windows and demanding structural parts.",
         "zh": "强度高、透明性好且抗冲击，适用于透明罩、防护窗口及高要求结构件。"
-      }
+      },
+      "imageAlt": { "en": "PC transparent molded part sample", "zh": "PC 透明注塑件样品" },
+      "tags": [
+        { "en": "High strength", "zh": "高强度" },
+        { "en": "Optical clarity", "zh": "高透明" }
+      ]
     },
     {
       "no": "03",
@@ -33,7 +65,12 @@
       "desc": {
         "en": "Balances PC strength with ABS moldability, commonly used in electronic housings, automotive plastic parts and industrial components.",
         "zh": "结合 PC 强度与 ABS 加工性，常用于电子外壳、汽车塑胶件和工业塑胶零部件。"
-      }
+      },
+      "imageAlt": { "en": "PC and ABS blend molded housing sample", "zh": "PC+ABS 合金外壳样品" },
+      "tags": [
+        { "en": "Balanced", "zh": "性能均衡" },
+        { "en": "Housing ready", "zh": "适合外壳" }
+      ]
     },
     {
       "no": "04",
@@ -41,7 +78,12 @@
       "desc": {
         "en": "Lightweight with good chemical resistance, suitable for home products, containers, fittings and functional plastic parts.",
         "zh": "材料轻、耐化学性较好，适用于家居产品、容器、配件及功能性塑胶件。"
-      }
+      },
+      "imageAlt": { "en": "PP lightweight molded part sample", "zh": "PP 轻量注塑件样品" },
+      "tags": [
+        { "en": "Lightweight", "zh": "轻量" },
+        { "en": "Chemical resistant", "zh": "耐化学性" }
+      ]
     },
     {
       "no": "05",
@@ -49,7 +91,12 @@
       "desc": {
         "en": "Flexible and chemically stable for packaging parts, protective components and general molded plastic parts.",
         "zh": "韧性和耐化学性较好，适用于包装件、防护件及通用塑胶零部件。"
-      }
+      },
+      "imageAlt": { "en": "PE flexible molded part sample", "zh": "PE 柔韧注塑件样品" },
+      "tags": [
+        { "en": "Flexible", "zh": "柔韧" },
+        { "en": "Chemically stable", "zh": "化学稳定" }
+      ]
     },
     {
       "no": "06",
@@ -57,7 +104,15 @@
       "desc": {
         "en": "High strength, wear resistance and mechanical performance for gears, brackets, connectors and structural parts.",
         "zh": "强度高、耐磨性和机械性能好，适用于齿轮、支架、连接件及结构件。"
-      }
+      },
+      "imageAlt": {
+        "en": "PA nylon gear and structural part sample",
+        "zh": "PA 尼龙齿轮与结构件样品"
+      },
+      "tags": [
+        { "en": "Wear resistant", "zh": "耐磨" },
+        { "en": "Structural", "zh": "结构强度" }
+      ]
     },
     {
       "no": "07",
@@ -65,7 +120,12 @@
       "desc": {
         "en": "High hardness, wear resistance and dimensional stability for precision plastic parts, gears and sliding mechanisms.",
         "zh": "硬度高、耐磨且尺寸稳定，适用于精密塑胶件、齿轮和滑动结构。"
-      }
+      },
+      "imageAlt": { "en": "POM precision component sample", "zh": "POM 精密零件样品" },
+      "tags": [
+        { "en": "Precision", "zh": "高精度" },
+        { "en": "Low friction", "zh": "低摩擦" }
+      ]
     },
     {
       "no": "08",
@@ -73,7 +133,12 @@
       "desc": {
         "en": "Excellent transparency and surface gloss for clear covers, display parts and appearance-focused plastic products.",
         "zh": "透明度和表面光泽优良，适用于透明罩、展示件及外观塑胶件。"
-      }
+      },
+      "imageAlt": { "en": "PMMA clear high-gloss part sample", "zh": "PMMA 高透明高光泽零件样品" },
+      "tags": [
+        { "en": "Crystal clear", "zh": "高透明" },
+        { "en": "High gloss", "zh": "高光泽" }
+      ]
     },
     {
       "no": "09",
@@ -81,7 +146,12 @@
       "desc": {
         "en": "Used for electronics, electrical components and plastic products with flame-retardant safety requirements.",
         "zh": "适用于电子产品、电气部件及对阻燃性能有要求的塑胶产品。"
-      }
+      },
+      "imageAlt": { "en": "Flame-retardant plastic component sample", "zh": "阻燃塑胶零件样品" },
+      "tags": [
+        { "en": "Safety focused", "zh": "安全导向" },
+        { "en": "Electrical", "zh": "电气应用" }
+      ]
     },
     {
       "no": "10",
@@ -89,34 +159,80 @@
       "desc": {
         "en": "Used for transparent housings, display components, protective parts and products requiring visible internal structure.",
         "zh": "适用于透明外壳、展示部件、防护件及对透明度有要求的产品。"
-      }
+      },
+      "imageAlt": {
+        "en": "Transparent housing and display part sample",
+        "zh": "透明外壳与展示件样品"
+      },
+      "tags": [
+        { "en": "Visible structure", "zh": "结构可视" },
+        { "en": "Appearance", "zh": "外观应用" }
+      ]
     }
   ],
+  "processesSection": {
+    "eyebrow": { "en": "02 · Surface studio", "zh": "02 · 表面工作室" },
+    "title": { "en": "Give every part its final character", "zh": "让零件拥有最后的质感" },
+    "subtitle": {
+      "en": "Color, marking, texture and assembly turn a molded component into a finished product experience.",
+      "zh": "颜色、标识、质感与组装，让注塑件真正成为完整的产品体验。"
+    },
+    "itemLabel": { "en": "Process option", "zh": "工艺选项" },
+    "scrollHint": { "en": "Swipe or scroll to explore", "zh": "左右滑动查看更多" }
+  },
   "processes": [
     {
       "no": "01",
       "title": { "en": "Spray Painting", "zh": "喷涂" },
-      "desc": { "en": "Add color and surface protection.", "zh": "增加颜色与表面保护。" }
+      "desc": { "en": "Add color and surface protection.", "zh": "增加颜色与表面保护。" },
+      "imageAlt": { "en": "Spray-painted plastic surface sample", "zh": "塑胶件喷涂表面样品" },
+      "tags": [
+        { "en": "Color", "zh": "色彩" },
+        { "en": "Protection", "zh": "表面保护" }
+      ]
     },
     {
       "no": "02",
       "title": { "en": "Screen Printing", "zh": "丝印" },
-      "desc": { "en": "Print graphics or labels cleanly.", "zh": "适合图案与标识印刷。" }
+      "desc": { "en": "Print graphics or labels cleanly.", "zh": "适合图案与标识印刷。" },
+      "imageAlt": { "en": "Screen-printed graphic on a plastic part", "zh": "塑胶件丝印图案样品" },
+      "tags": [
+        { "en": "Graphics", "zh": "图案" },
+        { "en": "Clean labels", "zh": "清晰标识" }
+      ]
     },
     {
       "no": "03",
       "title": { "en": "Pad Printing", "zh": "移印" },
-      "desc": { "en": "Print on curved or complex surfaces.", "zh": "适合曲面与异形表面。" }
+      "desc": { "en": "Print on curved or complex surfaces.", "zh": "适合曲面与异形表面。" },
+      "imageAlt": { "en": "Pad printing on a curved plastic surface", "zh": "塑胶曲面移印样品" },
+      "tags": [
+        { "en": "Curved surfaces", "zh": "曲面适用" },
+        { "en": "Fine marks", "zh": "精细标识" }
+      ]
     },
     {
       "no": "04",
       "title": { "en": "Laser Engraving", "zh": "激光雕刻" },
-      "desc": { "en": "Permanent marking and traceability.", "zh": "永久标记与追溯。" }
+      "desc": { "en": "Permanent marking and traceability.", "zh": "永久标记与追溯。" },
+      "imageAlt": {
+        "en": "Laser-engraved marking on a plastic part",
+        "zh": "塑胶件激光雕刻标识样品"
+      },
+      "tags": [
+        { "en": "Permanent", "zh": "永久标记" },
+        { "en": "Traceable", "zh": "可追溯" }
+      ]
     },
     {
       "no": "05",
       "title": { "en": "Electroplating", "zh": "电镀" },
-      "desc": { "en": "Enhance appearance and durability.", "zh": "提升外观和耐久性。" }
+      "desc": { "en": "Enhance appearance and durability.", "zh": "提升外观和耐久性。" },
+      "imageAlt": { "en": "Electroplated plastic surface sample", "zh": "塑胶件电镀表面样品" },
+      "tags": [
+        { "en": "Metallic look", "zh": "金属质感" },
+        { "en": "Durability", "zh": "耐久" }
+      ]
     },
     {
       "no": "06",
@@ -124,9 +240,45 @@
       "desc": {
         "en": "Combine plastic parts with metal hardware, screws, electronics or other accessories according to project needs.",
         "zh": "根据客户需求，将塑胶件与五金件、电子件、螺丝及其他配件进行组装。"
-      }
+      },
+      "imageAlt": {
+        "en": "Assembled plastic and metal component sample",
+        "zh": "塑胶与五金组合件样品"
+      },
+      "tags": [
+        { "en": "Integrated", "zh": "整合组装" },
+        { "en": "Ready to use", "zh": "成品交付" }
+      ]
     }
   ],
+  "route": {
+    "eyebrow": { "en": "One part · One route", "zh": "一个零件 · 一条路线" },
+    "title": {
+      "en": "Material and finish should be decided together",
+      "zh": "材料与工艺，需要一起决定"
+    },
+    "desc": {
+      "en": "Share the application, environment and appearance target early. We will review the material, molding and finishing route as one connected decision.",
+      "zh": "尽早告诉我们应用场景、使用环境和外观目标，我们会把材料、成型与表面工艺作为一条完整路线来评估。"
+    },
+    "steps": [
+      {
+        "no": "A",
+        "title": { "en": "Performance first", "zh": "先定性能" },
+        "desc": { "en": "Strength, heat, wear and safety.", "zh": "强度、耐热、耐磨与安全。" }
+      },
+      {
+        "no": "B",
+        "title": { "en": "Appearance matched", "zh": "再配外观" },
+        "desc": { "en": "Color, clarity, texture and marking.", "zh": "颜色、透明度、质感与标识。" }
+      },
+      {
+        "no": "C",
+        "title": { "en": "Cost balanced", "zh": "平衡成本" },
+        "desc": { "en": "Process, volume and delivery target.", "zh": "工艺、数量与交付目标。" }
+      }
+    ]
+  },
   "cta": {
     "title": { "en": "Need help selecting a material?", "zh": "需要帮您选材吗？" },
     "button": { "en": "Get a Quote", "zh": "获取报价" },

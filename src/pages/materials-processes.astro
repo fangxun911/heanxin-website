@@ -1,64 +1,567 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import SectionHeader from "../components/SectionHeader.astro";
+import Icon from "../components/Icon.astro";
 import NumberedCard from "../components/NumberedCard.astro";
+import SectionHeader from "../components/SectionHeader.astro";
 import T from "../components/T.astro";
 import materials from "../content/materials-processes.json";
 import { url } from "../lib/i18n";
+
+const featuredMaterials = new Set([0, 5]);
+const indexItems = [...materials.materials, ...materials.processes];
+const orbitItems = [
+  materials.materials[0].title,
+  materials.materials[2].title,
+  materials.materials[5].title,
+  materials.materials[6].title,
+  materials.materials[7].title,
+  materials.processes[3].title,
+];
 ---
 
 <BaseLayout
   title="材料与工艺"
   description="禾安鑫可根据外观、强度、耐热、透明、阻燃等需求，匹配 ABS、PC、PC+ABS、PP、PE、PA/尼龙、POM、PMMA 等材料，并提供喷涂、丝印、移印、激光雕刻和电镀等表面工艺。"
 >
-  <section class="container-page pt-12 pb-8">
-    <SectionHeader title={materials.header.title} subtitle={materials.header.subtitle} as="h1" />
+  <section class="materials-hero bg-deep relative overflow-hidden text-white">
+    <div
+      class="materials-hero__grid pointer-events-none absolute inset-0 opacity-20"
+      aria-hidden="true"
+    >
+    </div>
+    <div
+      class="bg-spark-500/25 animate-glow pointer-events-none absolute -top-28 right-[-8rem] h-[30rem] w-[30rem] rounded-full blur-3xl"
+      aria-hidden="true"
+    >
+    </div>
+    <div
+      class="bg-ember-500/12 animate-float pointer-events-none absolute -bottom-28 -left-20 h-80 w-80 rounded-full blur-3xl"
+      aria-hidden="true"
+    >
+    </div>
+
+    <div
+      class="container-page relative grid min-h-[640px] items-center gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-20"
+    >
+      <div data-reveal class="max-w-3xl">
+        <p class="eyebrow text-ember-300">
+          <T text={materials.header.eyebrow} />
+        </p>
+        <h1
+          class="font-display mt-5 text-5xl leading-[0.98] font-semibold tracking-[-0.045em] sm:text-6xl xl:text-7xl"
+        >
+          <T text={materials.header.title} />
+        </h1>
+        <p class="text-brand-100/85 mt-7 max-w-2xl text-lg leading-relaxed sm:text-xl">
+          <T text={materials.header.subtitle} />
+        </p>
+
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+          <a
+            href={url("/materials-processes#materials-library")}
+            class="group bg-ember-500 hover:bg-ember-600 inline-flex items-center justify-center gap-3 rounded-full px-7 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-ember)] transition hover:-translate-y-0.5"
+          >
+            <T text={materials.header.primaryCta} />
+            <Icon
+              name="arrowRight"
+              class="h-4 w-4 transition-transform group-hover:translate-x-1"
+            />
+          </a>
+          <a
+            href={url("/contact#quote")}
+            class="inline-flex items-center justify-center rounded-full border border-white/25 bg-white/8 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-white/50 hover:bg-white/12"
+          >
+            <T text={materials.header.secondaryCta} />
+          </a>
+        </div>
+
+        <dl class="mt-11 flex max-w-xl border-y border-white/12 py-5">
+          <div class="min-w-0 flex-1">
+            <dd class="font-display text-4xl font-semibold">
+              {String(materials.materials.length).padStart(2, "0")}
+            </dd>
+            <dt class="text-brand-100/65 mt-1 text-xs font-semibold tracking-[0.16em] uppercase">
+              <T text={materials.header.materialCount} />
+            </dt>
+          </div>
+          <div class="min-w-0 flex-1 border-l border-white/12 pl-7">
+            <dd class="font-display text-4xl font-semibold">
+              {String(materials.processes.length).padStart(2, "0")}
+            </dd>
+            <dt class="text-brand-100/65 mt-1 text-xs font-semibold tracking-[0.16em] uppercase">
+              <T text={materials.header.processCount} />
+            </dt>
+          </div>
+        </dl>
+      </div>
+
+      <div data-reveal class="relative hidden lg:block">
+        <div
+          class="signal-map relative mx-auto aspect-square w-full max-w-[31rem]"
+          role="img"
+          aria-label={`${materials.header.signalLabel.en} / ${materials.header.signalLabel.zh}`}
+        >
+          <p
+            class="text-brand-100/60 absolute top-7 left-1/2 z-20 -translate-x-1/2 text-center text-[11px] font-semibold tracking-[0.2em] uppercase"
+          >
+            <T text={materials.header.signalLabel} />
+          </p>
+          <div class="signal-map__ring" aria-hidden="true"></div>
+          <div class="signal-map__ring signal-map__ring--inner" aria-hidden="true"></div>
+          <div class="signal-map__center">
+            <span class="bg-ember-500 mb-4 h-2 w-2 rounded-full shadow-[var(--shadow-ember)]"
+            ></span>
+            <span class="font-display text-center text-lg leading-relaxed font-semibold text-white">
+              <T text={materials.header.signalCenter} class="whitespace-pre-line" />
+            </span>
+          </div>
+          {
+            orbitItems.map((item, index) => (
+              <span class={`signal-chip signal-chip--${index + 1}`}>
+                <T text={item} />
+              </span>
+            ))
+          }
+          <span class="signal-map__dot signal-map__dot--one" aria-hidden="true"></span>
+          <span class="signal-map__dot signal-map__dot--two" aria-hidden="true"></span>
+          <span class="signal-map__dot signal-map__dot--three" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section class="container-page pb-14">
-    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+  <div
+    class="material-marquee border-line overflow-hidden border-b bg-white py-4"
+    aria-label={`${materials.marquee.label.en} / ${materials.marquee.label.zh}`}
+  >
+    <div class="material-marquee__track">
+      <div class="material-marquee__group" role="list">
+        {
+          indexItems.map((item) => (
+            <span role="listitem" class="material-marquee__item">
+              <span class="bg-ember-500 h-1.5 w-1.5 rounded-full" aria-hidden="true" />
+              <T text={item.title} />
+            </span>
+          ))
+        }
+      </div>
+      <div class="material-marquee__group" aria-hidden="true">
+        {
+          indexItems.map((item) => (
+            <span class="material-marquee__item">
+              <span class="bg-ember-500 h-1.5 w-1.5 rounded-full" />
+              <T text={item.title} />
+            </span>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <section id="materials-library" class="container-page scroll-mt-24 py-16 sm:py-20">
+    <div class="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+      <SectionHeader
+        eyebrow={materials.materialsSection.eyebrow}
+        title={materials.materialsSection.title}
+        subtitle={materials.materialsSection.subtitle}
+        align="left"
+      />
+      <div data-reveal class="border-line border-t pt-5 lg:border-t-0 lg:border-l lg:pl-8">
+        <p class="font-display text-brand-800 text-5xl font-semibold sm:text-6xl">
+          {String(materials.materials.length).padStart(2, "0")}
+        </p>
+        <p class="text-muted mt-2 text-sm font-semibold tracking-[0.14em] uppercase">
+          <T text={materials.materialsSection.countLabel} />
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {
-        materials.materials.map((item) => (
-          <NumberedCard no={item.no} title={item.title} desc={item.desc} />
+        materials.materials.map((item, index) => (
+          <NumberedCard
+            no={item.no}
+            title={item.title}
+            desc={item.desc}
+            imageAlt={item.imageAlt}
+            tags={item.tags}
+            kind={materials.materialsSection.itemLabel}
+            featured={featuredMaterials.has(index)}
+          />
         ))
       }
     </div>
   </section>
 
-  <section class="section-tint border-line border-y py-14">
-    <div class="container-page">
-      <SectionHeader
-        eyebrow={{ en: "Finishing Options", zh: "表面处理" }}
-        title={{ en: "Surface Processes", zh: "表面工艺" }}
-      />
-      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+  <section id="surface-studio" class="bg-deep relative scroll-mt-24 overflow-hidden py-16 sm:py-20">
+    <div
+      class="materials-processes__arc pointer-events-none absolute -top-60 -right-40 h-[38rem] w-[38rem] rounded-full border border-white/8"
+      aria-hidden="true"
+    >
+    </div>
+    <div
+      class="bg-spark-500/18 animate-glow pointer-events-none absolute top-0 right-0 h-96 w-96 rounded-full blur-3xl"
+      aria-hidden="true"
+    >
+    </div>
+
+    <div class="container-page relative">
+      <div class="grid gap-7 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+        <SectionHeader
+          eyebrow={materials.processesSection.eyebrow}
+          title={materials.processesSection.title}
+          subtitle={materials.processesSection.subtitle}
+          align="left"
+          tone="dark"
+        />
+        <div data-reveal class="flex items-center gap-4 lg:justify-end">
+          <span class="h-px w-16 bg-white/20" aria-hidden="true"></span>
+          <p class="text-brand-100/70 text-sm font-semibold tracking-[0.12em] uppercase">
+            <T text={materials.processesSection.scrollHint} />
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="process-rail mt-11 flex gap-5 overflow-x-auto pb-7"
+        role="region"
+        tabindex="0"
+        aria-label={`${materials.processesSection.title.en} / ${materials.processesSection.title.zh}`}
+      >
         {
           materials.processes.map((item) => (
-            <NumberedCard no={item.no} title={item.title} desc={item.desc} />
+            <NumberedCard
+              no={item.no}
+              title={item.title}
+              desc={item.desc}
+              imageAlt={item.imageAlt}
+              tags={item.tags}
+              kind={materials.processesSection.itemLabel}
+              tone="dark"
+              class="w-[82vw] shrink-0 snap-start sm:w-[27rem] lg:w-[29rem]"
+            />
           ))
         }
+      </div>
+
+      <div class="mt-1 flex items-center justify-between gap-5 border-t border-white/10 pt-5">
+        <span class="text-brand-100/55 text-xs font-semibold tracking-[0.16em] uppercase">
+          01 — {String(materials.processes.length).padStart(2, "0")}
+        </span>
+        <div class="flex items-center gap-3 text-white" aria-hidden="true">
+          <span>←</span>
+          <span class="from-ember-500 to-spark-400 h-px w-20 bg-gradient-to-r"></span>
+          <span>→</span>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="container-page py-14">
-    <div class="bg-deep rounded-[var(--radius-card)] p-6 text-white sm:p-8">
-      <div class="grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-        <div>
+  <section class="container-page py-16 sm:py-20">
+    <div class="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
+      <div data-reveal class="lg:sticky lg:top-28">
+        <p class="eyebrow"><T text={materials.route.eyebrow} /></p>
+        <h2
+          class="font-display text-brand-800 mt-4 text-3xl leading-tight font-semibold tracking-tight sm:text-4xl"
+        >
+          <T text={materials.route.title} />
+        </h2>
+        <p class="text-muted mt-5 leading-relaxed">
+          <T text={materials.route.desc} />
+        </p>
+      </div>
+
+      <ol class="route-flow grid gap-4 lg:grid-cols-3">
+        {
+          materials.route.steps.map((step) => (
+            <li
+              data-reveal
+              class="border-line relative z-10 bg-white p-5 shadow-[var(--shadow-card)]"
+            >
+              <span class="font-display text-ember-600 text-sm font-bold tracking-[0.18em]">
+                {step.no}
+              </span>
+              <h3 class="font-display text-brand-800 mt-8 text-xl font-semibold">
+                <T text={step.title} />
+              </h3>
+              <p class="text-muted mt-2 text-sm leading-relaxed">
+                <T text={step.desc} />
+              </p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    <div
+      data-reveal
+      class="bg-deep relative mt-14 overflow-hidden rounded-[var(--radius-card)] px-6 py-9 text-white sm:px-9 lg:px-12 lg:py-11"
+    >
+      <div
+        class="border-spark-400/20 pointer-events-none absolute top-0 right-0 h-full w-1/3 border-l"
+        aria-hidden="true"
+      >
+      </div>
+      <div class="relative flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+        <div class="max-w-3xl">
           <p class="eyebrow text-ember-300"><T text={materials.cta.title} /></p>
-          <p class="text-brand-100/85 mt-3 max-w-2xl leading-relaxed">
+          <p class="text-brand-100/80 mt-4 max-w-2xl text-lg leading-relaxed">
             <T text={materials.cta.desc} />
           </p>
         </div>
-        <div class="flex justify-start lg:justify-end">
-          <a
-            href={url("/contact#quote")}
-            class="bg-ember-500 hover:bg-ember-600 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5"
-          >
-            <T text={materials.cta.button} />
-          </a>
-        </div>
+        <a
+          href={url("/contact#quote")}
+          class="group bg-ember-500 hover:bg-ember-600 inline-flex shrink-0 items-center justify-center gap-3 rounded-full px-7 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-ember)] transition hover:-translate-y-0.5"
+        >
+          <T text={materials.cta.button} />
+          <Icon name="arrowRight" class="h-4 w-4 transition-transform group-hover:translate-x-1" />
+        </a>
       </div>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .materials-hero__grid {
+    background-image:
+      linear-gradient(
+        color-mix(in srgb, var(--color-brand-100) 35%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--color-brand-100) 35%, transparent) 1px,
+        transparent 1px
+      );
+    background-size: 64px 64px;
+    mask-image: linear-gradient(to right, black, transparent 82%);
+  }
+
+  .signal-map::before,
+  .signal-map::after {
+    position: absolute;
+    inset: 4%;
+    content: "";
+    border: 1px solid color-mix(in srgb, var(--color-brand-100) 16%, transparent);
+    border-radius: 50%;
+  }
+
+  .signal-map::after {
+    inset: 20%;
+    border-style: dashed;
+  }
+
+  .signal-map__ring {
+    position: absolute;
+    inset: 12%;
+    border: 1px dashed color-mix(in srgb, var(--color-spark-400) 45%, transparent);
+    border-radius: 50%;
+    animation: signal-spin 34s linear infinite;
+  }
+
+  .signal-map__ring::before {
+    position: absolute;
+    top: -0.35rem;
+    left: 50%;
+    width: 0.7rem;
+    height: 0.7rem;
+    content: "";
+    background: var(--color-ember-500);
+    border-radius: 999px;
+    box-shadow: var(--shadow-ember);
+  }
+
+  .signal-map__ring--inner {
+    inset: 28%;
+    border-style: solid;
+    border-color: color-mix(in srgb, var(--color-brand-100) 20%, transparent);
+    animation-direction: reverse;
+    animation-duration: 22s;
+  }
+
+  .signal-map__center {
+    position: absolute;
+    inset: 35%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid color-mix(in srgb, var(--color-brand-100) 24%, transparent);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--color-brand-900) 72%, transparent);
+    box-shadow: 0 28px 80px color-mix(in srgb, var(--color-night) 55%, transparent);
+    backdrop-filter: blur(12px);
+  }
+
+  .signal-chip {
+    position: absolute;
+    z-index: 10;
+    padding: 0.45rem 0.8rem;
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-brand-100);
+    background: color-mix(in srgb, var(--color-brand-700) 72%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-brand-100) 22%, transparent);
+    border-radius: 999px;
+    backdrop-filter: blur(10px);
+    animation: signal-float 5s ease-in-out infinite;
+  }
+
+  .signal-chip--1 {
+    top: 14%;
+    left: 16%;
+  }
+  .signal-chip--2 {
+    top: 18%;
+    right: 10%;
+    animation-delay: -1.2s;
+  }
+  .signal-chip--3 {
+    top: 48%;
+    right: 1%;
+    animation-delay: -2.4s;
+  }
+  .signal-chip--4 {
+    right: 17%;
+    bottom: 12%;
+    animation-delay: -3.5s;
+  }
+  .signal-chip--5 {
+    bottom: 10%;
+    left: 14%;
+    animation-delay: -0.8s;
+  }
+  .signal-chip--6 {
+    top: 48%;
+    left: 1%;
+    animation-delay: -2.9s;
+  }
+
+  .signal-map__dot {
+    position: absolute;
+    width: 0.4rem;
+    height: 0.4rem;
+    background: var(--color-spark-400);
+    border-radius: 999px;
+    box-shadow: 0 0 24px var(--color-spark-400);
+  }
+  .signal-map__dot--one {
+    top: 28%;
+    left: 28%;
+  }
+  .signal-map__dot--two {
+    right: 24%;
+    bottom: 32%;
+  }
+  .signal-map__dot--three {
+    bottom: 28%;
+    left: 23%;
+    background: var(--color-ember-400);
+    box-shadow: 0 0 24px var(--color-ember-400);
+  }
+
+  .material-marquee__track {
+    display: flex;
+    width: max-content;
+    animation: material-marquee 38s linear infinite;
+  }
+
+  .material-marquee__group {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+  }
+
+  .material-marquee__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-inline: 1.4rem;
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--color-brand-700);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .material-marquee:hover .material-marquee__track {
+    animation-play-state: paused;
+  }
+
+  .process-rail {
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-ember-500)
+      color-mix(in srgb, var(--color-brand-100) 12%, transparent);
+  }
+
+  .route-flow {
+    position: relative;
+  }
+
+  @media (min-width: 1024px) {
+    .route-flow::before {
+      position: absolute;
+      top: 1.6rem;
+      right: 8%;
+      left: 8%;
+      height: 2px;
+      content: "";
+      background: linear-gradient(
+        90deg,
+        var(--color-ember-500),
+        var(--color-spark-400),
+        var(--color-brand-300),
+        var(--color-ember-500)
+      );
+      background-size: 200% 100%;
+      animation: route-flow 5s linear infinite;
+    }
+  }
+
+  @keyframes signal-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes signal-float {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: 0 -8px;
+    }
+  }
+
+  @keyframes material-marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes route-flow {
+    to {
+      background-position: -200% 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .signal-map__ring,
+    .signal-chip,
+    .material-marquee__track,
+    .route-flow::before {
+      animation: none !important;
+    }
+
+    .material-marquee {
+      overflow-x: auto;
+    }
+  }
+</style>

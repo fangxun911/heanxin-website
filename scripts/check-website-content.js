@@ -282,6 +282,7 @@ function assertMaterialsProcessesPage() {
   const site = readJson("src/content/site.json");
   const materials = readJson("src/content/materials-processes.json");
   const page = readText("src/pages/materials-processes.astro");
+  const numberedCard = readText("src/components/NumberedCard.astro");
   const header = readText("src/components/Header.astro");
 
   const navItem = site.nav.find((item) => item.href === "/materials-processes");
@@ -307,9 +308,15 @@ function assertMaterialsProcessesPage() {
     "Flame-retardant Materials",
     "Transparent Materials",
   ];
-  const materialNames = materials.materials.map((item) => item.title.en);
   for (const material of requiredMaterials) {
-    assert(materialNames.includes(material), `materials list must include ${material}`);
+    const item = materials.materials.find((candidate) => candidate.title.en === material);
+    assert(item, `materials list must include ${material}`);
+    assertLocalized(item.imageAlt, `materials.${material}.imageAlt`);
+    assert(
+      Array.isArray(item.tags) && item.tags.length >= 2,
+      `materials.${material}.tags must include at least two properties`
+    );
+    item.tags.forEach((tag, index) => assertLocalized(tag, `materials.${material}.tags[${index}]`));
   }
 
   const requiredProcesses = [
@@ -320,10 +327,19 @@ function assertMaterialsProcessesPage() {
     "Electroplating",
     "Assembly",
   ];
-  const processNames = materials.processes.map((item) => item.title.en);
   for (const process of requiredProcesses) {
-    assert(processNames.includes(process), `process list must include ${process}`);
+    const item = materials.processes.find((candidate) => candidate.title.en === process);
+    assert(item, `process list must include ${process}`);
+    assertLocalized(item.imageAlt, `processes.${process}.imageAlt`);
+    assert(
+      Array.isArray(item.tags) && item.tags.length >= 2,
+      `processes.${process}.tags must include at least two properties`
+    );
+    item.tags.forEach((tag, index) => assertLocalized(tag, `processes.${process}.tags[${index}]`));
   }
+
+  assertContains(page, "NumberedCard", "Materials page media cards");
+  assertContains(numberedCard, "PhotoPlaceholder", "Materials card image slots");
 }
 
 function assertNewsSeoPages() {
@@ -564,13 +580,15 @@ function assertRealMediaAssets() {
     assert(existsSync(path.join(root, component)), `${component} must exist`);
   }
 
-  const placeholderUses = sourceFiles
+  const allowedPlaceholderUses = new Set(["src/components/NumberedCard.astro"]);
+  const unexpectedPlaceholderUses = sourceFiles
     .filter(([file]) => !file.endsWith("PhotoPlaceholder.astro"))
     .filter(([, text]) => text.includes("PhotoPlaceholder"))
-    .map(([file]) => file);
+    .map(([file]) => file)
+    .filter((file) => !allowedPlaceholderUses.has(file));
   assert(
-    placeholderUses.length === 0,
-    `PhotoPlaceholder must not be used by production pages/components:\n${placeholderUses.join(
+    unexpectedPlaceholderUses.length === 0,
+    `PhotoPlaceholder must only be used by approved image-slot components:\n${unexpectedPlaceholderUses.join(
       "\n"
     )}`
   );
