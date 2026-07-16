@@ -17,7 +17,7 @@ const { article } = Astro.props;
 ---
 
 <BaseLayout title={article.title.zh} description={article.summary.zh}>
-  <article class="container-page pt-12 pb-16">
+  <article class="container-page pt-10 pb-16 sm:pt-12">
     <a
       href={url("/news")}
       class="border-line text-brand-700 hover:border-ember-500 hover:text-ember-700 focus:ring-ember-200 inline-flex items-center gap-2 rounded-full border bg-white px-4 py-2 text-sm font-semibold transition hover:-translate-y-0.5 focus:ring-4 focus:outline-none"
@@ -26,28 +26,60 @@ const { article } = Astro.props;
       <span lang="en">Back</span><span lang="zh">返回</span>
     </a>
 
-    <div class="mt-6">
-      <SectionHeader
-        eyebrow={{ en: article.date, zh: article.date }}
-        title={article.title}
-        subtitle={article.summary}
-        as="h1"
-      />
-    </div>
+    <div class="mt-8 grid gap-10 lg:grid-cols-[16rem_minmax(0,48rem)] lg:justify-center 2xl:gap-16">
+      <aside class="lg:sticky lg:top-28 lg:self-start">
+        <details open class="border-line border-y py-4">
+          <summary class="font-display text-brand-700 cursor-pointer font-semibold">
+            <T text={news.articleNavTitle} />
+          </summary>
+          <ol class="mt-4 space-y-3">
+            {
+              article.sections.map((section, index) => (
+                <li>
+                  <a
+                    href={url(`/news/${article.slug}#section-${index + 1}`)}
+                    class="text-muted hover:text-ember-700 flex gap-3 text-sm leading-snug transition"
+                  >
+                    <span class="text-ember-600 font-semibold">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <T text={section.heading} />
+                  </a>
+                </li>
+              ))
+            }
+          </ol>
+        </details>
+      </aside>
 
-    <div class="mx-auto mt-10 max-w-3xl space-y-8">
-      {
-        article.sections.map((section) => (
-          <section class="border-line border-b pb-8 last:border-b-0 last:pb-0">
-            <h2 class="font-display text-brand-700 text-2xl font-semibold">
-              <T text={section.heading} />
-            </h2>
-            <p class="text-muted mt-4 leading-relaxed">
-              <T text={section.body} />
-            </p>
-          </section>
-        ))
-      }
+      <div>
+        <SectionHeader
+          eyebrow={{ en: article.date, zh: article.date }}
+          title={article.title}
+          subtitle={article.summary}
+          as="h1"
+          align="left"
+          size="page"
+        />
+
+        <div class="content-measure mt-12 space-y-10">
+          {
+            article.sections.map((section, index) => (
+              <section
+                id={`section-${index + 1}`}
+                class="border-line scroll-mt-28 border-b pb-10 last:border-b-0 last:pb-0"
+              >
+                <h2 class="font-display text-brand-700 text-2xl font-semibold sm:text-3xl">
+                  <T text={section.heading} />
+                </h2>
+                <p class="text-muted mt-4 leading-relaxed">
+                  <T text={section.body} />
+                </p>
+              </section>
+            ))
+          }
+        </div>
+      </div>
     </div>
   </article>
 

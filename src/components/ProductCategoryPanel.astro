@@ -64,14 +64,14 @@ const supportingImages = previews.slice(1);
       mainImage && (
         <button
           type="button"
-          class="group border-line bg-surface relative min-h-[22rem] overflow-hidden border text-left sm:min-h-[30rem] lg:min-h-[38rem]"
+          class="group border-line bg-surface relative h-[22rem] overflow-hidden border text-left sm:h-[30rem] lg:h-[clamp(30rem,65svh,44rem)]"
           data-product-image
           data-image-index="0"
         >
           <ResponsiveImage
             image={mainImage}
             fit="contain"
-            class="h-full min-h-[22rem] bg-white p-5 sm:min-h-[30rem] lg:min-h-[38rem]"
+            class="h-full bg-white p-5"
             imgClass="transition duration-500 group-hover:scale-[1.025]"
             sizes="(min-width: 1024px) 58vw, 100vw"
             widths={[480, 768, 1024, 1280]}
@@ -90,7 +90,9 @@ const supportingImages = previews.slice(1);
       )
     }
 
-    <div class="grid min-h-[26rem] grid-cols-2 grid-rows-2 gap-3 sm:min-h-[34rem] lg:min-h-[38rem]">
+    <div
+      class="grid h-[26rem] grid-cols-2 grid-rows-2 gap-3 sm:h-[34rem] lg:h-[clamp(30rem,65svh,44rem)]"
+    >
       {
         supportingImages.map((image, index) => {
           const imageIndex = index + 1;

@@ -13,6 +13,10 @@
       "zh": "面向 OEM / ODM 买家的实用指南，帮助规划塑胶注塑、选材与模具开发项目。"
     }
   },
+  "articleNavTitle": {
+    "en": "In this article",
+    "zh": "文章目录"
+  },
   "articles": [
     {
       "slug": "choose-right-material-plastic-enclosures",

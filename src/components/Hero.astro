@@ -53,9 +53,14 @@ const { eyebrow, title, subtitle, primaryCta, secondaryCta, compact = false } = 
     class="text-brand-300/15 pointer-events-none absolute right-0 bottom-0 hidden w-[460px] lg:block"
   />
 
-  <div class="container-page relative">
-    <div class="grid items-center gap-12 lg:grid-cols-[1.5fr_1fr]">
-      <div class="max-w-3xl">
+  <div class="container-wide relative">
+    <div
+      class:list={[
+        "grid items-center gap-12",
+        compact ? "lg:grid-cols-1" : "lg:grid-cols-[1.5fr_1fr]",
+      ]}
+    >
+      <div data-reveal="left" class:list={[compact ? "max-w-5xl" : "max-w-3xl"]}>
         {
           eyebrow && (
             <p class="eyebrow text-ember-400">
@@ -109,7 +114,7 @@ const { eyebrow, title, subtitle, primaryCta, secondaryCta, compact = false } = 
 
       {
         !compact && (
-          <div class="relative hidden lg:block">
+          <div data-reveal="scale" class="relative hidden lg:block">
             <div class="animate-float relative rounded-2xl border border-white/20 bg-white/5 p-6 backdrop-blur-sm">
               <span class="text-brand-100/70 font-display text-xs tracking-widest uppercase">
                 Plastic · Mold · Hardware

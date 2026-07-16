@@ -23,11 +23,14 @@ const assets = media.assetMap;
     secondaryCta={{ label: home.hero.secondaryCta, href: "/contact", icon: "mail" }}
   />
 
-  <section class="container-page py-10">
-    <h2 class="font-display text-brand-800 text-center text-3xl font-bold">
-      <T text={home.coreSolutions.title} />
-    </h2>
-    <div class="mt-7 grid gap-5 lg:grid-cols-2 xl:grid-cols-4">
+  <section class="container-page py-14 sm:py-16">
+    <div class="border-line flex items-end justify-between gap-8 border-b pb-6">
+      <h2 class="font-display text-brand-800 text-3xl font-bold sm:text-4xl">
+        <T text={home.coreSolutions.title} />
+      </h2>
+      <span class="bg-ember-500 hidden h-1 w-20 sm:block" aria-hidden="true"></span>
+    </div>
+    <div class="mt-8 grid gap-5 md:grid-cols-2 2xl:grid-cols-4">
       {
         home.coreSolutions.items.map((item) => (
           <HomeSolutionCard
@@ -40,7 +43,10 @@ const assets = media.assetMap;
         ))
       }
     </div>
-    <div class="mt-8">
+  </section>
+
+  <section class="border-line section-tint border-y">
+    <div class="container-wide py-10 sm:py-12">
       <CapabilityStrip items={home.capabilityStrip.items} />
     </div>
   </section>

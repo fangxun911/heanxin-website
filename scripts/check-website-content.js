@@ -800,13 +800,19 @@ function assertHomeVisualRefinement() {
   );
   assertContains(
     hero,
-    "object-position: center top",
-    "Home hero desktop background image must align from the top while preserving the full PNG"
+    "object-position: right center",
+    "Home hero desktop background image must meet the right viewport edge without cropping"
   );
   assertContains(
     hero,
-    "clamp(720px, calc(100vw * 941 / 1672), 860px)",
-    "Home hero desktop height must be tall enough to show the full PNG"
+    "clamp(40rem, calc(100svh - 4rem), 54rem)",
+    "Home hero desktop height must respond to the available viewport height"
+  );
+  assertContains(hero, "container-wide", "Home hero copy must use the wide responsive shell");
+  assertContains(
+    hero,
+    "aspect-ratio: 1672 / 941",
+    "Home hero mobile image must participate in flow at the source aspect ratio"
   );
   assertContains(
     hero,
@@ -820,28 +826,24 @@ function assertHomeVisualRefinement() {
   );
   assertContains(
     hero,
-    "max-width: min(46vw, 42rem)",
-    "English home hero title must be narrow enough to avoid product overlap"
+    "max-width: 42rem",
+    "English home hero title must remain within the product-safe text area"
   );
   assertContains(
     hero,
-    "font-size: clamp(3rem, 3.65vw, 3.15rem)",
-    "English home hero title must use a controlled desktop font size"
+    "font-size: 3.5rem",
+    "English home hero title must use a controlled wide-screen font size"
   );
   assertContains(
     hero,
-    "@media (min-width: 1024px)",
-    "Home hero must keep desktop-only copy positioning"
+    "@media (max-width: 1023px)",
+    "Home hero must expose a dedicated mobile flow layout"
   );
+  assertNotContains(hero, "transform: translateX", "Home hero copy must not use viewport offsets");
   assertContains(
     hero,
-    "transform: translateX(-2.5rem)",
-    "Home hero copy must move left on desktop without moving the background"
-  );
-  assertContains(
-    hero,
-    "transform: translateX(-3rem)",
-    "Home hero copy must move slightly farther left on wide desktop"
+    "@media (prefers-reduced-motion: reduce)",
+    "Home hero media entrance must respect reduced motion"
   );
   assertNotContains(hero, "object-fit: cover", "Home hero must not crop the source PNG");
   assertNotContains(

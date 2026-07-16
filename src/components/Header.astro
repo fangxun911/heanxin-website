@@ -13,7 +13,7 @@ function isActive(href: string): boolean {
 ---
 
 <header class="border-line sticky top-0 z-50 border-b bg-white/90 backdrop-blur">
-  <div class="container-page flex h-16 items-center justify-between">
+  <div class="container-wide flex h-16 items-center justify-between">
     <a href={url("/")} class="flex items-center gap-2.5">
       <span
         class="bg-brand-500 font-display flex h-9 items-center justify-center rounded-lg px-2 text-base font-bold tracking-tight text-white"
@@ -38,9 +38,9 @@ function isActive(href: string): boolean {
           <a
             href={url(item.href)}
             aria-current={isActive(item.href) ? "page" : undefined}
-            class={`rounded-md px-2.5 py-2 text-[13px] font-medium transition-colors ${
+            class={`relative rounded-md px-2.5 py-2 text-[13px] font-medium transition-colors ${
               isActive(item.href)
-                ? "text-brand-600 bg-brand-50"
+                ? "text-brand-700 after:bg-ember-500 after:absolute after:right-2.5 after:bottom-0 after:left-2.5 after:h-0.5"
                 : "text-ink hover:text-brand-600 hover:bg-brand-50/60"
             }`}
           >
@@ -88,7 +88,7 @@ function isActive(href: string): boolean {
         </svg>
       </summary>
       <nav
-        class="border-line absolute right-0 mt-2 w-56 rounded-xl border bg-white p-2 shadow-xl"
+        class="border-line absolute right-0 mt-2 w-[min(22rem,calc(100vw-2.5rem))] rounded-[var(--radius-card)] border bg-white p-2 shadow-[var(--shadow-card)]"
         aria-label="Mobile"
       >
         {
@@ -123,3 +123,27 @@ function isActive(href: string): boolean {
     </details>
   </div>
 </header>
+
+<style>
+  details[open] > nav {
+    animation: mobile-menu-in 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+    transform-origin: top right;
+  }
+
+  @keyframes mobile-menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(-6px) scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    details[open] > nav {
+      animation: none;
+    }
+  }
+</style>

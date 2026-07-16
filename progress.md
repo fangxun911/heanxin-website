@@ -81,6 +81,9 @@
 | ---------- | -------------------------------------- | -------- | -------------------------------- |
 | 2026-07-14 | 规划状态补丁因上下文顺序不匹配而未应用 | 1        | 读取实际文件后按文件顺序重做补丁 |
 | 2026-07-14 | 规划补丁漏写 Markdown 表格行首竖线     | 1        | 使用完整精确行重新匹配           |
+| 2026-07-16 | 内容检查仍断言 banner 为 `center top`  | 1        | 按实施计划更新首页响应式契约     |
+| 2026-07-16 | 浏览器宽屏测量选择器未命中 hero 元素   | 1        | 先读取 DOM，再收窄测量目标       |
+| 2026-07-16 | 连续 2560px 页面截图超时               | 1        | 1920px 单页截图，超宽尺寸审计    |
 
 - 2026-07-14：内容检查禁止所有生产组件使用 `PhotoPlaceholder`；已建立材料卡白名单并增强数据断言。
 - 2026-07-14：组合补丁因规划表格格式变化未应用；已拆分为业务与日志补丁。
@@ -97,3 +100,71 @@
 | 目标是什么？   | 现代化重构材料工艺页并为每项预留图片位置 |
 | 我学到了什么？ | 见 `findings.md`                         |
 | 我做了什么？   | 见上方记录                               |
+
+## 会话：2026-07-16
+
+### 阶段 6：全站响应式基础与共享组件
+
+- **状态：** complete
+- 执行的操作：
+  - 读取用户确认的全站实施计划、项目规则和规划技能。
+  - 确认工作区干净，当前分支为 `main` 并跟踪 `origin/main`。
+  - 恢复历史规划记录，确认材料工艺页任务已完成，本轮从阶段 6 追加。
+  - 记录首页 banner、1280px 容器、超宽断点、旧页面模板和动效初始化问题。
+- 计划修改范围：
+  - 全局样式、基础布局与共享组件。
+  - 8 个主导航页面、新闻详情及共享别名路由。
+  - 内容与图片性能契约测试。
+- 已修改：
+  - `src/styles/global.css`
+  - `src/layouts/BaseLayout.astro`
+  - `src/components/HomeHero.astro`
+  - `src/components/Hero.astro`
+  - `src/components/ImageHero.astro`
+  - `src/components/SectionHeader.astro`
+  - `src/components/IconFeatureCard.astro`
+  - `src/components/Header.astro`
+  - `src/components/Footer.astro`
+  - `src/components/HomeSolutionCard.astro`
+  - `src/components/CapabilityStrip.astro`
+  - `src/components/HomeQuoteCta.astro`
+  - `src/pages/index.astro`
+  - `src/pages/about.astro`
+  - `src/components/CapabilitiesPage.astro`
+  - `src/components/ProcessStepper.astro`
+  - `src/components/ProductExplorer.astro`
+  - `src/components/ProductCategoryPanel.astro`
+  - `src/components/NewsSearch.astro`
+  - `src/components/QuoteSection.astro`
+  - `src/pages/products.astro`
+  - `src/pages/materials-processes.astro`
+  - `src/pages/industries.astro`
+  - `src/pages/news.astro`
+  - `src/pages/news/[slug].astro`
+  - `src/pages/contact.astro`
+  - `src/content/news.json`
+  - `scripts/check-website-content.js`
+- 中期验证：
+  - 生产构建通过，17 个路由与 149 张响应式图片检查通过。
+  - 内容结构检查通过（14 项）。
+  - 2560×1440 首页无溢出，banner 右贴边且文案不与产品重叠。
+  - 1440×900 关于页、制造能力页视觉截图通过。
+  - 1440×900 行业页、新闻页视觉截图通过。
+  - 1440×900 联系页、产品页视觉截图通过。
+  - 390×844 首页视觉与尺寸检查通过，页面无横向溢出。
+  - 定位并修复关于页移动端 reveal 隐藏态导致的 4px 横向溢出。
+  - 390px 下复扫 8 个主页面，全部无横向溢出且主标题可见。
+  - 移动菜单与中英文切换交互通过，中文状态无溢出。
+  - 320×568、768×1024、1024×768 首页视觉与尺寸检查通过。
+  - 3440×1440 首页与 8 个主页面宽度扫描通过，banner 右贴边且全站无横向溢出。
+  - 新闻详情页中文侧栏/正文视觉通过，生产预览控制台无错误。
+
+### 阶段 7-10：页面重排、验证与交付
+
+- **状态：** complete
+- 最终结果：
+  - 首页、共享组件、8 个主页面和新闻详情均完成响应式与年轻化重排。
+  - 320、390、768、1024、1440、2560、3440 代表视口完成浏览器验收。
+  - 中英文切换、移动菜单、新闻目录与滚动渐显工作正常。
+  - `npm run format:check`、`npm run test:content`、`npm run test:images`、`npm run build` 和 `git diff --check` 全部通过。
+  - 生产构建输出 17 个静态路由，图片检查覆盖 149 个 picture 与 149 张 raster 图片。

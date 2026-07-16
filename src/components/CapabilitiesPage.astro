@@ -1,6 +1,6 @@
 ---
-import Hero from "./Hero.astro";
 import HighlightStat from "./HighlightStat.astro";
+import ImageHero from "./ImageHero.astro";
 import IconFeatureCard from "./IconFeatureCard.astro";
 import ProcessStepper from "./ProcessStepper.astro";
 import ResponsiveImage from "./ResponsiveImage.astro";
@@ -13,23 +13,25 @@ import { url } from "../lib/i18n";
 const assets = media.assetMap;
 ---
 
-<Hero
+<ImageHero
   title={capabilities.hero.title}
   subtitle={capabilities.hero.subtitle}
+  image={assets.productLineBanner}
   primaryCta={{ label: capabilities.cta.button, href: "/contact#quote" }}
-  compact
 />
 
-<section class="container-page py-14">
+<section class="container-page py-14 sm:py-16">
   <SectionHeader
     eyebrow={{ en: "Core Services", zh: "核心服务" }}
     title={{ en: "Six Manufacturing Capabilities", zh: "六项制造能力" }}
+    align="left"
   />
-  <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+  <div class="mt-10 grid gap-x-8 sm:grid-cols-2 lg:grid-cols-3">
     {
       capabilities.services.map((item, index) => (
         <IconFeatureCard
           no={String(index + 1)}
+          variant="row"
           icon={item.icon}
           title={item.title}
           desc={item.desc}
@@ -39,7 +41,7 @@ const assets = media.assetMap;
   </div>
 </section>
 
-<section class="section-tint border-line border-y py-14">
+<section class="section-tint border-line border-y py-14 sm:py-16">
   <div class="container-page">
     <SectionHeader
       title={capabilities.projectFlow.title}
@@ -51,8 +53,8 @@ const assets = media.assetMap;
   </div>
 </section>
 
-<section class="bg-deep py-16 text-white">
-  <div class="container-page">
+<section class="bg-deep py-16 text-white sm:py-20">
+  <div class="container-wide">
     <SectionHeader
       title={capabilities.moldFlow.title}
       subtitle={capabilities.moldFlow.subtitle}
@@ -64,16 +66,16 @@ const assets = media.assetMap;
   </div>
 </section>
 
-<section class="container-page py-14">
-  <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
+<section class="container-wide py-14 sm:py-16">
+  <div class="grid grid-cols-2 gap-3 lg:grid-cols-4">
     {
       capabilities.gallery.map((item) => (
         <ResponsiveImage
           image={assets[item.image]}
           aspect="video"
           fit="contain"
-          class="border-line border bg-white p-3"
-          sizes="(min-width: 1024px) 24vw, 50vw"
+          class="border-line border bg-white p-3 transition duration-500 hover:-translate-y-1 hover:shadow-[var(--shadow-card)]"
+          sizes="(min-width: 1536px) 24vw, (min-width: 1024px) 25vw, 50vw"
         />
       ))
     }
@@ -81,7 +83,7 @@ const assets = media.assetMap;
 </section>
 
 <section class="bg-brand-700 py-14">
-  <div class="container-page">
+  <div class="container-wide">
     <SectionHeader title={{ en: "Production Capability", zh: "生产能力亮点" }} tone="dark" />
     <div class="mt-10 grid gap-5 sm:grid-cols-3">
       {

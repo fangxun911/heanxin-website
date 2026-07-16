@@ -9,6 +9,7 @@ interface Props {
   align?: "left" | "center";
   tone?: "light" | "dark";
   as?: "h1" | "h2";
+  size?: "page" | "section" | "compact";
 }
 
 const {
@@ -18,6 +19,7 @@ const {
   align = "center",
   tone = "light",
   as: HeadingTag = "h2",
+  size = "section",
 } = Astro.props;
 
 const alignCls = align === "center" ? "mx-auto text-center" : "text-left";
@@ -25,6 +27,11 @@ const titleColor = tone === "dark" ? "text-white" : "text-brand-700";
 const subColor = tone === "dark" ? "text-brand-100" : "text-muted";
 const eyebrowColor = tone === "dark" ? "text-ember-400" : "text-ember-700";
 const barCenter = align === "center" ? "justify-center" : "";
+const titleSize = {
+  page: "text-4xl sm:text-5xl 2xl:text-6xl",
+  section: "text-3xl sm:text-4xl 2xl:text-5xl",
+  compact: "text-2xl sm:text-3xl",
+}[size];
 ---
 
 <div class={`max-w-3xl ${alignCls}`}>
@@ -35,9 +42,7 @@ const barCenter = align === "center" ? "justify-center" : "";
       </p>
     )
   }
-  <HeadingTag
-    class={`font-display mt-3 text-4xl font-bold tracking-tight sm:text-5xl ${titleColor}`}
-  >
+  <HeadingTag class={`font-display mt-3 leading-tight font-bold ${titleSize} ${titleColor}`}>
     <span lang="en" class="uppercase">{title.en}</span><span lang="zh">{title.zh}</span>
   </HeadingTag>
   <div class={`accent-bar mt-4 ${barCenter}`} aria-hidden="true">

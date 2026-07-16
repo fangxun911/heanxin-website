@@ -13,32 +13,64 @@ const assets = media.assetMap;
   title="应用领域"
   description="禾安鑫的定制塑胶与五金塑胶组合件广泛应用于电子设备、工业控制、智能家居、小型家电、汽车电子及医疗健康设备等行业。"
 >
-  <section class="container-page pt-12 pb-8">
-    <SectionHeader title={industries.header.title} subtitle={industries.header.subtitle} as="h1" />
+  <section class="container-page py-12 sm:py-14">
+    <div class="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+      <SectionHeader
+        title={industries.header.title}
+        subtitle={industries.header.subtitle}
+        as="h1"
+        align="left"
+        size="page"
+      />
+      <p
+        class="font-display text-brand-100 hidden text-right text-[8rem] leading-none font-semibold lg:block"
+        aria-hidden="true"
+      >
+        06
+      </p>
+    </div>
   </section>
 
-  <section class="container-page pb-12">
-    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+  <section class="container-wide pb-14 sm:pb-16">
+    <div class="grid gap-x-4 gap-y-8 sm:grid-cols-2 xl:grid-cols-12">
       {
-        industries.industries.map((item) => (
-          <article data-reveal class="card-base card-interactive overflow-hidden">
-            <ResponsiveImage
-              image={assets[item.image]}
-              aspect="video"
-              fit="contain"
-              class="bg-white p-4"
-              sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
-            />
-            <div class="p-5">
-              <h2 class="font-display text-brand-700 text-xl font-semibold">
-                <T text={item.title} />
-              </h2>
-              <p class="text-muted mt-3 text-[15px] leading-relaxed">
-                <T text={item.desc} />
-              </p>
-            </div>
-          </article>
-        ))
+        industries.industries.map((item, index) => {
+          const spanClass =
+            index === 0 ? "xl:col-span-7" : index === 1 ? "xl:col-span-5" : "xl:col-span-3";
+          const mediaHeight = index < 2 ? "h-72 2xl:h-96" : "h-60 2xl:h-72";
+
+          return (
+            <article
+              data-reveal={index % 2 === 0 ? "left" : "right"}
+              class={`group border-line border-t pt-4 ${spanClass}`}
+            >
+              <div class="bg-surface overflow-hidden">
+                <ResponsiveImage
+                  image={assets[item.image]}
+                  fit="contain"
+                  class={`${mediaHeight} bg-white p-4`}
+                  imgClass="transition duration-500 group-hover:scale-105"
+                  sizes={
+                    index < 2 ? "(min-width: 1280px) 54vw, 50vw" : "(min-width: 1280px) 24vw, 50vw"
+                  }
+                />
+              </div>
+              <div class="grid gap-3 py-5 lg:grid-cols-[auto_1fr] lg:gap-6">
+                <span class="font-display text-ember-600 text-sm font-bold">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <h2 class="font-display text-brand-700 text-xl font-semibold 2xl:text-2xl">
+                    <T text={item.title} />
+                  </h2>
+                  <p class="text-muted mt-3 text-[15px] leading-relaxed">
+                    <T text={item.desc} />
+                  </p>
+                </div>
+              </div>
+            </article>
+          );
+        })
       }
     </div>
   </section>

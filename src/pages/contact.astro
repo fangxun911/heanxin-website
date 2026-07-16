@@ -15,11 +15,11 @@ import { site } from "../lib/i18n";
 >
   <Hero title={contact.header.title} subtitle={contact.header.subtitle} compact />
 
-  <section class="container-page py-14">
-    <div class="grid gap-5 sm:grid-cols-3">
+  <section class="section-tint border-line border-y">
+    <div class="container-wide grid gap-x-8 py-8 sm:grid-cols-3 sm:py-10">
       {
         contact.highlights.map((item) => (
-          <IconFeatureCard icon={item.icon} title={item.title} desc={item.desc} />
+          <IconFeatureCard variant="row" icon={item.icon} title={item.title} desc={item.desc} />
         ))
       }
     </div>
@@ -27,18 +27,18 @@ import { site } from "../lib/i18n";
 
   <QuoteSection />
 
-  <section class="container-page py-14">
-    <div class="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
-      <div>
+  <section class="container-page py-14 sm:py-16">
+    <div class="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-start 2xl:gap-16">
+      <div data-reveal="left">
         <SectionHeader
           eyebrow={contact.prepare.eyebrow}
           title={contact.prepare.title}
           align="left"
         />
-        <ul class="mt-8 space-y-3">
+        <ul class="border-line mt-8 border-y">
           {
             contact.prepare.items.map((item, index) => (
-              <li class="border-line flex gap-3 rounded-[var(--radius-card)] border bg-white p-4">
+              <li class:list={["flex gap-3 py-4", index > 0 && "border-line border-t"]}>
                 <span class="bg-brand-100 text-brand-700 font-display flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold">
                   {String(index + 1).padStart(2, "0")}
                 </span>
@@ -51,7 +51,10 @@ import { site } from "../lib/i18n";
         </ul>
       </div>
 
-      <aside class="bg-deep rounded-[var(--radius-card)] p-6 text-white sm:p-8">
+      <aside
+        data-reveal="scale"
+        class="bg-deep rounded-[var(--radius-card)] p-6 text-white sm:p-8 2xl:p-10"
+      >
         <p class="eyebrow text-ember-300">
           <span lang="en">Direct Contact</span><span lang="zh">直接联系</span>
         </p>

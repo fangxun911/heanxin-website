@@ -41,7 +41,7 @@ const orbitItems = [
     </div>
 
     <div
-      class="container-page relative grid min-h-[640px] items-center gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-20"
+      class="container-wide relative grid min-h-[640px] items-center gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-20 2xl:gap-16"
     >
       <div data-reveal class="max-w-3xl">
         <p class="eyebrow text-ember-300">
@@ -97,7 +97,7 @@ const orbitItems = [
 
       <div data-reveal class="relative hidden lg:block">
         <div
-          class="signal-map relative mx-auto aspect-square w-full max-w-[31rem]"
+          class="signal-map relative mx-auto aspect-square w-full max-w-[31rem] 2xl:max-w-[36rem]"
           role="img"
           aria-label={`${materials.header.signalLabel.en} / ${materials.header.signalLabel.zh}`}
         >
@@ -176,7 +176,7 @@ const orbitItems = [
       </div>
     </div>
 
-    <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
       {
         materials.materials.map((item, index) => (
           <NumberedCard
@@ -205,7 +205,7 @@ const orbitItems = [
     >
     </div>
 
-    <div class="container-page relative">
+    <div class="container-wide relative">
       <div class="grid gap-7 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
         <SectionHeader
           eyebrow={materials.processesSection.eyebrow}
@@ -238,7 +238,7 @@ const orbitItems = [
               tags={item.tags}
               kind={materials.processesSection.itemLabel}
               tone="dark"
-              class="w-[82vw] shrink-0 snap-start sm:w-[27rem] lg:w-[29rem]"
+              class="w-[82vw] shrink-0 snap-start sm:w-[27rem] lg:w-[29rem] 2xl:w-[32rem]"
             />
           ))
         }

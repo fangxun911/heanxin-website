@@ -24,22 +24,25 @@ const { icon, title, desc, image, href } = Astro.props;
 ---
 
 <a
-  data-reveal
+  data-reveal="up"
   href={url(href)}
-  class="group border-line hover:border-brand-200 relative grid h-full grid-cols-[6.5rem_1fr] items-center gap-3 rounded-lg border bg-white/80 p-4 shadow-sm transition duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-[var(--shadow-card)] max-sm:grid-cols-1"
+  class="group border-line hover:border-brand-200 relative grid h-full grid-rows-[auto_1fr] overflow-hidden rounded-[var(--radius-card)] border bg-white transition duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-card)]"
 >
-  <ResponsiveImage
-    image={image}
-    fit="contain"
-    sizes="(min-width: 1024px) 16vw, 42vw"
-    class="h-24 w-full bg-transparent max-sm:h-32"
-    imgClass="mix-blend-multiply drop-shadow-md transition duration-300 group-hover:scale-105"
-  />
-  <div class="min-w-0">
-    <div class="text-brand-500 mb-2 inline-flex items-center gap-2 text-sm font-semibold">
-      <Icon name={icon} class="h-4 w-4" />
-      <span class="h-px w-8 bg-current opacity-40"></span>
+  <div class="bg-surface relative aspect-[4/3] overflow-hidden">
+    <ResponsiveImage
+      image={image}
+      fit="contain"
+      sizes="(min-width: 1536px) 22vw, (min-width: 1024px) 44vw, 100vw"
+      class="h-full w-full bg-transparent p-5"
+      imgClass="mix-blend-multiply drop-shadow-md transition duration-500 group-hover:scale-105"
+    />
+    <div
+      class="bg-brand-800 absolute top-4 left-4 inline-flex h-10 w-10 items-center justify-center rounded-full text-white shadow-sm"
+    >
+      <Icon name={icon} class="h-5 w-5" />
     </div>
+  </div>
+  <div class="min-w-0 p-5">
     <h3 class="font-display text-brand-700 text-base leading-snug font-semibold sm:text-lg">
       <T text={title} />
     </h3>
@@ -48,7 +51,7 @@ const { icon, title, desc, image, href } = Astro.props;
     </p>
   </div>
   <span
-    class="border-brand-200 text-brand-500 group-hover:bg-brand-500 absolute right-4 bottom-4 hidden h-8 w-8 items-center justify-center rounded-full border transition group-hover:text-white lg:inline-flex"
+    class="border-brand-200 text-brand-500 group-hover:bg-brand-500 absolute right-4 bottom-4 inline-flex h-8 w-8 items-center justify-center rounded-full border transition group-hover:text-white"
     aria-hidden="true"
   >
     <Icon name="chevronRight" class="h-4 w-4" />

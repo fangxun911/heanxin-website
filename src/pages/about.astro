@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SectionHeader from "../components/SectionHeader.astro";
 import IconFeatureCard from "../components/IconFeatureCard.astro";
+import ImageHero from "../components/ImageHero.astro";
 import ResponsiveImage from "../components/ResponsiveImage.astro";
 import T from "../components/T.astro";
 import about from "../content/about.json";
@@ -15,83 +16,97 @@ const assets = media.assetMap;
   title="公司简介"
   description="东莞市禾安鑫五金塑胶制品有限公司是一家专注塑胶注塑、模具开发、嵌件注塑与五金塑胶组合件的一站式 OEM / ODM 制造企业。"
 >
-  <section class="container-page pt-12 pb-8">
-    <SectionHeader title={about.header.title} as="h1" />
-    <p class="text-muted mx-auto mt-6 max-w-3xl text-center leading-relaxed">
-      <T text={about.intro.body} />
-    </p>
-  </section>
+  <ImageHero
+    title={about.header.title}
+    subtitle={about.intro.body}
+    image={assets[about.visuals[0]]}
+  />
 
-  <section class="container-page py-12">
-    <div class="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-      <div>
-        <SectionHeader eyebrow={about.profile.eyebrow} title={about.profile.title} align="left" />
-        <div class="text-muted mt-6 space-y-4 leading-relaxed">
-          {
-            about.profile.paragraphs.map((paragraph) => (
-              <p>
-                <T text={paragraph} />
-              </p>
-            ))
-          }
-        </div>
+  <section class="container-page py-14 sm:py-16">
+    <div class="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-start 2xl:gap-16">
+      <div data-reveal="left" class="lg:sticky lg:top-28">
+        <SectionHeader
+          eyebrow={about.profile.eyebrow}
+          title={about.profile.title}
+          align="left"
+          size="section"
+        />
       </div>
-      <ResponsiveImage
-        image={assets[about.visuals[0]]}
-        aspect="portrait"
-        fit="cover"
-        class="border-line shadow-brand-900/10 border bg-white shadow-lg"
-        sizes="(min-width: 1024px) 42vw, 100vw"
-      />
-    </div>
-  </section>
-
-  <section class="container-page py-12">
-    <SectionHeader eyebrow={about.facilities.eyebrow} title={about.facilities.title} />
-    <div class="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
-      {
-        about.workshops.map((w) => (
-          <ResponsiveImage
-            image={assets[w.image]}
-            aspect="video"
-            fit="contain"
-            class="border-line border bg-white p-3"
-            sizes="(min-width: 1024px) 24vw, 50vw"
-          />
-        ))
-      }
-    </div>
-    <div class="mt-8 grid gap-5 sm:grid-cols-3">
-      {about.stats.map((s) => <IconFeatureCard icon={s.icon} title={s.title} desc={s.desc} />)}
-    </div>
-  </section>
-
-  <section class="section-tint border-line border-y py-14">
-    <div class="container-page">
-      <SectionHeader eyebrow={about.capabilities.eyebrow} title={about.capabilities.title} />
-      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div data-reveal="right" class="content-measure text-muted space-y-5 leading-relaxed">
         {
-          about.capabilities.items.map((item) => (
-            <IconFeatureCard icon={item.icon} title={item.title} desc={item.desc} />
+          about.profile.paragraphs.map((paragraph) => (
+            <p>
+              <T text={paragraph} />
+            </p>
           ))
         }
       </div>
     </div>
   </section>
 
-  <section class="container-page py-14">
-    <SectionHeader eyebrow={about.advantages.eyebrow} title={about.advantages.title} />
-    <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+  <section class="section-tint border-line border-y py-14 sm:py-16">
+    <div class="container-wide">
+      <SectionHeader
+        eyebrow={about.facilities.eyebrow}
+        title={about.facilities.title}
+        align="left"
+      />
+      <div class="mt-10 grid grid-cols-2 gap-3 lg:grid-cols-4">
+        {
+          about.workshops.map((w) => (
+            <div data-reveal="scale" class="border-line group overflow-hidden border bg-white p-3">
+              <ResponsiveImage
+                image={assets[w.image]}
+                aspect="video"
+                fit="contain"
+                class="bg-white"
+                imgClass="transition duration-500 group-hover:scale-105"
+                sizes="(min-width: 1536px) 24vw, (min-width: 1024px) 25vw, 50vw"
+              />
+            </div>
+          ))
+        }
+      </div>
+      <div class="mt-10 grid gap-x-8 sm:grid-cols-3">
+        {
+          about.stats.map((s) => (
+            <IconFeatureCard variant="row" icon={s.icon} title={s.title} desc={s.desc} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="py-14 sm:py-16">
+    <div class="container-page">
+      <SectionHeader
+        eyebrow={about.capabilities.eyebrow}
+        title={about.capabilities.title}
+        align="left"
+      />
+      <div class="mt-10 grid gap-x-8 sm:grid-cols-2">
+        {
+          about.capabilities.items.map((item) => (
+            <IconFeatureCard variant="row" icon={item.icon} title={item.title} desc={item.desc} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="border-line container-page border-t py-14 sm:py-16">
+    <SectionHeader eyebrow={about.advantages.eyebrow} title={about.advantages.title} align="left" />
+    <div class="mt-10 grid gap-x-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5">
       {
         about.advantages.items.map((item) => (
-          <IconFeatureCard icon={item.icon} title={item.title} desc={item.desc} />
+          <IconFeatureCard variant="row" icon={item.icon} title={item.title} desc={item.desc} />
         ))
       }
     </div>
   </section>
 
   <section class="bg-deep py-14 text-white">
-    <div class="container-page">
+    <div class="container-wide">
       <div class="grid gap-8 lg:grid-cols-[1fr_1.2fr] lg:items-center">
         <SectionHeader
           eyebrow={about.cooperation.eyebrow}

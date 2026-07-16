@@ -9,11 +9,25 @@ import news from "../content/news.json";
   title="新闻资讯"
   description="禾安鑫新闻资讯提供塑胶注塑、材料选择、电子外壳选材、定制塑胶项目启动和模具开发流程等制造知识。"
 >
-  <section class="container-page pt-12 pb-8">
-    <SectionHeader title={news.header.title} subtitle={news.header.subtitle} as="h1" />
+  <section class="container-page py-12 sm:py-14">
+    <div class="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+      <SectionHeader
+        title={news.header.title}
+        subtitle={news.header.subtitle}
+        as="h1"
+        align="left"
+        size="page"
+      />
+      <p
+        class="font-display text-brand-100 hidden text-right text-[8rem] leading-none font-semibold lg:block"
+        aria-hidden="true"
+      >
+        {String(news.articles.length).padStart(2, "0")}
+      </p>
+    </div>
   </section>
 
-  <section class="container-page pb-14">
+  <section class="container-page pb-14 sm:pb-16">
     <NewsSearch articles={news.articles} />
   </section>
 </BaseLayout>

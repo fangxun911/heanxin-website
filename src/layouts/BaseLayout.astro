@@ -195,12 +195,17 @@ const jsonLd = [
       // on newly loaded pages are revealed (otherwise they'd stay hidden).
       (function () {
         function initReveal() {
-          var els = document.querySelectorAll("[data-reveal]:not(.is-visible)");
+          var els = document.querySelectorAll(
+            "[data-reveal]:not(.is-visible):not([data-reveal-bound])"
+          );
           if (!els.length) return;
           var reduce =
             window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
           if (reduce || !("IntersectionObserver" in window)) {
-            for (var i = 0; i < els.length; i++) els[i].classList.add("is-visible");
+            for (var i = 0; i < els.length; i++) {
+              els[i].classList.add("is-visible");
+              els[i].removeAttribute("data-reveal-bound");
+            }
             return;
           }
           var io = new IntersectionObserver(
@@ -212,15 +217,24 @@ const jsonLd = [
                 var sibs = Array.prototype.filter.call(el.parentElement.children, function (c) {
                   return c.hasAttribute("data-reveal");
                 });
-                el.style.transitionDelay = Math.min(sibs.indexOf(el), 6) * 70 + "ms";
+                var requestedOrder = Number(el.getAttribute("data-reveal-order"));
+                var order = Number.isFinite(requestedOrder)
+                  ? requestedOrder
+                  : Math.max(0, sibs.indexOf(el));
+                el.style.transitionDelay = Math.min(order, 6) * 70 + "ms";
                 el.classList.add("is-visible");
+                el.removeAttribute("data-reveal-bound");
                 io.unobserve(el);
               });
             },
             { rootMargin: "0px 0px -10% 0px", threshold: 0.08 }
           );
-          for (var j = 0; j < els.length; j++) io.observe(els[j]);
+          for (var j = 0; j < els.length; j++) {
+            els[j].setAttribute("data-reveal-bound", "");
+            io.observe(els[j]);
+          }
         }
+        initReveal();
         document.addEventListener("astro:page-load", initReveal);
       })();
     </script>

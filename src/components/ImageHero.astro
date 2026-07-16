@@ -21,65 +21,86 @@ interface Props {
   subtitle: LocalizedText;
   eyebrow?: LocalizedText;
   image: ImageAsset;
-  primaryCta: Cta;
+  primaryCta?: Cta;
   secondaryCta?: Cta;
+  tone?: "light" | "dark";
 }
 
-const { title, subtitle, eyebrow, image, primaryCta, secondaryCta } = Astro.props;
+const { title, subtitle, eyebrow, image, primaryCta, secondaryCta, tone = "light" } = Astro.props;
+const isDark = tone === "dark";
 ---
 
-<section class="section-tint border-line border-b">
+<section class:list={["border-line border-b", isDark ? "bg-deep text-white" : "section-tint"]}>
   <div
-    class="container-page grid gap-10 py-12 lg:grid-cols-[0.88fr_1.12fr] lg:items-center lg:py-16"
+    class="container-wide grid gap-10 py-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:py-16 2xl:gap-16 2xl:py-20"
   >
-    <div data-reveal>
+    <div data-reveal="left">
       {
         eyebrow && (
-          <p class="eyebrow text-ember-700">
+          <p class:list={["eyebrow", isDark ? "text-ember-300" : "text-ember-700"]}>
             <T text={eyebrow} />
           </p>
         )
       }
       <h1
-        class="font-display text-brand-800 mt-4 max-w-3xl text-4xl leading-tight font-bold sm:text-5xl"
+        class:list={[
+          "font-display heading-measure mt-4 text-4xl leading-tight font-bold sm:text-5xl 2xl:text-6xl",
+          isDark ? "text-white" : "text-brand-800",
+        ]}
       >
         <T text={title} />
       </h1>
-      <p class="text-muted mt-5 max-w-2xl text-lg leading-relaxed">
+      <p
+        class:list={[
+          "content-measure mt-5 text-lg leading-relaxed",
+          isDark ? "text-brand-100/85" : "text-muted",
+        ]}
+      >
         <T text={subtitle} />
       </p>
-      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-        <a
-          href={url(primaryCta.href)}
-          class="bg-ember-500 hover:bg-ember-600 shadow-ember-900/10 inline-flex items-center justify-center rounded-full px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5"
-        >
-          <T text={primaryCta.label} />
-        </a>
-        {
-          secondaryCta && (
-            <a
-              href={url(secondaryCta.href)}
-              class="border-line text-brand-700 hover:bg-brand-50 inline-flex items-center justify-center rounded-full border bg-white px-7 py-3.5 text-sm font-semibold transition hover:-translate-y-0.5"
-            >
-              <T text={secondaryCta.label} />
-            </a>
-          )
-        }
-      </div>
+      {
+        (primaryCta || secondaryCta) && (
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+            {primaryCta && (
+              <a
+                href={url(primaryCta.href)}
+                class="bg-ember-500 hover:bg-ember-600 inline-flex items-center justify-center rounded-lg px-7 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-ember)] transition hover:-translate-y-0.5"
+              >
+                <T text={primaryCta.label} />
+              </a>
+            )}
+            {secondaryCta && (
+              <a
+                href={url(secondaryCta.href)}
+                class:list={[
+                  "inline-flex items-center justify-center rounded-lg border px-7 py-3.5 text-sm font-semibold transition hover:-translate-y-0.5",
+                  isDark
+                    ? "border-white/30 text-white hover:bg-white/10"
+                    : "border-line text-brand-700 hover:bg-brand-50 bg-white",
+                ]}
+              >
+                <T text={secondaryCta.label} />
+              </a>
+            )}
+          </div>
+        )
+      }
     </div>
-    <div data-reveal class="relative">
-      <div class="border-line shadow-brand-900/10 bg-white p-2 shadow-2xl">
+    <div data-reveal="scale" data-parallax class="relative">
+      <div
+        class="border-line overflow-hidden rounded-[var(--radius-card)] border bg-white p-2 shadow-[var(--shadow-card)]"
+      >
         <ResponsiveImage
           image={image}
-          aspect="banner"
-          fit="cover"
+          aspect="wide"
+          fit="contain"
           priority
           sizes="(min-width: 1024px) 54vw, 100vw"
           widths={[480, 768, 1024, 1280, 1600]}
         />
       </div>
       <div
-        class="border-line shadow-brand-900/10 absolute -bottom-5 left-6 hidden bg-white px-5 py-3 shadow-lg sm:block"
+        class="border-line absolute -bottom-5 left-6 hidden rounded-[var(--radius-card)] border bg-white px-5 py-3 shadow-[var(--shadow-card)] sm:block"
       >
         <p class="font-display text-brand-700 text-sm font-semibold">
           <span lang="en">OEM / ODM plastic injection manufacturing</span>

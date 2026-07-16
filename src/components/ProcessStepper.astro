@@ -37,15 +37,15 @@ const tlDescCls = tone === "dark" ? "text-brand-100/85" : "text-muted";
 
 {
   variant === "timeline" ? (
-    <ol class="relative flex flex-col lg:flex-row lg:items-start">
+    <ol class="process-timeline relative flex flex-col lg:flex-row lg:items-start">
       <span
-        class={`pointer-events-none absolute top-2 bottom-2 left-6 z-0 w-0.5 -translate-x-1/2 lg:top-6 lg:right-0 lg:bottom-auto lg:left-0 lg:h-0.5 lg:w-auto lg:translate-x-0 ${lineCls}`}
+        class={`process-timeline__line pointer-events-none absolute top-2 bottom-2 left-6 z-0 w-0.5 -translate-x-1/2 lg:top-6 lg:right-0 lg:bottom-auto lg:left-0 lg:h-0.5 lg:w-auto lg:translate-x-0 ${lineCls}`}
         aria-hidden="true"
       />
       {steps.map((step, i) => (
         <li
           class="relative flex flex-col pb-8 pl-16 last:pb-0 lg:flex-1 lg:items-center lg:px-3 lg:pb-0 lg:pl-0 lg:text-center"
-          data-reveal
+          data-reveal="up"
         >
           <span
             class={`absolute top-1 left-6 z-10 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full text-white ring-4 lg:static lg:mb-5 lg:translate-x-0 ${nodeCls}`}
@@ -71,7 +71,7 @@ const tlDescCls = tone === "dark" ? "text-brand-100/85" : "text-muted";
   ) : (
     <ol class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
       {steps.map((step, i) => (
-        <li class="relative flex h-full" data-reveal>
+        <li class="relative flex h-full" data-reveal="up">
           <div
             class={`card-interactive relative flex h-full w-full flex-col items-center rounded-[var(--radius-card)] border px-5 pt-8 pb-6 text-center ${cardCls}`}
           >
@@ -110,3 +110,31 @@ const tlDescCls = tone === "dark" ? "text-brand-100/85" : "text-muted";
     </ol>
   )
 }
+
+<style>
+  @keyframes process-line-in {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      clip-path: inset(0);
+    }
+  }
+
+  @supports (animation-timeline: view()) {
+    @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+      .process-timeline__line {
+        animation: process-line-in linear both;
+        animation-timeline: view();
+        animation-range: entry 10% cover 45%;
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .process-timeline__line {
+      animation: none;
+      clip-path: none;
+    }
+  }
+</style>
