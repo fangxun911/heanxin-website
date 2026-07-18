@@ -29,10 +29,44 @@ interface Props {
 
 const { title, subtitle, image, primaryCta, secondaryCta } = Astro.props;
 const source = resolveImage(image.src);
+const edgeSource = resolveImage("images/products/banner-home-edge.png");
 const widths = responsiveWidths(source, [480, 768, 1024, 1280, 1672]);
 ---
 
 <section class="home-hero relative overflow-hidden">
+  <Picture
+    src={edgeSource}
+    formats={["avif"]}
+    fallbackFormat="webp"
+    widths={[1]}
+    width={edgeSource.width}
+    height={edgeSource.height}
+    alt=""
+    loading="eager"
+    decoding="async"
+    sizes="100vw"
+    pictureAttributes={{ class: "contents" }}
+    class="home-hero__edge pointer-events-none"
+    aria-hidden="true"
+  />
+
+  <Picture
+    src={source}
+    formats={["avif"]}
+    fallbackFormat="webp"
+    widths={widths}
+    width={source.width}
+    height={source.height}
+    alt=""
+    loading="eager"
+    decoding="async"
+    fetchpriority="high"
+    sizes="100vw"
+    pictureAttributes={{ class: "contents" }}
+    class="home-hero__background pointer-events-none"
+    aria-hidden="true"
+  />
+
   <div class="home-hero__layout container-wide relative z-10">
     <div data-reveal="left" class="home-hero__copy relative">
       <h1
@@ -69,23 +103,6 @@ const widths = responsiveWidths(source, [480, 768, 1024, 1280, 1672]);
       </div>
     </div>
   </div>
-
-  <Picture
-    src={source}
-    formats={["avif"]}
-    fallbackFormat="webp"
-    widths={widths}
-    width={source.width}
-    height={source.height}
-    alt=""
-    loading="eager"
-    decoding="async"
-    fetchpriority="high"
-    sizes="100vw"
-    pictureAttributes={{ class: "contents" }}
-    class="home-hero__background pointer-events-none"
-    aria-hidden="true"
-  />
 </section>
 
 <style>
@@ -97,12 +114,22 @@ const widths = responsiveWidths(source, [480, 768, 1024, 1280, 1672]);
   .home-hero__background {
     position: absolute;
     inset: 0 0 0 auto;
-    z-index: 0;
+    z-index: 1;
     width: 100%;
     height: 100%;
     object-fit: contain;
-    object-position: right center;
+    object-position: right top;
     animation: hero-media-in 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .home-hero__edge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 100%;
+    height: min(100%, 56.28vw);
+    object-fit: fill;
   }
 
   .home-hero__layout {
@@ -140,6 +167,10 @@ const widths = responsiveWidths(source, [480, 768, 1024, 1280, 1672]);
   }
 
   @media (max-width: 1023px) {
+    .home-hero__edge {
+      display: none;
+    }
+
     .home-hero__layout {
       display: block;
       min-height: 0;

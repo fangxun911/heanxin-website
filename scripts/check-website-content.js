@@ -730,6 +730,7 @@ function assertHomeVisualRefinement() {
     "src/assets",
     "images/products/banner-home-transparent.png"
   );
+  const homeBannerEdge = path.join(root, "src/assets", "images/products/banner-home-edge.png");
 
   assert(
     media.banners.home.src === "images/products/banner-home.png",
@@ -757,6 +758,7 @@ function assertHomeVisualRefinement() {
   assert(!existsSync(oldCleanBanner), "unused banner-home-clean.webp should be removed");
   assert(!existsSync(oldTransparentBanner), "abandoned transparent banner PNG should be removed");
   assert(home.hero.image === "homeBanner", "home.hero.image must keep the registered home banner");
+  assert(existsSync(homeBannerEdge), "home banner edge extension must exist");
 
   assertContains(page, "HomeHero", "Home page must use the dedicated home hero");
   assertNotContains(page, "ImageHero", "Home page must not use the generic framed ImageHero");
@@ -771,10 +773,21 @@ function assertHomeVisualRefinement() {
     "home.capabilityStrip",
     "Home page must render the reference-style capability strip"
   );
+  assertContains(hero, "home-hero__background", "Home hero must render the complete client PNG");
   assertContains(
     hero,
-    "home-hero__background",
-    "Home hero must render the PNG as a single background layer"
+    "home-hero__edge",
+    "Home hero must extend the source image canvas across ultrawide viewports"
+  );
+  assertContains(
+    hero,
+    'resolveImage("images/products/banner-home-edge.png")',
+    "Home hero edge extension must be derived from an imported Astro image asset"
+  );
+  assertContains(
+    hero,
+    "height: min(100%, 56.28vw)",
+    "Home hero edge extension must match the contained source image height"
   );
   const heroSectionClass = hero.match(/<section class="([^"]*home-hero[^"]*)">/)?.[1] ?? "";
   assert(
@@ -800,8 +813,13 @@ function assertHomeVisualRefinement() {
   );
   assertContains(
     hero,
-    "object-position: right center",
-    "Home hero desktop background image must meet the right viewport edge without cropping"
+    "object-position: right top",
+    "Home hero desktop background image must meet the top and right viewport edges without cropping"
+  );
+  assertNotContains(
+    hero,
+    "transform: translateY(-50%)",
+    "Home hero edge extension must not vertically center away from the top boundary"
   );
   assertContains(
     hero,
@@ -813,6 +831,11 @@ function assertHomeVisualRefinement() {
     hero,
     "aspect-ratio: 1672 / 941",
     "Home hero mobile image must participate in flow at the source aspect ratio"
+  );
+  assert(
+    hero.indexOf('class="home-hero__background pointer-events-none"') <
+      hero.indexOf('class="home-hero__layout container-wide relative z-10"'),
+    "Home hero mobile image must precede the copy so its top edge meets the hero boundary"
   );
   assertContains(
     hero,
